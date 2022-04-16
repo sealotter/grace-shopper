@@ -55,11 +55,12 @@ const parseRaw = () => {
   const result = {};
   return raw.map((x) => {
     return {
-      rank: x[0],
-      title: x[1],
-      artist: x[2],
+      billBoardRank1989: x[0],
+      albumName: x[1],
+      artistName: x[2],
     };
   });
 };
 
-export default parseRaw();
+const testData = parseRaw();
+module.exports = testData;

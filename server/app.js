@@ -11,21 +11,6 @@ app.use(morgan('dev'));
 // body parsing middleware
 app.use(express.json());
 
-app.get('/test/test', async (req, res, next) => {
-  try {
-    // const accessToken = await axios.get(
-    //   'https://api.discogs.com/oauth/request_token'
-    // );
-    // console.log(accessToken);
-    const response = await axios.get(
-      'https://api.discogs.com/releases/22628222'
-    );
-    res.send(response.data);
-  } catch (error) {
-    next(error);
-  }
-});
-
 // auth and api routes
 app.use('/auth', require('./auth'));
 app.use('/api', require('./api'));

@@ -30,7 +30,7 @@ const AuthForm = (props) => {
         {error && error.response && <div> {error.response.data} </div>}
       </form>
       {/* //test area */}
-      <ul>
+      {/* <ul>
         {albumlist.map((x, i) => {
           return (
             <li key={i}>
@@ -38,7 +38,7 @@ const AuthForm = (props) => {
             </li>
           );
         })}
-      </ul>
+      </ul> */}
     </div>
   );
 };
