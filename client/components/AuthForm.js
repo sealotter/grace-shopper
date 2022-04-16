@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { authenticate } from '../store';
-import albumlist from '../../server/db/testData';
 
 /**
  * COMPONENT
@@ -29,16 +28,6 @@ const AuthForm = (props) => {
         </div>
         {error && error.response && <div> {error.response.data} </div>}
       </form>
-      {/* //test area */}
-      {/* <ul>
-        {albumlist.map((x, i) => {
-          return (
-            <li key={i}>
-              {x.rank}: "{x.title}"" {x.artist}
-            </li>
-          );
-        })}
-      </ul> */}
     </div>
   );
 };
