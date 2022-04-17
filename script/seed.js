@@ -2,7 +2,7 @@
 
 const {
   db,
-  models: { User, Album },
+  models: { User, Album }, 
 } = require('../server/db');
 const testData = require('../server/db/testData');
 
@@ -23,6 +23,7 @@ async function seed() {
     User.create({ username: 'anna', password: '123', firstName: 'Anna', lastName: 'Kohler', email: 'kohler.anna@gmail.com', address: '4095 Hilltop Street Bernardstown, MA 01337'}),
     User.create({ username: 'eric', password: '123', firstName: 'Eric', lastName: 'Rodgers', email: 'rodgers.eric@gmail.com', address: '2210 Petunia Way, Birmingham, AL 35209'}),
   ]);
+
   const albums = await Album.bulkCreate(testData);
 
   console.log(`seeded ${users.length} users`);

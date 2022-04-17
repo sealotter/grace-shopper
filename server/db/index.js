@@ -7,6 +7,7 @@ const Album = require('./models/Album');
 
 //associations could go here!
 
+
 module.exports = {
   db,
   models: {
