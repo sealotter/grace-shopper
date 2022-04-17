@@ -16,8 +16,12 @@ async function seed() {
 
   // Creating Users
   const users = await Promise.all([
-    User.create({ username: 'cody', password: '123' }),
-    User.create({ username: 'murphy', password: '123' }),
+    User.create({ username: 'cody', password: '123', firstName: 'Cody', lastName: 'Perez', email: 'perez.cody@gmail.com', address: '3095 Ridenour Street, San Francisco, CA 33323'}),
+    User.create({ username: 'murphy', password: '123', firstName: 'Murphy', lastName: 'Miller', email: 'miller.murphy@gmail.com', address: '434 Stroop Hill Road, Atlanta, GA 30310'}),
+    User.create({ username: 'janae', password: '123', firstName: 'Janae', lastName: 'Edwards', email: 'edwards.janae@gmail.com', address: '46 Hollis Lane Willingboro, NJ 08046'}),
+    User.create({ username: 'lisa', password: '123', firstName: 'Lisa', lastName: 'Knox', email: 'knox.lisa@gmail.com', address: '4088 Elk Creek Road Duluth, GA 30136'}),
+    User.create({ username: 'anna', password: '123', firstName: 'Anna', lastName: 'Kohler', email: 'kohler.anna@gmail.com', address: '4095 Hilltop Street Bernardstown, MA 01337'}),
+    User.create({ username: 'eric', password: '123', firstName: 'Eric', lastName: 'Rodgers', email: 'rodgers.eric@gmail.com', address: '2210 Petunia Way, Birmingham, AL 35209'}),
   ]);
   const albums = await Album.bulkCreate(testData);
 
