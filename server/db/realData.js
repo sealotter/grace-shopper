@@ -26,6 +26,7 @@ const sampleData = async (release) => {
       availableInventory: response.num_for_sale,
     };
     console.log(album);
+    return album;
   } catch (error) {
     console.log(error.code);
   }
@@ -39,9 +40,7 @@ const getAlbumDetails = async (artist, title) => {
     const response = (
       await axios.get(searchResults.data.results[0].resource_url)
     ).data;
-    // console.log(response);
     const album = {
-      //format included for sorting purposes
       format: response.formats[0].name,
       albumName: response.title,
       albumArt: searchResults.data.results[0].cover_image,
