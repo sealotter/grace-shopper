@@ -5,6 +5,7 @@ const {
   models: { User, Album }, 
 } = require('../server/db');
 const testData = require('../server/db/testData');
+const realData = require('../server/db/realData');
 
 /**
  * seed - this function clears the database, updates tables to

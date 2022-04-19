@@ -6,6 +6,10 @@ const Album = db.define('album', {
     type: Sequelize.STRING,
     allowNull: true,
   },
+  albumArt: {
+    type: Sequelize.STRING,
+    allowNull: true,
+  },
   artistName: {
     type: Sequelize.STRING,
     allowNull: true,
@@ -14,7 +18,7 @@ const Album = db.define('album', {
     type: Sequelize.STRING,
     allowNull: true,
   },
-  decade: {
+  year: {
     type: Sequelize.STRING,
     allowNull: true,
   },
