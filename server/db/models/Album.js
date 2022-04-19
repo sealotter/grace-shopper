@@ -10,6 +10,10 @@ const Album = db.define('album', {
     type: Sequelize.STRING,
     allowNull: true,
   },
+  thumbNail: {
+    type: Sequelize.STRING,
+    allowNull: true,
+  },
   artistName: {
     type: Sequelize.STRING,
     allowNull: true,

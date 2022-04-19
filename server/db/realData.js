@@ -6,6 +6,7 @@ const getAlbumDetails = async (artist, title) => {
     const searchResults = await axios.get(
       `https://api.discogs.com/database/search?q=artist=${artist}&title=${title}&key=${process.env.DISCOGS_KEY}&secret=${process.env.DISCOGS_SECRET}`
     );
+    // console.log(searchResults.data.results[0].thumb);
     const response = (
       await axios.get(searchResults.data.results[0].resource_url)
     ).data;
@@ -13,6 +14,7 @@ const getAlbumDetails = async (artist, title) => {
       // format: response.formats[0].name,
       albumName: response.title,
       albumArt: searchResults.data.results[0].cover_image,
+      thumbNail: searchResults.data.results[0].thumb,
       artistName: response.artists[0].name,
       genre: response.genres[0],
       style: response.styles[0],
@@ -71,5 +73,3 @@ const bulkGetAlbumDetails = (array) => {
 };
 
 bulkGetAlbumDetails(albumArray);
-
-// module.exports = realData;

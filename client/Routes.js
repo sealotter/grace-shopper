@@ -35,8 +35,10 @@ class Routes extends Component {
           {albums.map((x, i) => {
             return (
               <li key={i}>
-                <img src={x.albumArt}></img>
-                {x.albumName}, {x.artistName}
+                <div>
+                  {x.albumName}, {x.artistName}
+                </div>
+                <img src={x.thumbNail}></img>
               </li>
             );
           })}
