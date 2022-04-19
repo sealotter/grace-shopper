@@ -13,3 +13,4 @@ const store = createStore(reducer, middleware);
 
 export default store;
 export * from './auth';
+export * from './albums';
