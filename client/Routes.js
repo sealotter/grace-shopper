@@ -1,9 +1,11 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { withRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { withRouter, Route, Switch, Redirect, Link } from 'react-router-dom';
 import { Login, Signup } from './components/AuthForm';
 import Home from './components/Home';
 import { me, loadAlbums } from './store';
+import AlbumList from './components/AlbumList';
+import AlbumDetail from './components/AlbumDetail';
 
 /**
  * COMPONENT
@@ -22,7 +24,7 @@ class Routes extends Component {
         {isLoggedIn ? (
           <Switch>
             <Route path="/home" component={Home} />
-            <Redirect to="/home" />
+            {/* <Redirect to="/home" /> */}
           </Switch>
         ) : (
           <Switch>
@@ -31,18 +33,11 @@ class Routes extends Component {
             <Route path="/signup" component={Signup} />
           </Switch>
         )}
-        <ol>
-          {albums.map((x, i) => {
-            return (
-              <li key={i}>
-                <div>
-                  {x.albumName}, {x.artistName}
-                </div>
-                <img src={x.thumbNail}></img>
-              </li>
-            );
-          })}
-        </ol>
+        <Switch>
+          <Route path="/albums/:id" exact component={AlbumDetail} />
+          <Route path="/" component={AlbumList} />
+          <Route path="/home" exact component={AlbumList} />
+        </Switch>
       </div>
     );
   }
