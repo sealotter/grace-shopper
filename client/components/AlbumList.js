@@ -1,21 +1,28 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link, useLocation } from 'react-router-dom';
+import AlbumDetail from './AlbumDetail';
 
-const AlbumList = ({ albums }) => {
+const AlbumList = (props) => {
   // console.log(props);
+  const { albums } = props;
   return (
-    <ol>
-      {albums.map((album, i) => {
-        return (
-          <li key={album.id}>
-            <div>
-              {album.albumName}, {album.artistName}
-            </div>
-            <img src={album.thumbNail}></img>
-          </li>
-        );
-      })}
-    </ol>
+    <div>
+      <ol>
+        {albums.map((album) => {
+          return (
+            <li key={album.id}>
+              <div>
+                {album.albumName}, {album.artistName}
+              </div>
+              <Link to={`/albums/${album.id}`}>
+                <img src={album.thumbNail}></img>
+              </Link>
+            </li>
+          );
+        })}
+      </ol>
+    </div>
   );
 };
 
