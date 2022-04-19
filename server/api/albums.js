@@ -1,5 +1,3 @@
-//this route was for testing, can probably be removed
-
 const router = require('express').Router();
 const axios = require('axios');
 const {
@@ -15,6 +13,7 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+//this route was for testing, can probably be removed
 const artist = 'The Clash';
 const title = 'London Calling';
 router.get('/test', async (req, res) => {

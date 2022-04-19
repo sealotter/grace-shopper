@@ -20,10 +20,10 @@ async function seed() {
     User.create({ username: 'cody', password: '123' }),
     User.create({ username: 'murphy', password: '123' }),
   ]);
-  const albums = await Album.bulkCreate(testData);
+  // const albums = await Album.bulkCreate(realData);
 
   console.log(`seeded ${users.length} users`);
-  console.log(`seeded ${albums.length} albums`);
+  // console.log(`seeded ${albums.length} albums`);
   console.log(`seeded successfully`);
   return {
     users: {
