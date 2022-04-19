@@ -31,7 +31,10 @@ const Album = db.define('album', {
     allowNull: true,
   },
   trackList: {
-    type: Sequelize.STRING,
+    type: Sequelize.ARRAY({
+      //this JSON datatype might need to be changed later
+      type: Sequelize.JSON,
+    }),
     allowNull: true,
   },
   rating: {

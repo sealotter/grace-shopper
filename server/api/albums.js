@@ -1,3 +1,5 @@
+//this route was for testing, can probably be removed
+
 const router = require('express').Router();
 const axios = require('axios');
 const {
