@@ -26,6 +26,6 @@ const db = new Sequelize(
   config
 );
 
-console.log('databaseName: ', databaseName);
+// console.log('databaseName: ', databaseName);
 
 module.exports = db;
