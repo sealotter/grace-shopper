@@ -4,7 +4,6 @@ import { Link, useLocation } from 'react-router-dom';
 import AlbumDetail from './AlbumDetail';
 
 const AlbumList = (props) => {
-  // console.log(props);
   const { albums } = props;
   return (
     <div>

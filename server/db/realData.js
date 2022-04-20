@@ -4,9 +4,9 @@ const Album = require('./models/Album');
 const getAlbumDetails = async (artist, title) => {
   try {
     const searchResults = await axios.get(
-      `https://api.discogs.com/database/search?q=artist=${artist}&title=${title}&key=${process.env.DISCOGS_KEY}&secret=${process.env.DISCOGS_SECRET}`
+      `https://api.discogs.com/database/search?q=artist=${artist}&title=${title}&page=1&per_page=1&key=${process.env.DISCOGS_KEY}&secret=${process.env.DISCOGS_SECRET}`
     );
-    // console.log(searchResults.data.results[0].thumb);
+    console.log(searchResults.data);
     const response = (
       await axios.get(searchResults.data.results[0].resource_url)
     ).data;
@@ -72,4 +72,42 @@ const bulkGetAlbumDetails = (array) => {
   }
 };
 
-bulkGetAlbumDetails(albumArray);
+// bulkGetAlbumDetails(albumArray);
+
+const getAlbumsByGenre = async (genre) => {
+  try {
+    const rawData = await axios.get(
+      `https://api.discogs.com/database/search?q=&genre=${genre}&page=1&per_page=22&key=${process.env.DISCOGS_KEY}&secret=${process.env.DISCOGS_SECRET}`
+    );
+    const searchResults = rawData.data.results;
+    // console.log(searchResults);
+    for (let i = 0; i < searchResults.length; i++) {
+      const response = (await axios.get(searchResults[i].resource_url)).data;
+      console.log(response);
+      const album = {
+        // format: response.formats[0].name,
+        albumName: response.title,
+        albumArt: searchResults[i].cover_image,
+        thumbNail: searchResults[i].thumb,
+        artistName: response.artists[0].name,
+        genre: response.genres[0],
+        style: response.styles[0],
+        year: response.year,
+        price: response.lowest_price,
+        albumDetails: response.notes,
+        trackList: response.tracklist.map((x) => {
+          return { track: x.position, title: x.title };
+        }),
+        rating: response.community.rating.average,
+        availableInventory: response.num_for_sale,
+      };
+      if (album) {
+        await Album.create({ ...album });
+      }
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+getAlbumsByGenre('Electronic');

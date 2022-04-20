@@ -4,7 +4,7 @@ const {
   db,
   models: { User, Album },
 } = require('../server/db');
-const testData = require('../server/db/testData');
+// const testData = require('../server/db/testData');
 const realData = require('../server/db/realData');
 
 /**
