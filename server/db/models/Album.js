@@ -22,6 +22,10 @@ const Album = db.define('album', {
     type: Sequelize.STRING,
     allowNull: true,
   },
+  style: {
+    type: Sequelize.STRING,
+    allowNull: true,
+  },
   year: {
     type: Sequelize.STRING,
     allowNull: true,

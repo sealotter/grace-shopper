@@ -16,8 +16,8 @@ const getAlbumsByStyle = async (style, num = 16) => {
           secret: process.env.DISCOGS_SECRET,
         },
       });
-      // console.log(response);
       const detail = response.data;
+      console.log(detail);
       const album = {
         // format: detail.formats[0].name,
         albumName: detail.title,
@@ -124,7 +124,7 @@ const slowRoll = (array) => {
 };
 
 //----------------use this function for testing----------
-getAlbumsByStyle('Jazz', 5);
+getAlbumsByStyle('Pop', 5);
 
 //----------------this is the full seed method-----------
 //-------it takes like an hour bc rate limiting on the api
