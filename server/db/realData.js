@@ -9,24 +9,31 @@ const getAlbumsByStyle = async (style, num = 16) => {
     const searchResults = rawData.data.results;
     // console.log(searchResults[0]);
     for (let i = 0; i < searchResults.length; i++) {
-      const response = (await axios.get(searchResults[i].resource_url)).data;
-      // console.log(response);
+      const response = await axios.get(searchResults[i].resource_url, {
+        //need to figure out how to authorize this request
+        headers: {
+          key: process.env.DISCOGS_KEY,
+          secret: process.env.DISCOGS_SECRET,
+        },
+      });
+      console.log(response);
+      const detail = response.data;
       const album = {
-        // format: response.formats[0].name,
-        albumName: response.title,
+        // format: detail.formats[0].name,
+        albumName: detail.title,
         albumArt: searchResults[i].cover_image,
         thumbNail: searchResults[i].thumb,
-        artistName: response.artists[0].name,
-        genre: response.genres[0],
-        style: response.styles[0],
-        year: response.year,
-        price: response.lowest_price,
-        albumDetails: response.notes,
-        trackList: response.tracklist.map((x) => {
+        artistName: detail.artists[0].name,
+        genre: detail.genres[0],
+        style: detail.styles[0],
+        year: detail.year,
+        price: detail.lowest_price,
+        albumDetails: detail.notes,
+        trackList: detail.tracklist.map((x) => {
           return { track: x.position, title: x.title };
         }),
-        rating: response.community ? response.community.rating.average : 0,
-        availableInventory: response.num_for_sale,
+        rating: detail.community ? detail.community.rating.average : 0,
+        availableInventory: detail.num_for_sale,
       };
       // console.log(album);
       if (album) {
@@ -108,15 +115,14 @@ const slowRoll = (array) => {
   );
   for (let i = 0; i < array.length; i++) {
     setTimeout(() => {
-      // console.log(`~~~~~~${array[i]} seeded~~~~~`);
       getAlbumsByStyle(array[i]);
     }, 61001 * i);
   }
 };
 
 //----------------use this function for testing----------
-getAlbumsByStyle('Punk', 10);
+getAlbumsByStyle('Grunge', 3);
 
 //----------------this is the full seed method-----------
-//----------------it takes like an hour bc rate limiting on the api
+//-------it takes like an hour bc rate limiting on the api
 // slowRoll(styleList);
