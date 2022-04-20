@@ -16,7 +16,7 @@ const getAlbumsByStyle = async (style, num = 16) => {
           secret: process.env.DISCOGS_SECRET,
         },
       });
-      console.log(response);
+      // console.log(response);
       const detail = response.data;
       const album = {
         // format: detail.formats[0].name,
@@ -29,8 +29,8 @@ const getAlbumsByStyle = async (style, num = 16) => {
         year: detail.year,
         price: detail.lowest_price,
         albumDetails: detail.notes,
-        trackList: detail.tracklist.map((x) => {
-          return { track: x.position, title: x.title };
+        trackList: detail.tracklist.map((track) => {
+          return { position: track.position, title: track.title };
         }),
         rating: detail.community ? detail.community.rating.average : 0,
         availableInventory: detail.num_for_sale,
@@ -40,13 +40,16 @@ const getAlbumsByStyle = async (style, num = 16) => {
         await Album.create({ ...album });
       }
     }
-    console.log(`~~~seeded ${style} genre: ${num} albums`);
+    console.log(`~~~seeded ${num} albums in the ${style} genre~~~`);
   } catch (error) {
     console.log(error.response.data);
   }
 };
 
 const styleList = [
+  'Rock',
+  'Hip Hop',
+  'Reggae',
   'Pop Rock',
   'Blues Rock',
   'Hard Rock',
@@ -121,7 +124,7 @@ const slowRoll = (array) => {
 };
 
 //----------------use this function for testing----------
-getAlbumsByStyle('Grunge', 3);
+getAlbumsByStyle('Jazz', 5);
 
 //----------------this is the full seed method-----------
 //-------it takes like an hour bc rate limiting on the api
