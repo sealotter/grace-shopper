@@ -11,8 +11,10 @@ const LineItem = require('./models/LineItem');
 
 Cart.belongsTo(User);
 User.hasMany(Cart);
+
 LineItem.belongsTo(Cart);
 Cart.hasMany(LineItem);
+
 LineItem.belongsTo(Album);
 Album.hasMany(LineItem);
 
