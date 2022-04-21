@@ -47,6 +47,7 @@ const Album = db.define('album', {
   },
   rating: {
     type: Sequelize.FLOAT,
+    defaultValue: 0,
     allowNull: true,
   },
   availableInventory: {

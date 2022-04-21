@@ -29,7 +29,9 @@ const AlbumDetail = ({ albums, match }) => {
             Community Rating:{' '}
             {album.rating ? `${album.rating} / 5` : 'unavilable'}
           </div>
-          <div>Current Price: ${album.price}</div>
+          <div>
+            Current Price: {album.price ? `$${album.price}` : 'unavailable'}
+          </div>
           <div>Available Inventory: {album.availableInventory}</div>
         </div>
       ) : (

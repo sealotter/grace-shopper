@@ -130,11 +130,9 @@ const slowRoll = (array, delay = 61000) => {
 };
 
 //----------------use this function for testing----------
-getAlbumsByStyle('Rock', 5);
+getAlbumsByStyle('Hip Hop', 10);
+// getAlbumsByStyle('Rock', 5);
 getAlbumsByStyle('Pop', 5);
-getAlbumsByStyle('Hip Hop', 5);
-getAlbumsByStyle('Electronic', 5);
-getAlbumsByStyle('Jazz', 5);
 
 //----------------this is the full seed method-----------
 //-------it takes like an hour bc rate limiting on the api
