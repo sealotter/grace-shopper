@@ -5,7 +5,7 @@ const LineItem = db.define('lineItem', {
     quantity: {
         type: Sequelize.INTEGER
     },
-    price: {
+    total: {
         type: Sequelize.INTEGER,
         allowNull: false,
         validate: {

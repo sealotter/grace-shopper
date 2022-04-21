@@ -32,12 +32,12 @@ async function seed() {
     Cart.create({ isPurchased: false }),
     ]);
 
-    cart1.userId = janaeE.id; // 3
-    cart2.userId = codyP.id; //  1
-    cart3.userId = murphyM.id; // 5
-    cart4.userId = lisaK.id; // 4
-    cart5.userId = annaK.id; // 2
-    cart6.userId = ericR.id; // 6
+    cart1.userId = janaeE.id; 
+    cart2.userId = codyP.id; 
+    cart3.userId = murphyM.id; 
+    cart4.userId = lisaK.id; 
+    cart5.userId = annaK.id; 
+    cart6.userId = ericR.id; 
 
     await Promise.all([
       cart1.save(),
@@ -49,9 +49,6 @@ async function seed() {
     ]);
 
   const albums = await Album.bulkCreate(testData);
-
-
-
 
   //console.log(`seeded ${users.length} users`);
   console.log(`seeded ${albums.length} albums`);
