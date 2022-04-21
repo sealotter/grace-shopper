@@ -17,7 +17,7 @@ const getAlbumsByStyle = async (style, num = 16) => {
         },
       });
       const detail = response.data;
-      console.log(detail);
+      // console.log(detail);
       const album = {
         // format: detail.formats[0].name,
         albumName: detail.title,
@@ -47,84 +47,94 @@ const getAlbumsByStyle = async (style, num = 16) => {
 };
 
 const styleList = [
-  'Rock',
-  'Hip Hop',
+  // 'Rock',
+  // 'Pop',
+  // 'Hip Hop',
+  // 'Electronic',
+  // 'Jazz',
   'Reggae',
+  'Blues',
+  'Latin',
   'Pop Rock',
   'Blues Rock',
-  'Hard Rock',
-  'Rock & Roll',
+  'House',
+  'Rhythm & Blues',
   'Psychedelic Rock',
-  'Prog Rock',
-  'Folk Rock',
-  'Soft Rock',
-  'Country Rock',
-  'Arena Rock',
-  'Glam',
+  'Grunge',
+  'New Wave',
+  'Punk',
   'Alternative Rock',
-  'Ballad',
+  'Funk',
   'Soul',
-  'Art Rock',
   'Acoustic',
   'Southern Rock',
-  'Synth-pop',
   'Soundtrack',
   'Disco',
   'Heavy Metal',
-  'Symphonic Rock',
-  'Vocal',
-  'Rhythm & Blues',
-  'AOR',
-  'New Wave',
-  'Funk',
-  'Jazz-Rock',
-  'Garage Rock',
-  'Indie Rock',
-  'Punk',
-  'Beat',
-  'Power Pop',
-  'Experimental',
-  'Folk',
-  'Mod',
-  'Electric Blues',
-  'Chanson',
-  'Country',
-  'Stoner Rock',
-  'Interview',
-  'Europop',
-  'Fusion',
-  'Rockabilly',
-  'Acid Rock',
-  'House',
-  'Avantgarde',
-  'Schlager',
   'Surf',
-  'Grunge',
-  'Easy Listening',
-  'Public Broadcast',
-  'Modern Classical',
-  'Downtempo',
-  'RnB/Swing',
-  'Electro',
-  'Euro House',
-  'Ambient',
-  'Reggae-Pop',
-  'Theme',
+  // 'Arena Rock',
+  // 'Glam',
+  // 'Synth-pop',
+  // 'Hard Rock',
+  // 'Vocal',
+  // 'Folk Rock',
+  // 'Prog Rock',
+  // 'AOR',
+  // 'Country Rock',
+  // 'Symphonic Rock',
+  // 'Jazz-Rock',
+  // 'Garage Rock',
+  // 'Ballad',
+  // 'Art Rock',
+  // 'Indie Rock',
+  // 'Beat',
+  // 'Experimental',
+  // 'Folk',
+  // 'Mod',
+  // 'Electric Blues',
+  // 'Soft Rock',
+  // 'Country',
+  // 'Stoner Rock',
+  // 'Interview',
+  // 'Europop',
+  // 'Rock & Roll',
+  // 'Fusion',
+  // 'Rockabilly',
+  // 'Acid Rock',
+  // 'Avantgarde',
+  // 'Schlager',
+  // 'Chanson',
+  // 'Easy Listening',
+  // 'Public Broadcast',
+  // 'Modern Classical',
+  // 'Downtempo',
+  // 'RnB/Swing',
+  // 'Electro',
+  // 'Euro House',
+  // 'Ambient',
+  // 'Reggae-Pop',
+  // 'Theme',
 ];
 
-const slowRoll = (array) => {
+const slowRoll = (array, delay = 61000) => {
   console.log(
-    `~~~This seed function will take ${array.length} minutes to complete. Good luck.~~~`
+    `~~~This seed function will take ~${
+      array.length * Math.floor(delay / 60000)
+    } minutes to complete. Good luck.~~~`
   );
   for (let i = 0; i < array.length; i++) {
     setTimeout(() => {
       getAlbumsByStyle(array[i]);
-    }, 61001 * i);
+    }, delay * i);
   }
 };
 
 //----------------use this function for testing----------
+getAlbumsByStyle('Rock', 5);
 getAlbumsByStyle('Pop', 5);
+getAlbumsByStyle('Hip Hop', 5);
+getAlbumsByStyle('Electronic', 5);
+getAlbumsByStyle('Jazz', 5);
 
 //----------------this is the full seed method-----------
 //-------it takes like an hour bc rate limiting on the api
