@@ -2,12 +2,19 @@ const axios = require('axios');
 const Album = require('./models/Album');
 
 const getAlbumsByStyle = async (style, num = 16) => {
+  let count = 0;
   try {
     const rawData = await axios.get(
       `https://api.discogs.com/database/search?q=&style=${style}&page=1&per_page=${num}&key=${process.env.DISCOGS_KEY}&secret=${process.env.DISCOGS_SECRET}`
     );
+    console.log(`---search for: {genre: ${style}}, ${num} albums---`);
+    // for (const header in rawData.headers) {
+    //   if (header.indexOf('ratelimit') !== -1) {
+    //     console.log(header, rawData.headers[header]);
+    //   }
+    // }
     const searchResults = rawData.data.results;
-    // console.log(searchResults[0]);
+    // console.log(searchResults[0].resource_url);
     for (let i = 0; i < searchResults.length; i++) {
       const response = await axios.get(searchResults[i].resource_url, {
         //need to figure out how to authorize this request
@@ -16,8 +23,15 @@ const getAlbumsByStyle = async (style, num = 16) => {
           secret: process.env.DISCOGS_SECRET,
         },
       });
+
+      // console.log('detail call-------------------');
+      // for (const header in response.headers) {
+      //   if (header.indexOf('ratelimit') !== -1) {
+      //     console.log(header, response.headers[header]);
+      //   }
+      // }
+
       const detail = response.data;
-      // console.log(detail);
       const album = {
         // format: detail.formats[0].name,
         albumName: detail.title,
@@ -38,40 +52,41 @@ const getAlbumsByStyle = async (style, num = 16) => {
       // console.log(album);
       if (album) {
         await Album.create({ ...album });
+        count++;
       }
     }
-    console.log(`~~~seeded ${num} albums in the ${style} genre~~~`);
+    console.log(`~~~seeded ${count} albums in the ${style} genre~~~`);
   } catch (error) {
-    console.log(error.response.data);
+    console.log(error.response.data.message, `${count} albums seeded.`);
   }
 };
 
 const styleList = [
-  // 'Rock',
-  // 'Pop',
-  // 'Hip Hop',
-  // 'Electronic',
-  // 'Jazz',
+  'Rock',
+  'Pop',
+  'Hip Hop',
+  'Electronic',
+  'Jazz',
   'Reggae',
   'Blues',
   'Latin',
-  'Pop Rock',
+  'Grunge',
   'Blues Rock',
   'House',
   'Rhythm & Blues',
-  'Psychedelic Rock',
-  'Grunge',
-  'New Wave',
-  'Punk',
-  'Alternative Rock',
-  'Funk',
-  'Soul',
-  'Acoustic',
-  'Southern Rock',
-  'Soundtrack',
-  'Disco',
-  'Heavy Metal',
-  'Surf',
+  // 'Pop Rock',
+  // 'New Wave',
+  // 'Punk',
+  // 'Alternative Rock',
+  // 'Funk',
+  // 'Soul',
+  // 'Acoustic',
+  // 'Southern Rock',
+  // 'Soundtrack',
+  // 'Disco',
+  // 'Heavy Metal',
+  // 'Surf',
+  // 'Psychedelic Rock',
   // 'Arena Rock',
   // 'Glam',
   // 'Synth-pop',
@@ -116,24 +131,27 @@ const styleList = [
   // 'Theme',
 ];
 
-const slowRoll = (array, delay = 61000) => {
+const slowRoll = (array, delay = 30000) => {
   console.log(
-    `~~~This seed function will take ~${
-      array.length * Math.floor(delay / 60000)
-    } minutes to complete. Good luck.~~~`
+    `~~~This seed function will take ${(
+      (array.length * delay) /
+      1000 /
+      60
+    ).toFixed(1)} minutes to complete. Good luck.~~~`
   );
   for (let i = 0; i < array.length; i++) {
     setTimeout(() => {
-      getAlbumsByStyle(array[i]);
+      getAlbumsByStyle(array[i], 9);
     }, delay * i);
   }
 };
 
-//----------------use this function for testing----------
-getAlbumsByStyle('Hip Hop', 10);
-// getAlbumsByStyle('Rock', 5);
-getAlbumsByStyle('Pop', 5);
+//--------featured album load--------
+const graceAlbums = [];
 
-//----------------this is the full seed method-----------
-//-------it takes like an hour bc rate limiting on the api
-// slowRoll(styleList);
+//----------------use this function for testing----------
+// getAlbumsByStyle('Hip Hop', 3);
+
+//-------this is the full seed method---------------------
+//-------it takes a long time bc rate limiting on the api
+slowRoll(styleList);
