@@ -1,5 +1,7 @@
 'use strict';
 
+const albumSeed = require('../server/db/albumSeed');
+
 const {
   db,
   models: { User, Album },
@@ -66,8 +68,12 @@ async function seed() {
       address: '2210 Petunia Way, Birmingham, AL 35209',
     }),
   ]);
-
-  console.log(`seeded ${users.length} users`);
+  try {
+    await Album.bulkCreate(albumSeed);
+  } catch (error) {
+    console.log(error.errors);
+  }
+  console.log(`seeded ${users.length} users and ${albumSeed.length} albums`);
   return {
     users: {
       cody: users[0],
