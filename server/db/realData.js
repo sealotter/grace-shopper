@@ -1,6 +1,12 @@
 const axios = require('axios');
 const Album = require('./models/Album');
 
+/*
+this whole file is mad to get the seed data from discogs.com. After getting the seed data, it must be manually copy+pasted into ./albumSeed. It can be deleted if absolutely necessary, but it's probably better to leave it so we can run it again if we have to.
+*/
+
+//LEAVE THE COMMENTED PARTS OF THIS FUNCTION ALONE
+//without these tests, it's very hard to track down a rate limit glitch
 const getAlbumsByStyle = async (style, num = 16) => {
   let count = 0;
   try {
@@ -57,7 +63,11 @@ const getAlbumsByStyle = async (style, num = 16) => {
     }
     console.log(`~~~seeded ${count} albums in the ${style} genre~~~`);
   } catch (error) {
-    console.log(error.response.data.message, `${count} albums seeded.`);
+    if (error.response.data.message) {
+      console.log(error.response.data.message, `${count} albums seeded.`);
+    } else {
+      console.log(error);
+    }
   }
 };
 
@@ -74,61 +84,61 @@ const styleList = [
   'Blues Rock',
   'House',
   'Rhythm & Blues',
-  // 'Pop Rock',
-  // 'New Wave',
-  // 'Punk',
-  // 'Alternative Rock',
-  // 'Funk',
-  // 'Soul',
-  // 'Acoustic',
-  // 'Southern Rock',
-  // 'Soundtrack',
-  // 'Disco',
-  // 'Heavy Metal',
-  // 'Surf',
-  // 'Psychedelic Rock',
-  // 'Arena Rock',
-  // 'Glam',
-  // 'Synth-pop',
-  // 'Hard Rock',
-  // 'Vocal',
-  // 'Folk Rock',
-  // 'Prog Rock',
-  // 'AOR',
-  // 'Country Rock',
-  // 'Symphonic Rock',
-  // 'Jazz-Rock',
-  // 'Garage Rock',
-  // 'Ballad',
-  // 'Art Rock',
-  // 'Indie Rock',
-  // 'Beat',
-  // 'Experimental',
-  // 'Folk',
-  // 'Mod',
-  // 'Electric Blues',
-  // 'Soft Rock',
-  // 'Country',
-  // 'Stoner Rock',
-  // 'Interview',
-  // 'Europop',
-  // 'Rock & Roll',
-  // 'Fusion',
-  // 'Rockabilly',
-  // 'Acid Rock',
-  // 'Avantgarde',
-  // 'Schlager',
-  // 'Chanson',
-  // 'Easy Listening',
-  // 'Public Broadcast',
-  // 'Modern Classical',
-  // 'Downtempo',
-  // 'RnB/Swing',
-  // 'Electro',
-  // 'Euro House',
-  // 'Ambient',
-  // 'Reggae-Pop',
-  // 'Theme',
+  'Pop Rock',
+  'New Wave',
+  'Punk',
+  'Alternative Rock',
+  'Funk',
+  'Soul',
+  'Acoustic',
+  'Southern Rock',
+  'Soundtrack',
+  'Disco',
+  'Heavy Metal',
+  'Surf',
+  'Psychedelic Rock',
+  'Arena Rock',
+  'Glam',
+  'Synth-pop',
+  'Hard Rock',
+  'Vocal',
+  'Folk Rock',
+  'Prog Rock',
+  'AOR',
+  'Country Rock',
+  'Symphonic Rock',
+  'Jazz-Rock',
+  'Garage Rock',
+  'Ballad',
+  'Art Rock',
+  'Indie Rock',
+  'Beat',
+  'Experimental',
+  'Folk',
+  'Mod',
+  'Electric Blues',
+  'Soft Rock',
+  'Country',
+  'Stoner Rock',
+  'Interview',
+  'Europop',
+  'Rock & Roll',
+  'Fusion',
+  'Rockabilly',
+  'Acid Rock',
+  'Avantgarde',
+  'Schlager',
+  'Chanson',
+  'Easy Listening',
+  'Public Broadcast',
+  'Modern Classical',
+  'Downtempo',
+  'RnB/Swing',
+  'Electro',
+  'Euro House',
+  'Ambient',
+  'Reggae-Pop',
+  'Theme',
 ];
 
 const slowRoll = (array, delay = 30000) => {
@@ -146,12 +156,9 @@ const slowRoll = (array, delay = 30000) => {
   }
 };
 
-//--------featured album load--------
-const graceAlbums = [];
-
 //----------------use this function for testing----------
-// getAlbumsByStyle('Hip Hop', 3);
+// getAlbumsByStyle('African', 9);
 
 //-------this is the full seed method---------------------
 //-------it takes a long time bc rate limiting on the api
-slowRoll(styleList);
+// slowRoll(styleList);
