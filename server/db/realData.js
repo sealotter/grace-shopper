@@ -1,70 +1,157 @@
-const app = require('../app');
 const axios = require('axios');
-const res = require('express/lib/response');
+const Album = require('./models/Album');
 
-const sampleData = async () => {
+const getAlbumsByStyle = async (style, num = 16) => {
+  let count = 0;
   try {
-    const response = (
-      await axios.get(`https://api.discogs.com/releases/8928025`)
-    ).data;
-    // console.log(response);
-    const album = {
-      //format included for sorting purposes
-      format: response.formats[0].name,
-      albumName: response.title,
-      albumArt: 'authorization required',
-      artistName: response.artists[0].name,
-      genre: response.genres[0],
-      style: response.styles[0],
-      year: response.year,
-      price: response.lowest_price,
-      albumDetails: response.notes,
-      trackList: response.tracklist.map((x) => {
-        return { track: x.position, title: x.title };
-      }),
-      rating: response.community.rating.average,
-      availableInventory: response.num_for_sale,
-    };
-    // console.log(album);
-    return album;
-  } catch (error) {
-    console.log(error.code);
-  }
-};
-
-const getAlbumDetails = async (artist, title) => {
-  try {
-    const searchResults = await axios.get(
-      `https://api.discogs.com/database/search?q=artist=${artist}&title=${title}&key=${process.env.DISCOGS_KEY}&secret=${process.env.DISCOGS_SECRET}`
+    const rawData = await axios.get(
+      `https://api.discogs.com/database/search?q=&style=${style}&page=1&per_page=${num}&key=${process.env.DISCOGS_KEY}&secret=${process.env.DISCOGS_SECRET}`
     );
-    // const response = (
-    //   await axios.get(searchResults.data.results[0].resource_url)
-    // ).data;
-    const album = {
-      // format: response.formats[0].name,
-      // albumName: response.title,
-      albumArt: searchResults.data.results[0].cover_image,
-      // artistName: response.artists[0].name,
-      // genre: response.genres[0],
-      // style: response.styles[0],
-      // year: response.year,
-      // price: response.lowest_price,
-      // albumDetails: response.notes,
-      // trackList: response.tracklist.map((x) => {
-      //   return { track: x.position, title: x.title };
-      // }),
-      // rating: response.community.rating.average,
-      // availableInventory: response.num_for_sale,
-    };
-    console.log('--within trycatch--', album);
-    return album;
+    console.log(`---search for: {genre: ${style}}, ${num} albums---`);
+    // for (const header in rawData.headers) {
+    //   if (header.indexOf('ratelimit') !== -1) {
+    //     console.log(header, rawData.headers[header]);
+    //   }
+    // }
+    const searchResults = rawData.data.results;
+    // console.log(searchResults[0].resource_url);
+    for (let i = 0; i < searchResults.length; i++) {
+      const response = await axios.get(searchResults[i].resource_url, {
+        //need to figure out how to authorize this request
+        headers: {
+          key: process.env.DISCOGS_KEY,
+          secret: process.env.DISCOGS_SECRET,
+        },
+      });
+
+      // console.log('detail call-------------------');
+      // for (const header in response.headers) {
+      //   if (header.indexOf('ratelimit') !== -1) {
+      //     console.log(header, response.headers[header]);
+      //   }
+      // }
+
+      const detail = response.data;
+      const album = {
+        // format: detail.formats[0].name,
+        albumName: detail.title,
+        albumArt: searchResults[i].cover_image,
+        thumbNail: searchResults[i].thumb,
+        artistName: detail.artists[0].name,
+        genre: detail.genres[0],
+        style: detail.styles[0],
+        year: detail.year,
+        price: detail.lowest_price,
+        albumDetails: detail.notes,
+        trackList: detail.tracklist.map((track) => {
+          return { position: track.position, title: track.title };
+        }),
+        rating: detail.community ? detail.community.rating.average : 0,
+        availableInventory: detail.num_for_sale,
+      };
+      // console.log(album);
+      if (album) {
+        await Album.create({ ...album });
+        count++;
+      }
+    }
+    console.log(`~~~seeded ${count} albums in the ${style} genre~~~`);
   } catch (error) {
-    console.log(error);
+    console.log(error.response.data.message, `${count} albums seeded.`);
   }
 };
 
-// const realData = getAlbumDetails('The Clash', 'London Calling');
-// console.log('return value--------', realData);
-// console.log(sampleData());
+const styleList = [
+  'Rock',
+  'Pop',
+  'Hip Hop',
+  'Electronic',
+  'Jazz',
+  'Reggae',
+  'Blues',
+  'Latin',
+  'Grunge',
+  'Blues Rock',
+  'House',
+  'Rhythm & Blues',
+  // 'Pop Rock',
+  // 'New Wave',
+  // 'Punk',
+  // 'Alternative Rock',
+  // 'Funk',
+  // 'Soul',
+  // 'Acoustic',
+  // 'Southern Rock',
+  // 'Soundtrack',
+  // 'Disco',
+  // 'Heavy Metal',
+  // 'Surf',
+  // 'Psychedelic Rock',
+  // 'Arena Rock',
+  // 'Glam',
+  // 'Synth-pop',
+  // 'Hard Rock',
+  // 'Vocal',
+  // 'Folk Rock',
+  // 'Prog Rock',
+  // 'AOR',
+  // 'Country Rock',
+  // 'Symphonic Rock',
+  // 'Jazz-Rock',
+  // 'Garage Rock',
+  // 'Ballad',
+  // 'Art Rock',
+  // 'Indie Rock',
+  // 'Beat',
+  // 'Experimental',
+  // 'Folk',
+  // 'Mod',
+  // 'Electric Blues',
+  // 'Soft Rock',
+  // 'Country',
+  // 'Stoner Rock',
+  // 'Interview',
+  // 'Europop',
+  // 'Rock & Roll',
+  // 'Fusion',
+  // 'Rockabilly',
+  // 'Acid Rock',
+  // 'Avantgarde',
+  // 'Schlager',
+  // 'Chanson',
+  // 'Easy Listening',
+  // 'Public Broadcast',
+  // 'Modern Classical',
+  // 'Downtempo',
+  // 'RnB/Swing',
+  // 'Electro',
+  // 'Euro House',
+  // 'Ambient',
+  // 'Reggae-Pop',
+  // 'Theme',
+];
 
-// module.exports = realData;
+const slowRoll = (array, delay = 30000) => {
+  console.log(
+    `~~~This seed function will take ${(
+      (array.length * delay) /
+      1000 /
+      60
+    ).toFixed(1)} minutes to complete. Good luck.~~~`
+  );
+  for (let i = 0; i < array.length; i++) {
+    setTimeout(() => {
+      getAlbumsByStyle(array[i], 9);
+    }, delay * i);
+  }
+};
+
+//--------featured album load--------
+const graceAlbums = [];
+
+//----------------use this function for testing----------
+// getAlbumsByStyle('Hip Hop', 3);
+
+//-------this is the full seed method---------------------
+//-------it takes a long time bc rate limiting on the api
+slowRoll(styleList);
