@@ -22,10 +22,11 @@ router.get('/search', async (req, res, next) => {
   try {
     // console.log(req.query);
     const rawData = await axios.get(
-      `https://api.discogs.com/database/search?q=&${req.query.style}&page=1&per_page=10&key=${DISCOGS_KEY}&secret=${DISCOGS_SECRET}`
+      `https://api.discogs.com/database/search?q=&${req.query.style}&page=1&per_page=5&key=${DISCOGS_KEY}&secret=${DISCOGS_SECRET}`
     );
     const searchResults = rawData.data.results;
-    console.log(searchResults);
+    // console.log(searchResults);
+    const output = [];
     for (let i = 0; i < searchResults.length; i++) {
       const response = await axios.get(searchResults[i].resource_url);
       const detail = response.data;
@@ -51,9 +52,10 @@ router.get('/search', async (req, res, next) => {
       // console.log(album);
       if (album) {
         await Album.create({ ...album });
+        output.push(album);
       }
     }
-    res.send('heck');
+    res.send(output);
   } catch (error) {
     next(error);
   }
