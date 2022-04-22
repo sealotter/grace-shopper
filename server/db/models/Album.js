@@ -2,6 +2,11 @@ const Sequelize = require('sequelize');
 const db = require('../db');
 
 const Album = db.define('album', {
+  id: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
   albumName: {
     type: Sequelize.STRING,
     allowNull: true,
