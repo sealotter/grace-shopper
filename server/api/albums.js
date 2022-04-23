@@ -54,21 +54,16 @@ router.get('/search', async (req, res, next) => {
         try {
           await Album.create({ ...album });
         } catch (error) {
-          console.log(
-            `album ${error.parameters[1]} by ${error.parameters[4]} already exists in DB`
-          );
+          const params = error.original.parameters;
+          console.log(`album ${params[1]} by ${params[4]} already exists`);
+          res.status(409);
         }
         output.push(album);
       }
     }
     res.send(output);
   } catch (error) {
-    if (error.name === 'SequelizeUniqueConstraintError') {
-      console.log('unique key violation: no data added');
-      res.sendStatus(409);
-    } else {
-      next(error);
-    }
+    next(error);
   }
 });
 
