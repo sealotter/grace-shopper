@@ -1,11 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { loadAlbums } from '../store/albums';
 import Cart from './Cart';
+
 /**
  * COMPONENT
  */
-export const Home = ({ auth, albums, loadAlbums }) => {
+export const Home = ({ auth }) => {
   return (
     <div>
       <h3>Welcome, {auth.username}</h3>

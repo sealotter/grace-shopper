@@ -10,6 +10,10 @@ const Album = db.define('album', {
     type: Sequelize.STRING,
     allowNull: true,
   },
+  thumbNail: {
+    type: Sequelize.STRING,
+    allowNull: true,
+  },
   artistName: {
     type: Sequelize.STRING,
     allowNull: true,
@@ -18,12 +22,16 @@ const Album = db.define('album', {
     type: Sequelize.STRING,
     allowNull: true,
   },
+  style: {
+    type: Sequelize.STRING,
+    allowNull: true,
+  },
   year: {
     type: Sequelize.STRING,
     allowNull: true,
   },
   price: {
-    type: Sequelize.FLOAT,
+    type: Sequelize.DECIMAL(10, 2),
     allowNull: true,
   },
   albumDetails: {
@@ -31,11 +39,15 @@ const Album = db.define('album', {
     allowNull: true,
   },
   trackList: {
-    type: Sequelize.STRING,
+    type: Sequelize.ARRAY({
+      //this JSON datatype might need to be changed later
+      type: Sequelize.JSON,
+    }),
     allowNull: true,
   },
   rating: {
     type: Sequelize.FLOAT,
+    defaultValue: 0,
     allowNull: true,
   },
   availableInventory: {

@@ -1,10 +1,12 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { withRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { withRouter, Route, Switch, Redirect, Link } from 'react-router-dom';
 import { Login, Signup } from './components/AuthForm';
 import Home from './components/Home';
 import Cart from './components/Cart';
 import { me, loadAlbums } from './store';
+import AlbumList from './components/AlbumList';
+import AlbumDetail from './components/AlbumDetail';
 
 /**
  * COMPONENT
@@ -21,6 +23,7 @@ class Routes extends Component {
     return (
       <div>
         {isLoggedIn ? (
+
           <Switch>
             <Route path="/home" component={Home} />
             <Route path="/cart" component={Cart} />
@@ -34,15 +37,10 @@ class Routes extends Component {
             <Route path="/cart" component={Cart} />
           </Switch>
         )}
-        <ol>
-          {albums.map((x, i) => {
-            return (
-              <li key={i}>
-                {x.albumName}, {x.artistName}
-              </li>
-            );
-          })}
-        </ol>
+        <Switch>
+          <Route path="/albums/:id" component={AlbumDetail} />
+          <Route path="/" component={AlbumList} />
+        </Switch>
       </div>
     );
   }

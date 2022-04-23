@@ -1,10 +1,12 @@
 'use strict';
 
+const albumSeed = require('../server/db/albumSeed');
+
 const {
   db,
   models: { User, Album, Cart, LineItem }, 
 } = require('../server/db');
-const testData = require('../server/db/testData');
+// const testData = require('../server/db/testData');
 const realData = require('../server/db/realData');
 
 /**
@@ -64,12 +66,19 @@ async function seed() {
   // Create Albums
 
   const albums = await Album.bulkCreate(testData);
-
+    
+   try {
+    await Album.bulkCreate(albumSeed);
+  } catch (error) {
+    console.log(error.errors);
+  }
+  
 // ------------
-
+  //console.log(`seeded ${users.length} users and ${albumSeed.length} albums`);
   console.log(`seeded ${users.length} users`);
   console.log(`seeded ${albums.length} albums`);
   console.log(`seeded successfully`);
+
   return {
     users: {
       cody: User[0],
