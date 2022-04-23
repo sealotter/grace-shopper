@@ -1,5 +1,5 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React from "react";
+import { connect } from "react-redux";
 
 /**
  * COMPONENT
@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 export const Home = ({ auth }) => {
   return (
     <div>
-      <h3>Welcome, {auth.username}</h3>
+      <h3>Welcome, {auth.firstName}</h3>
     </div>
   );
 };
