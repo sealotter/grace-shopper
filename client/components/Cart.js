@@ -5,6 +5,7 @@ const Cart = () => {
     return (
         <div>
             Add Cart Here
+            <hr />
         </div>
     )
 }
