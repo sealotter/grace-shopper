@@ -21,12 +21,12 @@ async function seed() {
   // Create Users
 
   const users = [
-    { username: 'cody', password: '123', firstName: 'Cody', lastName: 'Perez', email: 'perez.cody@gmail.com', address: '3095 Ridenour Street, San Francisco, CA 33323'},
-    { username: 'murphy', password: '123', firstName: 'Murphy', lastName: 'Miller', email: 'miller.murphy@gmail.com', address: '434 Stroop Hill Road, Atlanta, GA 30310'},
-    { username: 'janae', password: '123', firstName: 'Janae', lastName: 'Edwards', email: 'edwards.janae@gmail.com', address: '46 Hollis Lane Willingboro, NJ 08046'},
-    { username: 'lisa', password: '123', firstName: 'Lisa', lastName: 'Knox', email: 'knox.lisa@gmail.com', address: '4088 Elk Creek Road Duluth, GA 30136'},
-    { username: 'anna', password: '123', firstName: 'Anna', lastName: 'Kohler', email: 'kohler.anna@gmail.com', address: '4095 Hilltop Street Bernardstown, MA 01337'},
-    { username: 'eric', password: '123', firstName: 'Eric', lastName: 'Rodgers', email: 'rodgers.eric@gmail.com', address: '2210 Petunia Way, Birmingham, AL 35209'},
+    { username: 'cody', password: '123', firstName: 'Cody', lastName: 'Perez', email: 'perez.cody@gmail.com', address: '3095 Ridenour Street, San Francisco, CA 33323', isAdmin: false},
+    { username: 'murphy', password: '123', firstName: 'Murphy', lastName: 'Miller', email: 'miller.murphy@gmail.com', address: '434 Stroop Hill Road, Atlanta, GA 30310', isAdmin: false},
+    { username: 'janae', password: '123', firstName: 'Janae', lastName: 'Edwards', email: 'edwards.janae@gmail.com', address: '46 Hollis Lane Willingboro, NJ 08046', isAdmin: false},
+    { username: 'lisa', password: '123', firstName: 'Lisa', lastName: 'Knox', email: 'knox.lisa@gmail.com', address: '4088 Elk Creek Road Duluth, GA 30136', isAdmin: false},
+    { username: 'anna', password: '123', firstName: 'Anna', lastName: 'Kohler', email: 'kohler.anna@gmail.com', address: '4095 Hilltop Street Bernardstown, MA 01337', isAdmin: true},
+    { username: 'eric', password: '123', firstName: 'Eric', lastName: 'Rodgers', email: 'rodgers.eric@gmail.com', address: '2210 Petunia Way, Birmingham, AL 35209', isAdmin: false},
   ];
   const [codyP, murphyM, janaeE, lisaK, annaK, ericR] = await Promise.all(
     users.map( user => User.create({ 
@@ -35,7 +35,8 @@ async function seed() {
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
-      address: user.address
+      address: user.address,
+      isAdmin: user.isAdmin
     }))
   );
 
@@ -50,33 +51,33 @@ async function seed() {
     Cart.create({ userId: ericR.id, isPurchased: false }),
   ]);
   
-  // Create LineItems: How to add albumIds here? 
-
-  const lineItems = await Promise.all([
-    LineItem.create({ cartId: 1, quantity: 1 }),
-    LineItem.create({ cartId: 1, quantity: 1 }),
-    LineItem.create({ cartId: 2, quantity: 2 }),
-    LineItem.create({ cartId: 2, quantity: 2 }),
-    LineItem.create({ cartId: 3, quantity: 2 }),
-    LineItem.create({ cartId: 4, quantity: 2 }),
-    LineItem.create({ cartId: 5, quantity: 2 }),
-    LineItem.create({ cartId: 6, quantity: 2 }),
-  ]);
-  
   // Create Albums
 
-  const albums = await Album.bulkCreate(testData);
+  //const albums = await Album.bulkCreate(testData);
     
    try {
     await Album.bulkCreate(albumSeed);
   } catch (error) {
     console.log(error.errors);
   }
-  
+
+   // Create LineItems:
+
+  const lineItems = await Promise.all([
+    LineItem.create({ cartId: 1, albumId: 1, quantity: 1 }),
+    LineItem.create({ cartId: 1, albumId: 14, quantity: 1 }),
+    LineItem.create({ cartId: 2, albumId: 2, quantity: 2 }),
+    LineItem.create({ cartId: 2, albumId: 59, quantity: 2 }),
+    LineItem.create({ cartId: 3, albumId: 122, quantity: 2 }),
+    LineItem.create({ cartId: 4, albumId: 7, quantity: 2 }),
+    LineItem.create({ cartId: 5, albumId: 18, quantity: 1 }),
+    LineItem.create({ cartId: 6, albumId: 300, quantity: 2 }),
+  ]);
+
 // ------------
   //console.log(`seeded ${users.length} users and ${albumSeed.length} albums`);
   console.log(`seeded ${users.length} users`);
-  console.log(`seeded ${albums.length} albums`);
+  console.log(`seeded ${albumSeed.length} albums`);
   console.log(`seeded successfully`);
 
   return {
@@ -88,7 +89,7 @@ async function seed() {
 }
 catch(ex){
   console.log(ex)
-} 
+  } 
 }
 
 /*
