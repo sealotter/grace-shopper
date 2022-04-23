@@ -6,6 +6,7 @@ import Home from './components/Home';
 import { me, loadAlbums } from './store';
 import AlbumList from './components/AlbumList';
 import AlbumDetail from './components/AlbumDetail';
+import AlbumSearch from './components/AlbumSearch';
 
 /**
  * COMPONENT
@@ -17,7 +18,7 @@ class Routes extends Component {
   }
 
   render() {
-    const { isLoggedIn, albums } = this.props;
+    const { isLoggedIn } = this.props;
 
     return (
       <div>
@@ -41,6 +42,7 @@ class Routes extends Component {
           </div>
         )}
         <Switch>
+          <Route path="/albums/search" component={AlbumSearch} />
           <Route path="/albums/:id" component={AlbumDetail} />
           <Route path="/" component={AlbumList} />
         </Switch>

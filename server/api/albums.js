@@ -32,8 +32,8 @@ router.get('/search', async (req, res, next) => {
       const detail = response.data;
       // console.log('>>>', detail.id);
       const album = {
-        // format: detail.formats[0].name,
-        id: detail.id,
+        //GO BACK AND REMAKE SEED FILE WITH DISCOGS ID NUMBERS
+        id: detail.id + 600,
         albumName: detail.title,
         albumArt: searchResults[i].cover_image,
         thumbNail: searchResults[i].thumb,
@@ -51,13 +51,24 @@ router.get('/search', async (req, res, next) => {
       };
       // console.log(album);
       if (album) {
-        await Album.create({ ...album });
+        try {
+          await Album.create({ ...album });
+        } catch (error) {
+          console.log(
+            `album ${error.parameters[1]} by ${error.parameters[4]} already exists in DB`
+          );
+        }
         output.push(album);
       }
     }
     res.send(output);
   } catch (error) {
-    next(error);
+    if (error.name === 'SequelizeUniqueConstraintError') {
+      console.log('unique key violation: no data added');
+      res.sendStatus(409);
+    } else {
+      next(error);
+    }
   }
 });
 
