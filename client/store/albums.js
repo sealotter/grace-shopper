@@ -3,6 +3,7 @@ import axios from 'axios';
 
 //constants------------------------------
 const LOAD_ALBUMS = 'LOAD_ALBUMS';
+const ALBUM_SEARCH = 'ALBUM_SEARCH';
 
 //thunks---------------------------------
 export const loadAlbums = () => {

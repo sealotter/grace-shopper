@@ -24,7 +24,6 @@ class Routes extends Component {
     return (
       <div>
         {isLoggedIn ? (
-
           <Switch>
             <Route path="/home" component={Home} />
             <Route path="/cart" component={Cart} />
