@@ -5,7 +5,17 @@ import { albumSearch } from '../store';
 class AlbumSearch extends React.Component {
   constructor() {
     super();
+    this.state = {
+      searchResults: [],
+    };
     this.handleOnClick = this.handleOnClick.bind(this);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.albums.length && prevProps !== this.props) {
+      console.log(this.props.albums);
+      // this.setState({searchResults: xxx})
+    }
   }
 
   handleOnClick(ev) {
@@ -17,6 +27,7 @@ class AlbumSearch extends React.Component {
     return (
       <div>
         <button onClick={this.handleOnClick}>press me</button>
+        <div></div>
       </div>
     );
   }
@@ -30,4 +41,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(AlbumSearch);
+export default connect((state) => state, mapDispatchToProps)(AlbumSearch);
