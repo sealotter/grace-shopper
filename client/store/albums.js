@@ -3,6 +3,7 @@ import axios from 'axios';
 
 //constants------------------------------
 const LOAD_ALBUMS = 'LOAD_ALBUMS';
+const ALBUM_SEARCH = 'ALBUM_SEARCH';
 
 //thunks---------------------------------
 export const loadAlbums = () => {
@@ -16,11 +17,24 @@ export const loadAlbums = () => {
   };
 };
 
+export const albumSearch = (searchString) => {
+  return async (dispatch) => {
+    try {
+      const albums = (await axios.get(`/api/albums/search`, searchString)).data;
+      dispatch({ type: ALBUM_SEARCH, albums });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
 //reducer-------------------------------
 const albums = (state = [], action) => {
   switch (action.type) {
     case LOAD_ALBUMS:
       return action.albums;
+    case ALBUM_SEARCH:
+      return state.concat(action.albums);
 
     default:
       return state;
