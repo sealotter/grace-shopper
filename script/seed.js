@@ -65,8 +65,7 @@ async function seed() {
 
   const albums = await Album.bulkCreate(testData);
 
-
-
+// ------------
 
   console.log(`seeded ${users.length} users`);
   console.log(`seeded ${albums.length} albums`);

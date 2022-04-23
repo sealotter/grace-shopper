@@ -1,10 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import LineItems from './LineItems';
 
 const Cart = () => {
     return (
         <div>
-            Add Cart Here
+            Shopping Cart:
+            <LineItems />
             <hr />
         </div>
     )
