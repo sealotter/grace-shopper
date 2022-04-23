@@ -16,41 +16,59 @@ async function seed() {
   await db.sync({ force: true }); // clears db and matches models to tables
   console.log('db synced!');
 
-  // Creating Users
-  const [codyP, murphyM, janaeE, lisaK, annaK, ericR, cart1, cart2, cart3, cart4, cart5, cart6] = await Promise.all([
-    User.create({ username: 'cody', password: '123', firstName: 'Cody', lastName: 'Perez', email: 'perez.cody@gmail.com', address: '3095 Ridenour Street, San Francisco, CA 33323'}),
-    User.create({ username: 'murphy', password: '123', firstName: 'Murphy', lastName: 'Miller', email: 'miller.murphy@gmail.com', address: '434 Stroop Hill Road, Atlanta, GA 30310'}),
-    User.create({ username: 'janae', password: '123', firstName: 'Janae', lastName: 'Edwards', email: 'edwards.janae@gmail.com', address: '46 Hollis Lane Willingboro, NJ 08046'}),
-    User.create({ username: 'lisa', password: '123', firstName: 'Lisa', lastName: 'Knox', email: 'knox.lisa@gmail.com', address: '4088 Elk Creek Road Duluth, GA 30136'}),
-    User.create({ username: 'anna', password: '123', firstName: 'Anna', lastName: 'Kohler', email: 'kohler.anna@gmail.com', address: '4095 Hilltop Street Bernardstown, MA 01337'}),
-    User.create({ username: 'eric', password: '123', firstName: 'Eric', lastName: 'Rodgers', email: 'rodgers.eric@gmail.com', address: '2210 Petunia Way, Birmingham, AL 35209'}),
-    Cart.create({ isPurchased: true }),
-    Cart.create({ isPurchased: true }),
-    Cart.create({ isPurchased: false }),
-    Cart.create({ isPurchased: false }),
-    Cart.create({ isPurchased: false }),
-    Cart.create({ isPurchased: false }),
-    ]);
+  // Create Users
 
-    cart1.userId = janaeE.id; 
-    cart2.userId = codyP.id; 
-    cart3.userId = murphyM.id; 
-    cart4.userId = lisaK.id; 
-    cart5.userId = annaK.id; 
-    cart6.userId = ericR.id; 
+  const users = [
+    { username: 'cody', password: '123', firstName: 'Cody', lastName: 'Perez', email: 'perez.cody@gmail.com', address: '3095 Ridenour Street, San Francisco, CA 33323'},
+    { username: 'murphy', password: '123', firstName: 'Murphy', lastName: 'Miller', email: 'miller.murphy@gmail.com', address: '434 Stroop Hill Road, Atlanta, GA 30310'},
+    { username: 'janae', password: '123', firstName: 'Janae', lastName: 'Edwards', email: 'edwards.janae@gmail.com', address: '46 Hollis Lane Willingboro, NJ 08046'},
+    { username: 'lisa', password: '123', firstName: 'Lisa', lastName: 'Knox', email: 'knox.lisa@gmail.com', address: '4088 Elk Creek Road Duluth, GA 30136'},
+    { username: 'anna', password: '123', firstName: 'Anna', lastName: 'Kohler', email: 'kohler.anna@gmail.com', address: '4095 Hilltop Street Bernardstown, MA 01337'},
+    { username: 'eric', password: '123', firstName: 'Eric', lastName: 'Rodgers', email: 'rodgers.eric@gmail.com', address: '2210 Petunia Way, Birmingham, AL 35209'},
+  ];
+  const [codyP, murphyM, janaeE, lisaK, annaK, ericR] = await Promise.all(
+    users.map( user => User.create({ 
+      username: user.username,
+      password: user.password,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      address: user.address
+    }))
+  );
 
-    await Promise.all([
-      cart1.save(),
-      cart2.save(),
-      cart3.save(),
-      cart4.save(),
-      cart5.save(),
-      cart6.save()
-    ]);
+  // Create Carts  
+ 
+  const carts = await Promise.all([
+    Cart.create({ userId: codyP.id, isPurchased: false }),
+    Cart.create({ userId: murphyM.id, isPurchased: false }),
+    Cart.create({ userId: janaeE.id, isPurchased: false }),
+    Cart.create({ userId: lisaK.id, isPurchased: false }),
+    Cart.create({ userId: annaK.id, isPurchased: false }),
+    Cart.create({ userId: ericR.id, isPurchased: false }),
+  ]);
+  
+  // Create LineItems: How to add albumIds here? 
+
+  const lineItems = await Promise.all([
+    LineItem.create({ cartId: 1, quantity: 1 }),
+    LineItem.create({ cartId: 1, quantity: 1 }),
+    LineItem.create({ cartId: 2, quantity: 2 }),
+    LineItem.create({ cartId: 2, quantity: 2 }),
+    LineItem.create({ cartId: 3, quantity: 2 }),
+    LineItem.create({ cartId: 4, quantity: 2 }),
+    LineItem.create({ cartId: 5, quantity: 2 }),
+    LineItem.create({ cartId: 6, quantity: 2 }),
+  ]);
+  
+  // Create Albums
 
   const albums = await Album.bulkCreate(testData);
 
-  //console.log(`seeded ${users.length} users`);
+
+
+
+  console.log(`seeded ${users.length} users`);
   console.log(`seeded ${albums.length} albums`);
   console.log(`seeded successfully`);
   return {
