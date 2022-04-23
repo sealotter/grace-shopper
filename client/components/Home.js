@@ -1,5 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { loadAlbums } from '../store/albums';
+import Cart from './Cart';
 
 /**
  * COMPONENT

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter, Route, Switch, Redirect, Link } from 'react-router-dom';
 import { Login, Signup } from './components/AuthForm';
 import Home from './components/Home';
+import Cart from './components/Cart';
 import { me, loadAlbums } from './store';
 import AlbumList from './components/AlbumList';
 import AlbumDetail from './components/AlbumDetail';
@@ -22,23 +23,19 @@ class Routes extends Component {
     return (
       <div>
         {isLoggedIn ? (
-          <div>
-            {/* <Switch> */}
-            <Home />
-            {/* <Route path="/home" component={Home} /> */}
-            {/* <Redirect to="/home" /> */}
-            {/* </Switch> */}
-          </div>
+
+          <Switch>
+            <Route path="/home" component={Home} />
+            <Route path="/cart" component={Cart} />
+            <Redirect to="/home" />
+          </Switch>
         ) : (
-          <div>
-            <Switch>
-              <Login />
-              <Signup />
-              {/* <Route path="/" exact component={Login} /> */}
-              {/* <Route path="/login" component={Login} /> */}
-              {/* <Route path="/signup" component={Signup} /> */}
-            </Switch>
-          </div>
+          <Switch>
+            <Route path="/" exact component={Login} />
+            <Route path="/login" component={Login} />
+            <Route path="/signup" component={Signup} />
+            <Route path="/cart" component={Cart} />
+          </Switch>
         )}
         <Switch>
           <Route path="/albums/:id" component={AlbumDetail} />

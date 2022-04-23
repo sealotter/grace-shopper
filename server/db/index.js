@@ -9,13 +9,14 @@ const LineItem = require('./models/LineItem');
 
 //associations -----------
 
-Cart.belongsTo(User);
-User.hasMany(Cart);
+Cart.belongsTo(User); //, {as: 'buyer'}
+User.hasMany(Cart); // , {foreignKey: 'buyerId'}
+
 LineItem.belongsTo(Cart);
 Cart.hasMany(LineItem);
+
 LineItem.belongsTo(Album);
 Album.hasMany(LineItem);
-
 
 
 module.exports = {
