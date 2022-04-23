@@ -7,14 +7,15 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
   <div>
     <Link to="/home">
       <h1>Grace Vinyls</h1>
-      <h1>{process.env.HELLO_WORLD}</h1>
     </Link>
     <nav>
       {isLoggedIn ? (
         <div>
           {/* The navbar will show these links after you log in */}
           <Link to="/home">Home</Link>
-          <a href="#" onClick={handleClick}>Logout</a>
+          <a href="#" onClick={handleClick}>
+            Logout
+          </a>
           <Link to="/cart">Cart(0)</Link>
         </div>
       ) : (
@@ -31,7 +32,6 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
           <Link to="/cart">Cart(0)</Link>
         </div>
       )}
-      
     </nav>
     <hr />
   </div>
