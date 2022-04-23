@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { albumSearch } from '../store';
 
 class AlbumSearch extends React.Component {
   constructor() {
@@ -9,7 +10,7 @@ class AlbumSearch extends React.Component {
 
   handleOnClick(ev) {
     ev.preventDefault();
-    console.log('clicked');
+    this.props.albumSearch();
   }
 
   render() {
@@ -21,4 +22,12 @@ class AlbumSearch extends React.Component {
   }
 }
 
-export default connect()(AlbumSearch);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    albumSearch: (searchString) => {
+      return dispatch(albumSearch(searchString));
+    },
+  };
+};
+
+export default connect(null, mapDispatchToProps)(AlbumSearch);

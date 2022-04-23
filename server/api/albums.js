@@ -16,13 +16,13 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-// curl -G localhost:8080/api/albums/search -d "style=Funk"
+// curl -G localhost:8080/api/albums/search -d "style=style=Funk"
 
-router.get('/search', async (req, res, next) => {
+router.post('/search', async (req, res, next) => {
   try {
-    // console.log(req.query);
+    console.log('QUERY>>>', req.body);
     const rawData = await axios.get(
-      `https://api.discogs.com/database/search?q=&${req.query.style}&page=1&per_page=5&key=${DISCOGS_KEY}&secret=${DISCOGS_SECRET}`
+      `https://api.discogs.com/database/search?q=&${req.body.query}&page=1&per_page=5&key=${DISCOGS_KEY}&secret=${DISCOGS_SECRET}`
     );
     const searchResults = rawData.data.results;
     // console.log(searchResults);
@@ -58,7 +58,7 @@ router.get('/search', async (req, res, next) => {
             // error.original.parameters
             `album ${error.original.parameters[1]} by ${error.original.parameters[4]} already exists`
           );
-          res.status(409);
+          res.status(201);
         }
         output.push(album);
       }
