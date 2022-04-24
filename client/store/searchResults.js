@@ -2,6 +2,7 @@ import axios from 'axios';
 
 //ACTIONS------------------------
 const ALBUM_SEARCH = 'ALBUM_SEARCH';
+const ADD_ALBUMS = 'ADD_ALBUMS';
 
 //Thunks-------------------------
 export const albumSearch = (searchString) => {
@@ -10,9 +11,11 @@ export const albumSearch = (searchString) => {
       const albums = await axios.post('/api/albums/search', {
         query: 'style=Funk',
       });
+      // console.log('STATUS: ', albums.status);
       if (albums.status === 201) {
-        dispatch({ type: ALBUM_SEARCH, albums: albums.data });
+        dispatch({ type: ADD_ALBUMS, albums: albums.data });
       }
+      dispatch({ type: ALBUM_SEARCH, albums: albums.data });
     } catch (error) {
       console.log(error);
     }
@@ -24,6 +27,7 @@ const searchResults = (state = [], action) => {
   if (action.type === ALBUM_SEARCH) {
     return action.albums;
   }
+  return state;
 };
 
 export default searchResults;

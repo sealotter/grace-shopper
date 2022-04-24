@@ -118,7 +118,6 @@ async function seed() {
     }
 
     // ------------
-    //console.log(`seeded ${users.length} users and ${albumSeed.length} albums`);
     console.log(`seeded ${users.length} users`);
     console.log(`seeded ${albumSeed.length} albums`);
     console.log(`seeded successfully`);
