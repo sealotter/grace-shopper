@@ -3,8 +3,6 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { albumSearch } from '../store';
 
-//genre dropdown, style dropdown, artistName field, albumName field, track name field
-
 class AlbumSearch extends React.Component {
   constructor() {
     super();
@@ -14,12 +12,34 @@ class AlbumSearch extends React.Component {
       artist: '',
       title: '',
       track: '',
+      genres: [
+        'Rock',
+        'Electronic',
+        'Hip Hop',
+        'Folk',
+        'Country',
+        'Jazz',
+        'Funk',
+        'Soul',
+        'Pop',
+        'Latin',
+        'Classical',
+        'Reggae',
+        'Blues',
+        'Stage & Screen',
+      ],
+      styles: [],
     };
     this.handleOnClick = this.handleOnClick.bind(this);
     this.handleOnChange = this.handleOnChange.bind(this);
+    this.handleOnSelect = this.handleOnSelect.bind(this);
   }
 
   handleOnChange(ev) {
+    this.setState({ [ev.target.name]: ev.target.value });
+  }
+
+  handleOnSelect(ev) {
     this.setState({ [ev.target.name]: ev.target.value });
   }
 
@@ -32,6 +52,7 @@ class AlbumSearch extends React.Component {
 
   render() {
     const { searchResults } = this.props;
+    const { genres } = this.state;
     return (
       <div>
         <form>
@@ -39,18 +60,20 @@ class AlbumSearch extends React.Component {
             name="genre"
             placeholder="genre"
             value={this.state.genre}
-            onChange={this.handleOnChange}
+            onChange={this.handleOnSelect}
           >
-            <option>select genre</option>
+            {genres.map((genre, i) => {
+              return <option key={i}>{genre}</option>;
+            })}
           </select>
-          <select
+          {/* <select
             name="style"
             placeholder="style"
             value={this.state.style}
             onChange={this.handleOnChange}
           >
             <option>select style</option>
-          </select>
+          </select> */}
           <input
             name="artist"
             placeholder="artist"

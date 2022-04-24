@@ -40,7 +40,7 @@ router.post('/search', async (req, res, next) => {
         artistName: detail.artists[0].name,
         genre: detail.genres[0],
         style: detail.styles ? detail.styles[0] : null,
-        year: detail.year,
+        year: detail.year ? detail.year : 'date unknown',
         price: detail.lowest_price,
         albumDetails: detail.notes,
         trackList: detail.tracklist.map((track) => {
