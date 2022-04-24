@@ -6,6 +6,7 @@ import { albumSearch } from '../store';
 class AlbumSearch extends React.Component {
   constructor() {
     super();
+
     this.state = {
       genre: 'Rock',
       style: '',
@@ -41,10 +42,12 @@ class AlbumSearch extends React.Component {
 
   handleOnSelect(ev) {
     this.setState({ [ev.target.name]: ev.target.value });
+
   }
 
   handleOnClick(ev) {
     ev.preventDefault();
+
     const { genre, style, artist, title, track } = this.state;
     const searchString = `&genre=${genre}&style=${style}&artist=${artist}&title=${title}&track=${track}`;
     this.props.albumSearch(searchString);

@@ -3,7 +3,9 @@ import axios from 'axios';
 
 //constants------------------------------
 const LOAD_ALBUMS = 'LOAD_ALBUMS';
+
 const ADD_ALBUMS = 'ADD_ALBUMS';
+
 
 //thunks---------------------------------
 export const loadAlbums = () => {
@@ -11,6 +13,17 @@ export const loadAlbums = () => {
     try {
       const albums = (await axios.get('/api/albums')).data;
       dispatch({ type: LOAD_ALBUMS, albums });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const albumSearch = (searchString) => {
+  return async (dispatch) => {
+    try {
+      const albums = (await axios.get(`/api/albums/search`, searchString)).data;
+      dispatch({ type: ALBUM_SEARCH, albums });
     } catch (error) {
       console.log(error);
     }

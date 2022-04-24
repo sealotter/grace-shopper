@@ -3,6 +3,7 @@ const axios = require('axios');
 //reomove these at some point
 const DISCOGS_KEY = 'iqaccrEsxevhQaumXCuv';
 const DISCOGS_SECRET = 'egjaWRESFhqAxMEihyVHStXezYVOjqjN';
+//
 const {
   models: { Album },
 } = require('../db');
@@ -56,6 +57,7 @@ router.post('/search', async (req, res, next) => {
         try {
           await Album.create({ ...album });
         } catch (error) {
+
           console.log(
             `album ${error.original.parameters[1]} by ${error.original.parameters[4]} already exists`
           );
