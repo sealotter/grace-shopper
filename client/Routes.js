@@ -27,6 +27,8 @@ class Routes extends Component {
           <Switch>
             <Route path="/home" component={Home} />
             <Route path="/cart" component={Cart} />
+            <Route path="/albums/search" component={AlbumSearch} />
+            <Route path="/albums/:id" component={AlbumDetail} />
             <Redirect to="/home" />
           </Switch>
         ) : (
@@ -35,13 +37,11 @@ class Routes extends Component {
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
             <Route path="/cart" component={Cart} />
+            <Route path="/albums/search" component={AlbumSearch} />
+            <Route path="/albums/:id" component={AlbumDetail} />
           </Switch>
         )}
-        <Switch>
-          <Route path="/albums/search" component={AlbumSearch} />
-          <Route path="/albums/:id" component={AlbumDetail} />
-          <Route path="/" component={AlbumList} />
-        </Switch>
+        <Route path="/" component={AlbumList} />
       </div>
     );
   }

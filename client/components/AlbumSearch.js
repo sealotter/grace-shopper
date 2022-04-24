@@ -7,7 +7,7 @@ class AlbumSearch extends React.Component {
   constructor() {
     super();
     this.state = {
-      genre: '',
+      genre: 'Rock',
       style: '',
       artist: '',
       title: '',

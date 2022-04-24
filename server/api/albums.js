@@ -37,15 +37,17 @@ router.post('/search', async (req, res, next) => {
         albumName: detail.title,
         albumArt: searchResults[i].cover_image,
         thumbNail: searchResults[i].thumb,
-        artistName: detail.artists[0].name,
-        genre: detail.genres[0],
+        artistName: detail.artists ? detail.artists[0].name : 'various artists',
+        genre: detail.genres ? detail.genres[0] : 'unknown',
         style: detail.styles ? detail.styles[0] : null,
         year: detail.year ? detail.year : 'date unknown',
         price: detail.lowest_price,
         albumDetails: detail.notes,
-        trackList: detail.tracklist.map((track) => {
-          return { position: track.position, title: track.title };
-        }),
+        trackList: detail.tracklist
+          ? detail.tracklist.map((track) => {
+              return { position: track.position, title: track.title };
+            })
+          : 'track list unavailable',
         rating: detail.community ? detail.community.rating.average : 0,
         availableInventory: detail.num_for_sale,
       };
