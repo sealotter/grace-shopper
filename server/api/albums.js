@@ -23,7 +23,7 @@ router.post('/search', async (req, res, next) => {
     let statusCode = 201;
     console.log('QUERY>>>', req.body);
     const rawData = await axios.get(
-      `https://api.discogs.com/database/search?q=&${req.body.query}&page=1&per_page=5&key=${DISCOGS_KEY}&secret=${DISCOGS_SECRET}`
+      `https://api.discogs.com/database/search?q=${req.body.query}&page=1&per_page=5&key=${DISCOGS_KEY}&secret=${DISCOGS_SECRET}`
     );
     const searchResults = rawData.data.results;
     // console.log(searchResults);
@@ -31,16 +31,15 @@ router.post('/search', async (req, res, next) => {
     for (let i = 0; i < searchResults.length; i++) {
       const response = await axios.get(searchResults[i].resource_url);
       const detail = response.data;
-      // console.log('>>>', detail.id);
+      // console.log(detail);
       const album = {
-        //GO BACK AND REMAKE SEED FILE WITH DISCOGS ID NUMBERS
         id: detail.id,
         albumName: detail.title,
         albumArt: searchResults[i].cover_image,
         thumbNail: searchResults[i].thumb,
         artistName: detail.artists[0].name,
         genre: detail.genres[0],
-        style: detail.styles[0],
+        style: detail.styles ? detail.styles[0] : null,
         year: detail.year,
         price: detail.lowest_price,
         albumDetails: detail.notes,
@@ -56,7 +55,6 @@ router.post('/search', async (req, res, next) => {
           await Album.create({ ...album });
         } catch (error) {
           console.log(
-            // error.original.parameters
             `album ${error.original.parameters[1]} by ${error.original.parameters[4]} already exists`
           );
           statusCode = 200;

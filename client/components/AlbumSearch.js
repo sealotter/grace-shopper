@@ -13,7 +13,7 @@ class AlbumSearch extends React.Component {
       style: '',
       artist: '',
       title: '',
-      song: '',
+      track: '',
     };
     this.handleOnClick = this.handleOnClick.bind(this);
     this.handleOnChange = this.handleOnChange.bind(this);
@@ -25,7 +25,9 @@ class AlbumSearch extends React.Component {
 
   handleOnClick(ev) {
     ev.preventDefault();
-    this.props.albumSearch('testString');
+    const { genre, style, artist, title, track } = this.state;
+    const searchString = `&genre=${genre}&style=${style}&artist=${artist}&title=${title}&track=${track}`;
+    this.props.albumSearch(searchString);
   }
 
   render() {
@@ -56,15 +58,15 @@ class AlbumSearch extends React.Component {
             onChange={this.handleOnChange}
           ></input>
           <input
-            name="album"
-            placeholder="album"
-            value={this.state.album}
+            name="title"
+            placeholder="album title"
+            value={this.state.title}
             onChange={this.handleOnChange}
           ></input>
           <input
-            name="song"
+            name="track"
             placeholder="song"
-            value={this.state.song}
+            value={this.state.track}
             onChange={this.handleOnChange}
           ></input>
           <button onClick={this.handleOnClick}>submit</button>

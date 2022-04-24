@@ -6,10 +6,11 @@ const ADD_ALBUMS = 'ADD_ALBUMS';
 
 //Thunks-------------------------
 export const albumSearch = (searchString) => {
+  console.log(searchString);
   return async (dispatch) => {
     try {
       const albums = await axios.post('/api/albums/search', {
-        query: 'style=Classical',
+        query: searchString,
       });
       // console.log('STATUS: ', albums.status);
       if (albums.status === 201) {
