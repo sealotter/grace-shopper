@@ -9,7 +9,7 @@ export const albumSearch = (searchString) => {
   return async (dispatch) => {
     try {
       const albums = await axios.post('/api/albums/search', {
-        query: 'style=Funk',
+        query: 'style=Classical',
       });
       // console.log('STATUS: ', albums.status);
       if (albums.status === 201) {
