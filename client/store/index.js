@@ -4,8 +4,9 @@ import thunkMiddleware from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import auth from './auth';
 import albums from './albums';
+import carts from './carts';
 
-const reducer = combineReducers({ auth, albums });
+const reducer = combineReducers({ auth, albums, carts });
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({ collapsed: false }))
 );
@@ -14,3 +15,4 @@ const store = createStore(reducer, middleware);
 export default store;
 export * from './auth';
 export * from './albums';
+export * from './carts';
