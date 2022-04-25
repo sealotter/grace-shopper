@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // constants ---------
 
-const LOAD_CART = 'GET_CART';
+const GET_CART = 'GET_CART';
 
 // thunks -----------
 
@@ -15,7 +15,6 @@ export const getCart = () => {
                     authorization: token
                 }
             });
-            //console.log(dispatch)
             dispatch({ type: 'GET_CART', carts: response.data})
         }
     }

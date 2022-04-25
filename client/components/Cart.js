@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import LineItems from './LineItems';
 
-const Cart = ({ carts }) => {
+const Cart = ({ carts, lineItems }) => {
     console.log(carts)
     return (
         <div>
