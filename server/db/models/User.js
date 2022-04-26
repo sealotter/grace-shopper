@@ -34,6 +34,9 @@ const User = db.define("user", {
   address: {
     type: Sequelize.STRING,
   },
+  isAdmin: {
+    type: Sequelize.BOOLEAN
+  }
 });
 
 module.exports = User;
@@ -64,9 +67,12 @@ User.authenticate = async function ({ username, password }) {
 };
 
 User.findByToken = async function (token) {
+  console.log(token)
   try {
+    //console.log("LOOK HERE", id)
     const { id } = await jwt.verify(token, process.env.JWT);
-    const user = User.findByPk(id);
+    
+    const user = await User.findByPk(id);
     if (!user) {
       throw "nooo";
     }

@@ -36,9 +36,7 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
           <Link to="/cart">Cart(0)</Link>
         </div>
       )}
-
       <Link to="/albums/search">Search</Link>
-
     </nav>
     <hr />
   </div>

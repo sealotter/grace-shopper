@@ -1,11 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { getLineItems } from '../store/lineItems';
 
-const LineItems = () => {
+const LineItems = ({ lineItems }) => {
     return (
         <div>
-            Line Items Here:
+            Items:
+            <ul>
+                {lineItems.map( lineItem => {
+                    return (
+                        <li key={lineItem.id}> {lineItem.albumId} x {lineItem.quantity} </li>
+                    )
+                })}
+            </ul>
         </div>
     )
 }
-export default connect()(LineItems);
+export default connect((state) => state)(LineItems);

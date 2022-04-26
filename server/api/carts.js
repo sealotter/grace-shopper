@@ -1,9 +1,8 @@
 const router = require('express').Router()
-const { models: { Cart, User }} = require('../db')
+const { models: { Cart, LineItem, User }} = require('../db')
 
 router.get('/', async (req, res, next) => {
     try {
-        // need to identify the user first
         const user = await User.findByToken(req.headers.authorization);
 
         const userCart = await Cart.findAll({

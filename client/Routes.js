@@ -4,7 +4,7 @@ import { withRouter, Route, Switch, Redirect, Link } from 'react-router-dom';
 import { Login, Signup } from './components/AuthForm';
 import Home from './components/Home';
 import Cart from './components/Cart';
-import { me, loadAlbums } from './store';
+import { me, loadAlbums, getCart, getLineItems } from './store';
 import AlbumList from './components/AlbumList';
 import AlbumDetail from './components/AlbumDetail';
 import AlbumSearch from './components/AlbumSearch';
@@ -16,6 +16,15 @@ class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData();
     this.props.loadAlbums();
+    this.props.getLineItems();
+  }
+
+  componentDidUpdate(prevProps) {
+    if(!prevProps.isLoggedIn && this.props.isLoggedIn){
+      console.log("I logged in")
+      this.props.getCart();
+      this.props.getLineItems();
+    }
   }
 
   render() {
@@ -67,6 +76,13 @@ const mapDispatch = (dispatch) => {
     loadAlbums: () => {
       return dispatch(loadAlbums());
     },
+    getCart: () => {
+      console.log('cart')
+      return dispatch(getCart());
+    },
+    getLineItems: () => {
+      return dispatch(getLineItems());
+    }
   };
 };
 
