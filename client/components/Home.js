@@ -1,7 +1,7 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { loadAlbums } from '../store/albums';
-import Cart from './Cart';
+import React from "react";
+import { connect } from "react-redux";
+import { loadAlbums } from "../store/albums";
+import Cart from "./Cart";
 
 /**
  * COMPONENT
@@ -9,7 +9,7 @@ import Cart from './Cart';
 export const Home = ({ auth }) => {
   return (
     <div>
-      <h3>Welcome, {auth.username}</h3>
+      <h3>Welcome, {auth.firstName}</h3>
     </div>
   );
 };

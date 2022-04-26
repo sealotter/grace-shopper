@@ -1,13 +1,15 @@
-'use strict';
+"use strict";
 
-const albumSeed = require('../server/db/albumSeed');
+const albumSeed = require("../server/db/albumSeed");
 
 const {
   db,
-  models: { User, Album, Cart, LineItem }, 
+  models: { User, Album, Cart, LineItem },
+
 } = require('../server/db');
 // const testData = require('../server/db/testData');
 const realData = require('../server/db/realData');
+
 
 /**
  * seed - this function clears the database, updates tables to
@@ -90,6 +92,7 @@ async function seed() {
 catch(ex){
   console.log(ex)
   } 
+    
 }
 
 /*
@@ -98,16 +101,16 @@ catch(ex){
  The `seed` function is concerned only with modifying the database.
 */
 async function runSeed() {
-  console.log('seeding...');
+  console.log("seeding...");
   try {
     await seed();
   } catch (err) {
     console.error(err);
     process.exitCode = 1;
   } finally {
-    console.log('closing db connection');
+    console.log("closing db connection");
     await db.close();
-    console.log('db connection closed');
+    console.log("db connection closed");
   }
 }
 

@@ -40,6 +40,7 @@ const getAlbumsByStyle = async (style, num = 16) => {
       const detail = response.data;
       const album = {
         // format: detail.formats[0].name,
+        id: detail.id,
         albumName: detail.title,
         albumArt: searchResults[i].cover_image,
         thumbNail: searchResults[i].thumb,
@@ -63,7 +64,7 @@ const getAlbumsByStyle = async (style, num = 16) => {
     }
     console.log(`~~~seeded ${count} albums in the ${style} genre~~~`);
   } catch (error) {
-    if (error.response.data.message) {
+    if (error.response) {
       console.log(error.response.data.message, `${count} albums seeded.`);
     } else {
       console.log(error);
@@ -141,7 +142,7 @@ const styleList = [
   'Theme',
 ];
 
-const slowRoll = (array, delay = 30000) => {
+const slowRoll = (array, delay = 35000) => {
   console.log(
     `~~~This seed function will take ${(
       (array.length * delay) /
