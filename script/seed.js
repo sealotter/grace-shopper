@@ -1,13 +1,15 @@
-'use strict';
+"use strict";
 
-const albumSeed = require('../server/db/albumSeed');
+const albumSeed = require("../server/db/albumSeed");
 
 const {
   db,
   models: { User, Album, Cart, LineItem },
+
 } = require('../server/db');
 // const testData = require('../server/db/testData');
 const realData = require('../server/db/realData');
+
 
 /**
  * seed - this function clears the database, updates tables to
@@ -16,12 +18,15 @@ const realData = require('../server/db/realData');
 async function seed() {
   try {
     await db.sync({ force: true }); // clears db and matches models to tables
+
     console.log('db synced!');
+
 
     // Create Users
 
     const users = [
       {
+
         username: 'cody',
         password: '123',
         firstName: 'Cody',
@@ -68,6 +73,7 @@ async function seed() {
         lastName: 'Rodgers',
         email: 'rodgers.eric@gmail.com',
         address: '2210 Petunia Way, Birmingham, AL 35209',
+
       },
     ];
     const [codyP, murphyM, janaeE, lisaK, annaK, ericR] = await Promise.all(
@@ -109,7 +115,9 @@ async function seed() {
 
     // Create Albums
 
-    // const albums = await Album.bulkCreate(testData);
+
+    const albums = await Album.bulkCreate(realData);
+
 
     try {
       await Album.bulkCreate(albumSeed);
@@ -117,9 +125,10 @@ async function seed() {
       console.log(error.errors);
     }
 
-    // ------------
+
     console.log(`seeded ${users.length} users`);
     console.log(`seeded ${albumSeed.length} albums`);
+
     console.log(`seeded successfully`);
 
     return {
@@ -139,16 +148,16 @@ async function seed() {
  The `seed` function is concerned only with modifying the database.
 */
 async function runSeed() {
-  console.log('seeding...');
+  console.log("seeding...");
   try {
     await seed();
   } catch (err) {
     console.error(err);
     process.exitCode = 1;
   } finally {
-    console.log('closing db connection');
+    console.log("closing db connection");
     await db.close();
-    console.log('db connection closed');
+    console.log("db connection closed");
   }
 }
 

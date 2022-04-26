@@ -78,3 +78,12 @@ Database Setup
 
 
 Now, you should be deployed!
+
+
+## Eric last did
+installed dotenv
+  env variables package 
+
+Removed discogs key and secret moved to env file
+Changed username display to firstname since the username may be something crazy the end user may not want to see. Going forward as a future option if you want the user can also pick a nickname to use that they want displayed.
+Did oauth
