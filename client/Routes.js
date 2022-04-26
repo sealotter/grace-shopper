@@ -14,6 +14,7 @@ import AlbumSearch from './components/AlbumSearch';
  */
 class Routes extends Component {
   componentDidMount() {
+    console.log(this.props);
     this.props.loadInitialData();
     this.props.loadAlbums();
     this.props.getLineItems();
@@ -50,8 +51,10 @@ class Routes extends Component {
             <Route path="/albums/:id" component={AlbumDetail} />
           </Switch>
         )}
-        {/* <Route path="/albums/:id" component={AlbumDetail} /> */}
-        <Route path="/" component={AlbumList} />
+        <Switch>
+          <Route path="/" component={AlbumList} />
+          <Route path="/albums/:id" component={AlbumDetail} />
+        </Switch>
       </div>
     );
   }
@@ -78,7 +81,7 @@ const mapDispatch = (dispatch) => {
       return dispatch(loadAlbums());
     },
     getCart: () => {
-      console.log('cart');
+      // console.log('cart');
       return dispatch(getCart());
     },
     getLineItems: () => {
