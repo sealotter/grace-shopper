@@ -4,7 +4,7 @@ import { withRouter, Route, Switch, Redirect, Link } from 'react-router-dom';
 import { Login, Signup } from './components/AuthForm';
 import Home from './components/Home';
 import Cart from './components/Cart';
-import { me, loadAlbums, getCart } from './store';
+import { me, loadAlbums, getCart, getLineItems } from './store';
 import AlbumList from './components/AlbumList';
 import AlbumDetail from './components/AlbumDetail';
 import AlbumSearch from './components/AlbumSearch';

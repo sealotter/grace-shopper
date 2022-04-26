@@ -10,8 +10,14 @@ export const getLineItems = () => {
     return async(dispatch) => {
         const token = window.localStorage.getItem('token');
         if(token) {
-            const response = await axios.get('/api/')
+            const response = await axios.get('/api/lineItems', {
+                headers: {
+                    authorization: token
+                }
+            });
+            dispatch({ type: GET_ITEMS, lineItems: response.data})
         }
+
     }
 }
 
