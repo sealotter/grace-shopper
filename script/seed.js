@@ -5,9 +5,11 @@ const albumSeed = require("../server/db/albumSeed");
 const {
   db,
   models: { User, Album, Cart, LineItem },
-} = require("../server/db");
-//const testData = require("../server/db/testData");
-const realData = require("../server/db/realData");
+
+} = require('../server/db');
+// const testData = require('../server/db/testData');
+const realData = require('../server/db/realData');
+
 
 /**
  * seed - this function clears the database, updates tables to
@@ -16,58 +18,62 @@ const realData = require("../server/db/realData");
 async function seed() {
   try {
     await db.sync({ force: true }); // clears db and matches models to tables
-    console.log("db synced!");
+
+    console.log('db synced!');
+
 
     // Create Users
 
     const users = [
       {
-        username: "cody",
-        password: "123",
-        firstName: "Cody",
-        lastName: "Perez",
-        email: "perez.cody@gmail.com",
-        address: "3095 Ridenour Street, San Francisco, CA 33323",
+
+        username: 'cody',
+        password: '123',
+        firstName: 'Cody',
+        lastName: 'Perez',
+        email: 'perez.cody@gmail.com',
+        address: '3095 Ridenour Street, San Francisco, CA 33323',
       },
       {
-        username: "murphy",
-        password: "123",
-        firstName: "Murphy",
-        lastName: "Miller",
-        email: "miller.murphy@gmail.com",
-        address: "434 Stroop Hill Road, Atlanta, GA 30310",
+        username: 'murphy',
+        password: '123',
+        firstName: 'Murphy',
+        lastName: 'Miller',
+        email: 'miller.murphy@gmail.com',
+        address: '434 Stroop Hill Road, Atlanta, GA 30310',
       },
       {
-        username: "janae",
-        password: "123",
-        firstName: "Janae",
-        lastName: "Edwards",
-        email: "edwards.janae@gmail.com",
-        address: "46 Hollis Lane Willingboro, NJ 08046",
+        username: 'janae',
+        password: '123',
+        firstName: 'Janae',
+        lastName: 'Edwards',
+        email: 'edwards.janae@gmail.com',
+        address: '46 Hollis Lane Willingboro, NJ 08046',
       },
       {
-        username: "lisa",
-        password: "123",
-        firstName: "Lisa",
-        lastName: "Knox",
-        email: "knox.lisa@gmail.com",
-        address: "4088 Elk Creek Road Duluth, GA 30136",
+        username: 'lisa',
+        password: '123',
+        firstName: 'Lisa',
+        lastName: 'Knox',
+        email: 'knox.lisa@gmail.com',
+        address: '4088 Elk Creek Road Duluth, GA 30136',
       },
       {
-        username: "anna",
-        password: "123",
-        firstName: "Anna",
-        lastName: "Kohler",
-        email: "kohler.anna@gmail.com",
-        address: "4095 Hilltop Street Bernardstown, MA 01337",
+        username: 'anna',
+        password: '123',
+        firstName: 'Anna',
+        lastName: 'Kohler',
+        email: 'kohler.anna@gmail.com',
+        address: '4095 Hilltop Street Bernardstown, MA 01337',
       },
       {
-        username: "eric",
-        password: "123",
-        firstName: "Eric",
-        lastName: "Rodgers",
-        email: "rodgers.eric@gmail.com",
-        address: "2210 Petunia Way, Birmingham, AL 35209",
+        username: 'eric',
+        password: '123',
+        firstName: 'Eric',
+        lastName: 'Rodgers',
+        email: 'rodgers.eric@gmail.com',
+        address: '2210 Petunia Way, Birmingham, AL 35209',
+
       },
     ];
     const [codyP, murphyM, janaeE, lisaK, annaK, ericR] = await Promise.all(
@@ -109,7 +115,9 @@ async function seed() {
 
     // Create Albums
 
+
     const albums = await Album.bulkCreate(realData);
+
 
     try {
       await Album.bulkCreate(albumSeed);
@@ -117,10 +125,10 @@ async function seed() {
       console.log(error.errors);
     }
 
-    // ------------
-    //console.log(`seeded ${users.length} users and ${albumSeed.length} albums`);
+
     console.log(`seeded ${users.length} users`);
-    console.log(`seeded ${albums.length} albums`);
+    console.log(`seeded ${albumSeed.length} albums`);
+
     console.log(`seeded successfully`);
 
     return {

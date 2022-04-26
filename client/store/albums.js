@@ -3,7 +3,9 @@ import axios from 'axios';
 
 //constants------------------------------
 const LOAD_ALBUMS = 'LOAD_ALBUMS';
-const ALBUM_SEARCH = 'ALBUM_SEARCH';
+
+const ADD_ALBUMS = 'ADD_ALBUMS';
+
 
 //thunks---------------------------------
 export const loadAlbums = () => {
@@ -33,9 +35,8 @@ const albums = (state = [], action) => {
   switch (action.type) {
     case LOAD_ALBUMS:
       return action.albums;
-    case ALBUM_SEARCH:
+    case ADD_ALBUMS:
       return state.concat(action.albums);
-
     default:
       return state;
   }
