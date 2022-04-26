@@ -7,7 +7,7 @@ class AlbumSearch extends React.Component {
   constructor() {
     super();
     this.state = {
-      genre: 'Rock',
+      genre: '',
       style: '',
       artist: '',
       title: '',
@@ -56,7 +56,8 @@ class AlbumSearch extends React.Component {
     return (
       <div>
         <form>
-          <select
+          {/* //took out these selectors because I think they are unnecessary */}
+          {/* <select
             name="genre"
             placeholder="genre"
             value={this.state.genre}
@@ -65,7 +66,7 @@ class AlbumSearch extends React.Component {
             {genres.map((genre, i) => {
               return <option key={i}>{genre}</option>;
             })}
-          </select>
+          </select> */}
           {/* <select
             name="style"
             placeholder="style"

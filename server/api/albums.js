@@ -51,14 +51,18 @@ router.post('/search', async (req, res, next) => {
         rating: detail.community ? detail.community.rating.average : 0,
         availableInventory: detail.num_for_sale,
       };
-      // console.log(album);
+      console.log(album);
       if (album) {
         try {
           await Album.create({ ...album });
         } catch (error) {
-          console.log(
-            `album ${error.original.parameters[1]} by ${error.original.parameters[4]} already exists`
-          );
+          if (error.original) {
+            console.log(
+              `album ${error.original.parameters[1]} by ${error.original.parameters[4]} already exists`
+            );
+          } else {
+            console.log(error);
+          }
           statusCode = 200;
         }
         output.push(album);
