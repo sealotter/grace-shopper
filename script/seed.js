@@ -66,14 +66,14 @@ async function seed() {
    // Create LineItems:
 
   const lineItems = await Promise.all([
-    LineItem.create({ cartId: 1, albumId: 1, quantity: 1 }),
-    LineItem.create({ cartId: 1, albumId: 14, quantity: 1 }),
-    LineItem.create({ cartId: 2, albumId: 2, quantity: 2 }),
-    LineItem.create({ cartId: 2, albumId: 59, quantity: 2 }),
-    LineItem.create({ cartId: 3, albumId: 122, quantity: 2 }),
-    LineItem.create({ cartId: 4, albumId: 7, quantity: 2 }),
-    LineItem.create({ cartId: 5, albumId: 18, quantity: 1 }),
-    LineItem.create({ cartId: 6, albumId: 300, quantity: 2 }),
+    LineItem.create({ cartId: 1, albumId: 420645, quantity: 1 }),
+    LineItem.create({ cartId: 1, albumId: 10107979, quantity: 1 }),
+    LineItem.create({ cartId: 2, albumId: 740026, quantity: 2 }),
+    LineItem.create({ cartId: 2, albumId: 745710, quantity: 2 }),
+    LineItem.create({ cartId: 3, albumId: 443102, quantity: 2 }),
+    LineItem.create({ cartId: 4, albumId: 289898, quantity: 2 }),
+    LineItem.create({ cartId: 5, albumId: 1048886, quantity: 1 }),
+    LineItem.create({ cartId: 6, albumId: 96123, quantity: 2 }),
   ]);
 
 // ------------
