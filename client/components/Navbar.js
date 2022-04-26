@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { logout } from '../store';
+import AlbumSearch from './AlbumSearch';
 
 const Navbar = ({ handleClick, isLoggedIn }) => (
   <div>
@@ -13,7 +14,9 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
         <div>
           {/* The navbar will show these links after you log in */}
           <Link to="/home">Home</Link>
-          <a href="#" onClick={handleClick}>Logout</a>
+          <a href="#" onClick={handleClick}>
+            Logout
+          </a>
           <Link to="/cart">Cart(0)</Link>
         </div>
       ) : (
@@ -24,7 +27,7 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
           <Link to="/cart">Cart(0)</Link>
         </div>
       )}
-      
+      <Link to="/albums/search">Search</Link>
     </nav>
     <hr />
   </div>

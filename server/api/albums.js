@@ -17,13 +17,14 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-// curl -G localhost:8080/api/albums/search -d "style=Funk"
+// curl -G localhost:8080/api/albums/search -d "style=style=Funk"
 
-router.get('/search', async (req, res, next) => {
+router.post('/search', async (req, res, next) => {
   try {
-    // console.log(req.query);
+    let statusCode = 201;
+    console.log('QUERY>>>', req.body);
     const rawData = await axios.get(
-      `https://api.discogs.com/database/search?q=&${req.query.style}&page=1&per_page=5&key=${DISCOGS_KEY}&secret=${DISCOGS_SECRET}`
+      `https://api.discogs.com/database/search?q=${req.body.query}&page=1&per_page=5&key=${DISCOGS_KEY}&secret=${DISCOGS_SECRET}`
     );
     const searchResults = rawData.data.results;
     // console.log(searchResults);
@@ -31,38 +32,44 @@ router.get('/search', async (req, res, next) => {
     for (let i = 0; i < searchResults.length; i++) {
       const response = await axios.get(searchResults[i].resource_url);
       const detail = response.data;
-      // console.log('>>>', detail.id);
+      // console.log(detail);
       const album = {
-        //GO BACK AND REMAKE SEED FILE WITH DISCOGS ID NUMBERS
-        id: detail.id + 600,
+        id: detail.id,
         albumName: detail.title,
         albumArt: searchResults[i].cover_image,
         thumbNail: searchResults[i].thumb,
-        artistName: detail.artists[0].name,
-        genre: detail.genres[0],
-        style: detail.styles[0],
-        year: detail.year,
+        artistName: detail.artists ? detail.artists[0].name : 'various artists',
+        genre: detail.genres ? detail.genres[0] : 'unknown',
+        style: detail.styles ? detail.styles[0] : null,
+        year: detail.year ? detail.year : 'date unknown',
         price: detail.lowest_price,
         albumDetails: detail.notes,
-        trackList: detail.tracklist.map((track) => {
-          return { position: track.position, title: track.title };
-        }),
+        trackList: detail.tracklist
+          ? detail.tracklist.map((track) => {
+              return { position: track.position, title: track.title };
+            })
+          : 'track list unavailable',
         rating: detail.community ? detail.community.rating.average : 0,
         availableInventory: detail.num_for_sale,
       };
-      // console.log(album);
+      console.log(album);
       if (album) {
         try {
           await Album.create({ ...album });
         } catch (error) {
-          const params = error.original.parameters;
-          console.log(`album ${params[1]} by ${params[4]} already exists`);
-          res.status(409);
+          if (error.original) {
+            console.log(
+              `album ${error.original.parameters[1]} by ${error.original.parameters[4]} already exists`
+            );
+          } else {
+            console.log(error);
+          }
+          statusCode = 200;
         }
         output.push(album);
       }
     }
-    res.send(output);
+    res.status(statusCode).send(output);
   } catch (error) {
     next(error);
   }
