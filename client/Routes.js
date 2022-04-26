@@ -16,12 +16,14 @@ class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData();
     this.props.loadAlbums();
+    this.props.getLineItems();
   }
 
   componentDidUpdate(prevProps) {
     if(!prevProps.isLoggedIn && this.props.isLoggedIn){
       console.log("I logged in")
       this.props.getCart();
+      this.props.getLineItems();
     }
   }
 
@@ -79,6 +81,9 @@ const mapDispatch = (dispatch) => {
       console.log('cart')
       return dispatch(getCart());
     },
+    getLineItems: () => {
+      return dispatch(getLineItems());
+    }
   };
 };
 

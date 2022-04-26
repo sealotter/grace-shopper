@@ -17,7 +17,6 @@ export const getLineItems = () => {
             });
             dispatch({ type: GET_ITEMS, lineItems: response.data})
         }
-
     }
 }
 

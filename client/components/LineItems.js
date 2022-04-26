@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getLineItems } from '../store/LineItems';
+import { getLineItems } from '../store/lineItems';
 
 const LineItems = ({ lineItems }) => {
     return (
@@ -9,7 +9,7 @@ const LineItems = ({ lineItems }) => {
             <ul>
                 {lineItems.map( lineItem => {
                     return (
-                        <div> {lineItem.albumId} x {lineItem.quantity}</div>
+                        <li key={lineItem.id}> {lineItem.albumId} x {lineItem.quantity} </li>
                     )
                 })}
             </ul>
