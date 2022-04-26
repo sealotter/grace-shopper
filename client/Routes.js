@@ -20,8 +20,8 @@ class Routes extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if(!prevProps.isLoggedIn && this.props.isLoggedIn){
-      console.log("I logged in")
+    if (!prevProps.isLoggedIn && this.props.isLoggedIn) {
+      console.log('I logged in');
       this.props.getCart();
       this.props.getLineItems();
     }
@@ -47,9 +47,9 @@ class Routes extends Component {
             <Route path="/signup" component={Signup} />
             <Route path="/cart" component={Cart} />
             <Route path="/albums/search" component={AlbumSearch} />
-            <Route path="/albums/:id" component={AlbumDetail} />
           </Switch>
         )}
+        <Route path="/albums/:id" component={AlbumDetail} />
         <Route path="/" component={AlbumList} />
       </div>
     );
@@ -77,12 +77,12 @@ const mapDispatch = (dispatch) => {
       return dispatch(loadAlbums());
     },
     getCart: () => {
-      console.log('cart')
+      console.log('cart');
       return dispatch(getCart());
     },
     getLineItems: () => {
       return dispatch(getLineItems());
-    }
+    },
   };
 };
 

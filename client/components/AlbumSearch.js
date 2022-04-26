@@ -13,23 +13,6 @@ class AlbumSearch extends React.Component {
       artist: '',
       title: '',
       track: '',
-      genres: [
-        'Rock',
-        'Electronic',
-        'Hip Hop',
-        'Folk',
-        'Country',
-        'Jazz',
-        'Funk',
-        'Soul',
-        'Pop',
-        'Latin',
-        'Classical',
-        'Reggae',
-        'Blues',
-        'Stage & Screen',
-      ],
-      styles: [],
     };
     this.handleOnClick = this.handleOnClick.bind(this);
     this.handleOnChange = this.handleOnChange.bind(this);
@@ -42,7 +25,6 @@ class AlbumSearch extends React.Component {
 
   handleOnSelect(ev) {
     this.setState({ [ev.target.name]: ev.target.value });
-
   }
 
   handleOnClick(ev) {
@@ -59,25 +41,6 @@ class AlbumSearch extends React.Component {
     return (
       <div>
         <form>
-          {/* //took out these selectors because I think they are unnecessary */}
-          {/* <select
-            name="genre"
-            placeholder="genre"
-            value={this.state.genre}
-            onChange={this.handleOnSelect}
-          >
-            {genres.map((genre, i) => {
-              return <option key={i}>{genre}</option>;
-            })}
-          </select> */}
-          {/* <select
-            name="style"
-            placeholder="style"
-            value={this.state.style}
-            onChange={this.handleOnChange}
-          >
-            <option>select style</option>
-          </select> */}
           <input
             name="artist"
             placeholder="artist"
