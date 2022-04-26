@@ -47,9 +47,9 @@ class Routes extends Component {
             <Route path="/signup" component={Signup} />
             <Route path="/cart" component={Cart} />
             <Route path="/albums/search" component={AlbumSearch} />
+            <Route path="/albums/:id" component={AlbumDetail} />
           </Switch>
         )}
-        <Route path="/albums/:id" component={AlbumDetail} />
         <Route path="/" component={AlbumList} />
       </div>
     );
