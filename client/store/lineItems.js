@@ -24,10 +24,13 @@ export const getLineItems = () => {
 };
 
 export const createItem = (cartId, albumId) => {
+  //   console.log('thunk', cartId, albumId);
   return async (dispatch) => {
-    const response = await axios.post('/api/albums', {
-      body: { cartId, albumId },
+    const response = await axios.post('/api/lineItems', {
+      cartId,
+      albumId,
     });
+    console.log(response.data);
     dispatch({ type: CREATE_ITEM, item: response.data });
   };
 };

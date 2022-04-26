@@ -5,11 +5,17 @@ import { createItem } from '../store';
 class AlbumDetail extends React.Component {
   constructor() {
     super();
+    this.handleOnClick = this.handleOnClick.bind(this);
+  }
+
+  handleOnClick() {
+    const { carts, match } = this.props;
+    this.props.createItem(carts[0].id, match.params.id * 1);
   }
 
   render() {
+    console.log(this.props);
     const { albums, match } = this.props;
-
     const album = albums.find((album) => album.id === match.params.id * 1);
     return (
       <div>
@@ -41,7 +47,7 @@ class AlbumDetail extends React.Component {
               Current Price: {album.price ? `$${album.price}` : 'unavailable'}
             </div>
             <div>Available Inventory: {album.availableInventory}</div>
-            <button>Add to Cart</button>
+            <button onClick={this.handleOnClick}>Add to Cart</button>
           </div>
         ) : (
           ''

@@ -2,23 +2,25 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { getLineItems } from '../store/lineItems';
 
-const LineItems = ({ lineItems, carts }) => {
-  console.log(carts);
-
+const LineItems = ({ albums, lineItems, carts }) => {
   if (carts.length) {
-    console.log(carts[0].id);
     lineItems = lineItems.filter((x) => x.cartId === carts[0].id);
+    // .map((element) => {
+    //   return albums.find((album) => album.id === element.albumId);
+    // });
   }
+
   return (
     <div>
       Items:
       <ul>
         {lineItems.map((lineItem) => {
+          const album = albums.find((album) => album.id === lineItem.albumId);
           return (
             <li key={lineItem.id}>
-              {' '}
-              album: {lineItem.albumId} x quantity: {lineItem.quantity} cartId:{' '}
-              {lineItem.cartId}
+              <div>album: {album.albumName} </div>
+              <div> by: {album.artistName}</div>
+              <div> quantity: {lineItem.quantity} </div>
             </li>
           );
         })}

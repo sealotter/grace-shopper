@@ -16,9 +16,13 @@ router.get('/', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
-    console.log(req.body);
-    await LineItem.create({ cartId: 1, albumId: 420645, quantity: 1 }),
-      res.send(req.body);
+    // console.log('reqbody;', req.body);
+    const { cartId, albumId } = req.body;
+    const newLineItem = await LineItem.create({
+      cartId,
+      albumId,
+    });
+    res.send(newLineItem);
   } catch (error) {
     console.log(error);
   }
