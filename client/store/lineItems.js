@@ -41,10 +41,8 @@ export const updateItem = (item) => {
 };
 
 export const deleteItem = (item) => {
-  console.log(item);
   return async (dispatch) => {
     const response = await axios.delete(`/api/lineItems/${item.id}`);
-    console.log(response);
     dispatch({ type: DELETE_ITEM, item: response.data });
   };
 };

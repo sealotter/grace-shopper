@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { createItem } from '../store';
+import { createItem, updateItem } from '../store';
 
 class AlbumDetail extends React.Component {
   constructor() {
@@ -8,9 +8,17 @@ class AlbumDetail extends React.Component {
     this.handleOnClick = this.handleOnClick.bind(this);
   }
 
-  handleOnClick() {
-    const { carts, match } = this.props;
-    this.props.createItem(carts[0].id, match.params.id * 1);
+  handleOnClick(album) {
+    const { carts, match, lineItems } = this.props;
+    if (carts[0]) {
+      const item = lineItems.find((item) => item.albumId === album.id);
+      if (!item) {
+        this.props.createItem(carts[0].id, match.params.id * 1);
+      } else {
+        item.quantity++;
+        this.props.updateItem(item);
+      }
+    }
   }
 
   render() {
@@ -47,7 +55,9 @@ class AlbumDetail extends React.Component {
             </div>
             <div>Available Inventory: {album.availableInventory}</div>
             {album.availableInventory > 0 ? (
-              <button onClick={this.handleOnClick}>Add to Cart</button>
+              <button onClick={() => this.handleOnClick(album)}>
+                Add to Cart
+              </button>
             ) : (
               'Not available for purchase at this time'
             )}
@@ -64,6 +74,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     createItem: (cartId, albumId) => {
       return dispatch(createItem(cartId, albumId));
+    },
+    updateItem: (item) => {
+      return dispatch(updateItem(item));
     },
   };
 };
