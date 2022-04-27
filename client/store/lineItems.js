@@ -40,6 +40,14 @@ export const updateItem = (item) => {
   };
 };
 
+export const deleteItem = (item) => {
+  console.log(item);
+  return async (dispatch) => {
+    const response = await axios.delete(`/api/lineItems/${item.id}`);
+    console.log(response);
+    dispatch({ type: DELETE_ITEM, item: response.data });
+  };
+};
 // reducer ----------------
 
 const lineItems = (state = [], action) => {
@@ -53,6 +61,9 @@ const lineItems = (state = [], action) => {
     return state.map((item) => {
       return item.id === action.item.id ? action.item : item;
     });
+  }
+  if (action.type === DELETE_ITEM) {
+    return state.filter((item) => item.id !== action.item.id);
   }
   return state;
 };

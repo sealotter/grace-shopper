@@ -1,17 +1,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { updateItem } from '../store/lineItems';
+import { updateItem, deleteItem } from '../store/lineItems';
 
 class LineItems extends React.Component {
   constructor() {
     super();
     this.handleOnChange = this.handleOnChange.bind(this);
+    this.handleRemove = this.handleRemove.bind(this);
   }
 
   handleOnChange(ev, item) {
     item.quantity = ev.target.value;
-    console.log(item);
     this.props.updateItem(item);
+  }
+
+  handleRemove(item) {
+    this.props.deleteItem(item);
   }
 
   render() {
@@ -38,9 +42,14 @@ class LineItems extends React.Component {
                         quantity:{' '}
                         <input
                           type="number"
+                          min={0}
+                          max={album.availableInventory}
                           value={lineItem.quantity}
                           onChange={(ev) => this.handleOnChange(ev, lineItem)}
                         ></input>
+                        <button onClick={() => this.handleRemove(lineItem)}>
+                          remove?
+                        </button>
                       </div>
                     </li>
                   );
@@ -56,6 +65,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     updateItem: (item) => {
       return dispatch(updateItem(item));
+    },
+    deleteItem: (item) => {
+      return dispatch(deleteItem(item));
     },
   };
 };

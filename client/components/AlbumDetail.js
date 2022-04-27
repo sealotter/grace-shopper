@@ -14,7 +14,6 @@ class AlbumDetail extends React.Component {
   }
 
   render() {
-    console.log(this.props);
     const { albums, match } = this.props;
     const album = albums.find((album) => album.id === match.params.id * 1);
     return (
