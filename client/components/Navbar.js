@@ -30,8 +30,9 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
           <a
             href={`https://github.com/login/oauth/authorize?client_id=${process.env.GIT_CLIENT_ID} `}
           >
-            <p>GitHub Login</p>
+            <p>Login via GitHub</p>
           </a>
+          <Link to="/login">Login</Link>
           <Link to="/signup">Sign Up</Link>
           <Link to="/cart">Cart(0)</Link>
         </div>
