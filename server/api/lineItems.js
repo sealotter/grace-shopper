@@ -28,4 +28,17 @@ router.post('/', async (req, res, next) => {
   }
 });
 
+router.put('/', async (req, res, next) => {
+  try {
+    // console.log(req.body.item);
+    const item = await LineItem.findByPk(req.body.item.id);
+    // console.log(item.dataValues);
+    await item.update(req.body.item);
+    // console.log(item.dataValues);
+    res.sendStatus(204);
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = router;

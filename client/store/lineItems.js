@@ -33,6 +33,13 @@ export const createItem = (cartId, albumId) => {
   };
 };
 
+export const updateItem = (item) => {
+  return async (dispatch) => {
+    const response = await axios.put('/api/lineItems', { item });
+    dispatch({ type: UPDATE_ITEM, item: response.data });
+  };
+};
+
 // reducer ----------------
 
 const lineItems = (state = [], action) => {
@@ -41,6 +48,11 @@ const lineItems = (state = [], action) => {
   }
   if (action.type === CREATE_ITEM) {
     return state.concat([action.item]);
+  }
+  if (action.type === UPDATE_ITEM) {
+    return state.map((item) => {
+      return item.id === action.item.id ? action.item : item;
+    });
   }
   return state;
 };
