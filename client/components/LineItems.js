@@ -8,8 +8,8 @@ class LineItems extends React.Component {
     this.handleOnChange = this.handleOnChange.bind(this);
   }
 
-  handleOnChange(item) {
-    item.quantity++;
+  handleOnChange(ev, item) {
+    item.quantity = ev.target.value;
     console.log(item);
     this.props.updateItem(item);
   }
@@ -39,7 +39,7 @@ class LineItems extends React.Component {
                         <input
                           type="number"
                           value={lineItem.quantity}
-                          onChange={() => this.handleOnChange(lineItem)}
+                          onChange={(ev) => this.handleOnChange(ev, lineItem)}
                         ></input>
                       </div>
                     </li>
