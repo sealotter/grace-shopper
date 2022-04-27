@@ -7,20 +7,43 @@ router.get('/', async (req, res, next) => {
   try {
     const user = await User.findByToken(req.headers.authorization);
     const userLineItems = await LineItem.findAll();
-    // console.log(userLineItems)
+
     res.send(userLineItems);
   } catch (err) {
     next(err);
   }
 });
 
-//quantity, cartId, albumId
+
 router.post('/', async (req, res, next) => {
   try {
-    const user = await User.findByToken(req.headers.authorization);
+    const { cartId, albumId } = req.body;
+    const newLineItem = await LineItem.create({
+      cartId,
+      albumId,
+    });
+    res.send(newLineItem);
+  } catch (error) {
+    next(error);
+  }
+});
 
-    console.log(req.body);
-    res.send('response-o');
+router.put('/', async (req, res, next) => {
+  try {
+    const item = await LineItem.findByPk(req.body.item.id);
+    await item.update(req.body.item);
+    res.sendStatus(204);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.delete('/:id', async (req, res, next) => {
+  try {
+    const item = await LineItem.findByPk(req.params.id);
+    await item.destroy();
+    res.send(item);
+
   } catch (error) {
     next(error);
   }

@@ -22,7 +22,7 @@ router.get('/', async (req, res, next) => {
 router.post('/search', async (req, res, next) => {
   try {
     let statusCode = 201;
-    console.log('QUERY>>>', req.body);
+    // console.log('QUERY>>>', req.body);
     const rawData = await axios.get(
       `https://api.discogs.com/database/search?q=${req.body.query}&page=1&per_page=5&key=${DISCOGS_KEY}&secret=${DISCOGS_SECRET}`
     );
@@ -52,7 +52,7 @@ router.post('/search', async (req, res, next) => {
         rating: detail.community ? detail.community.rating.average : 0,
         availableInventory: detail.num_for_sale,
       };
-      console.log(album);
+      // console.log(album);
       if (album) {
         try {
           await Album.create({ ...album });
