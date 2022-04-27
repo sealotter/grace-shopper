@@ -24,7 +24,7 @@ router.post('/', async (req, res, next) => {
     });
     res.send(newLineItem);
   } catch (error) {
-    console.log(error);
+    next(error);
   }
 });
 
