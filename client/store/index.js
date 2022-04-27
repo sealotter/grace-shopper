@@ -16,6 +16,7 @@ const reducer = combineReducers({
   searchResults,
 });
 
+
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({ collapsed: false }))
 );

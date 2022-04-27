@@ -7,11 +7,13 @@ router.get('/', async (req, res, next) => {
   try {
     const user = await User.findByToken(req.headers.authorization);
     const userLineItems = await LineItem.findAll();
+
     res.send(userLineItems);
   } catch (err) {
     next(err);
   }
 });
+
 
 router.post('/', async (req, res, next) => {
   try {
@@ -41,6 +43,7 @@ router.delete('/:id', async (req, res, next) => {
     const item = await LineItem.findByPk(req.params.id);
     await item.destroy();
     res.send(item);
+
   } catch (error) {
     next(error);
   }

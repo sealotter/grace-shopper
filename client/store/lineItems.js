@@ -1,11 +1,12 @@
 import axios from 'axios';
 
 // constants ------------
-
 const GET_ITEMS = 'GET_ITEMS';
+
 const CREATE_ITEM = 'CREATE_ITEM';
 const UPDATE_ITEM = 'UPDATE_ITEM';
 const DELETE_ITEM = 'DELETE_ITEM';
+
 
 // thunks -----------------
 
@@ -19,6 +20,7 @@ export const getLineItems = () => {
         },
       });
       dispatch({ type: GET_ITEMS, lineItems: response.data });
+
     }
   };
 };
@@ -52,6 +54,7 @@ const lineItems = (state = [], action) => {
   if (action.type === GET_ITEMS) {
     return action.lineItems;
   }
+
   if (action.type === CREATE_ITEM) {
     return state.concat([action.item]);
   }
@@ -63,6 +66,7 @@ const lineItems = (state = [], action) => {
   if (action.type === DELETE_ITEM) {
     return state.filter((item) => item.id !== action.item.id);
   }
+
   return state;
 };
 
