@@ -1,7 +1,8 @@
 const path = require('path');
 const express = require('express');
 const morgan = require('morgan');
-const { default: axios } = require('axios');
+// const { default: axios } = require('axios');
+const axios = require('axios');
 const app = express();
 module.exports = app;
 
