@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+
 import { updateItem, deleteItem } from '../store/lineItems';
 
 class LineItems extends React.Component {
@@ -68,6 +69,7 @@ const mapDispatchToProps = (dispatch) => {
     },
     deleteItem: (item) => {
       return dispatch(deleteItem(item));
+
     },
   };
 };
