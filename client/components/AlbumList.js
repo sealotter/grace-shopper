@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { addLineItem } from '../store/lineItems';
+import AlbumDetail from './AlbumDetail';
 
 const AlbumList = (props) => {
   const { albums } = props;
@@ -23,14 +23,6 @@ const AlbumList = (props) => {
       </ol>
     </div>
   );
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    addLineItem: (item) => {
-      dispatch(addLineItem(item));
-    },
-  };
 };
 
 export default connect((state) => state)(AlbumList);

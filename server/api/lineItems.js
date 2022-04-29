@@ -14,7 +14,6 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-
 router.post('/', async (req, res, next) => {
   try {
     const { cartId, albumId } = req.body;
@@ -43,7 +42,6 @@ router.delete('/:id', async (req, res, next) => {
     const item = await LineItem.findByPk(req.params.id);
     await item.destroy();
     res.send(item);
-
   } catch (error) {
     next(error);
   }
