@@ -24,11 +24,16 @@ class AlbumDetail extends React.Component {
   render() {
     const { albums, match } = this.props;
     const album = albums.find((album) => album.id === match.params.id * 1);
+    console.log('art url: ', album.albumArt[8] === 's');
     return (
       <div>
         {album ? (
           <div>
-            <img src={album.albumArt} />
+            {album.albumArt[8] === 's' ? (
+              <img src="https://i.imgur.com/ZcaIYNM.jpg" />
+            ) : (
+              <img src={album.albumArt} />
+            )}
             <h1>{album.albumName}</h1>
             <div>
               {album.year} release by {album.artistName}

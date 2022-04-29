@@ -53,7 +53,7 @@ class Routes extends Component {
         )}
         {/* <Switch> */}
         {/* <Route path="/albums/:id" component={AlbumDetail} /> */}
-        { /* <Route path="/" component={AlbumList} /> */}
+        {/* <Route path="/" component={AlbumList} /> */}
         {/* </Switch> */}
       </div>
     );

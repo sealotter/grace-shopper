@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { albumSearch } from '../store';
 
+// import thumb404 from '../../public/record404thumb.png';
+
 class AlbumSearch extends React.Component {
   constructor() {
     super();
@@ -71,7 +73,11 @@ class AlbumSearch extends React.Component {
                       {album.albumName}, {album.artistName}
                     </div>
                     <Link to={`/albums/${album.id}`}>
-                      <img src={album.thumbNail}></img>
+                      {album.thumbNail.length ? (
+                        <img src={album.thumbNail}></img>
+                      ) : (
+                        <img src={'https://i.imgur.com/PHNYhhO.png'}></img>
+                      )}
                     </Link>
                   </li>
                 );
