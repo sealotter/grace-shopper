@@ -1,5 +1,5 @@
 import axios from 'axios';
-// import Album from '../../server/db/models/Album';
+import store from '.';
 
 //constants------------------------------
 const LOAD_ALBUMS = 'LOAD_ALBUMS';
@@ -17,11 +17,17 @@ export const loadAlbums = () => {
   };
 };
 
+export const addAlbums = (searchResults) => {
+  store.dispatch({ type: ADD_ALBUMS, albums: searchResults });
+};
+
 //reducer-------------------------------
 const albums = (state = [], action) => {
   switch (action.type) {
     case LOAD_ALBUMS:
       return action.albums;
+    case ADD_ALBUMS:
+      return state.concat(action.albums);
     default:
       return state;
   }

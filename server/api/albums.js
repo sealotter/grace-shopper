@@ -51,7 +51,7 @@ router.post('/search', async (req, res, next) => {
         rating: detail.community ? detail.community.rating.average : 0,
         availableInventory: detail.num_for_sale,
       };
-      // console.log(album.albumArt, album.thumbNail);
+      // console.log(album);
       if (album) {
         try {
           await Album.create({ ...album });
