@@ -14,17 +14,19 @@ import AlbumSearch from './components/AlbumSearch';
  */
 class Routes extends Component {
   componentDidMount() {
-    // console.log(this.props);
+    // window.localStorage.setItem('foo', 'bar');
+    // window.localStorage.removeItem('foo');
     this.props.loadInitialData();
     this.props.loadAlbums();
     this.props.getLineItems();
+    this.props.getCart();
+    console.log(window.localStorage);
   }
 
   componentDidUpdate(prevProps) {
     if (!prevProps.isLoggedIn && this.props.isLoggedIn) {
       console.log('I logged in');
-      this.props.getCart();
-      this.props.getLineItems();
+      // this.props.getLineItems();
     }
   }
 
