@@ -4,6 +4,7 @@ import { withRouter, Route, Switch, Redirect, Link } from 'react-router-dom';
 import { Login, Signup } from './components/AuthForm';
 import Home from './components/Home';
 import Cart from './components/Cart';
+import Profile from './components/Profile';
 import { me, loadAlbums, getCart, getLineItems } from './store';
 import AlbumList from './components/AlbumList';
 import AlbumDetail from './components/AlbumDetail';
@@ -35,20 +36,21 @@ class Routes extends Component {
       <div>
         {isLoggedIn ? (
           <Switch>
-            <Route path="/home" component={Home} />
-            <Route path="/cart" component={Cart} />
-            <Route path="/albums/search" component={AlbumSearch} />
-            <Route path="/albums/:id" component={AlbumDetail} />
-            <Redirect to="/home" />
+            <Route path='/home' component={Home} />
+            <Route path='/cart' component={Cart} />
+            <Route path='/profile' component={Profile} />
+            <Route path='/albums/search' component={AlbumSearch} />
+            <Route path='/albums/:id' component={AlbumDetail} />
+            <Redirect to='/home' />
           </Switch>
         ) : (
           <Switch>
-            <Route path="/" exact component={Login} />
-            <Route path="/login" component={Login} />
-            <Route path="/signup" component={Signup} />
-            <Route path="/cart" component={Cart} />
-            <Route path="/albums/search" component={AlbumSearch} />
-            <Route path="/albums/:id" component={AlbumDetail} />
+            <Route path='/' exact component={Login} />
+            <Route path='/login' component={Login} />
+            <Route path='/signup' component={Signup} />
+            <Route path='/cart' component={Cart} />
+            <Route path='/albums/search' component={AlbumSearch} />
+            <Route path='/albums/:id' component={AlbumDetail} />
           </Switch>
         )}
       </div>
