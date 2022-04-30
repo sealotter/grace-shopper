@@ -1,91 +1,120 @@
 const albumSeed = [
   {
-    id: 565486,
-    albumName: 'Keep Moving',
+    id: 26647,
+    albumName: 'Discovery',
     albumArt:
-      'https://i.discogs.com/BeVK6mOk5M5pRgGx5_Dbxtgh6u1OiHxqhsmTgpcgtpY/rs:fit/g:sm/q:90/h:594/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTQ2NDc3/NDEtMTM3MDk4Nzgz/MS02NDg2LnBuZw.jpeg',
+      'https://i.discogs.com/OG3sHYS5v6DYm7GMRoOQv7gg0IcDjxcUsBmzEnJmhH4/rs:fit/g:sm/q:90/h:608/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI4Nzkt/MTIzNjAzNTQ3Mi5q/cGVn.jpeg',
     thumbNail:
-      'https://i.discogs.com/bbeEtbnhUPiHYoL0TPlWFDolme_v1jzjCF7Zmb2q3mg/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTQ2NDc3/NDEtMTM3MDk4Nzgz/MS02NDg2LnBuZw.jpeg',
-    artistName: 'Andrew Stockdale',
-    genre: 'Rock',
-    style: 'Blues Rock',
-    year: '2013',
-    price: '3.99',
-    albumDetails: null,
+      'https://i.discogs.com/WX97KU1dB5I9VvpH2lk6c5jQ2bc5c8onJgicxe28EMk/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI4Nzkt/MTIzNjAzNTQ3Mi5q/cGVn.jpeg',
+    artistName: 'Daft Punk',
+    genre: 'Electronic',
+    style: 'House',
+    year: 2001,
+    price: 1.05,
+    albumDetails:
+      'Samples contained on the album:\r\n' +
+      `'One More Time: "More Spell On You" performed by [a=Eddie Johns] (uncredited). \r\n` +
+      `'Aerodynamic': "Il Macquillage Lady" performed by [a=Sister Sledge] (uncredited). \r\n` +
+      `'Digital Love': "I Love You More" performed by [a=George Duke]. \r\n` +
+      `'Harder, Better, Faster, Stronger': "Cola Bottle Baby" performed by [a=Edwin Birdsong].\r\n` +
+      `'Crescendolls': "Can You Imagine" performed by [a=The Imperials].\r\n` +
+      `'Superheroes': "Who's Been Sleeping In My Bed" performed by [a=Barry Manilow].\r\n` +
+      `'High Life': "Break Down For Love" performed by [a=Tavares] (uncredited). \r\n` +
+      `'Face To Face': "Evil Woman" performed by [a=Electric Light Orchestra] (uncredited).\r\n` +
+      `'Too Long': "First Come, First Serve" (rhythm)  performed by [a=Rose Royce] (uncredited).\r\n` +
+      "The uncredited samples on 'Discovery' were found one by one and technically reproduced by Daft Punk fans all over the world.\r\n" +
+      '\r\n' +
+      'Singles taken from this release: \r\n' +
+      '1. [m=26637]\r\n' +
+      '2. [m=26797]\r\n' +
+      '3. [m=26808]\r\n' +
+      '4. [m=26687]\r\n' +
+      '5. [m=27027]\r\n' +
+      '\r\n' +
+      'Concepts:\r\n' +
+      'The Daft Club\r\n' +
+      "All the copies of 'Discovery' were released with a 'Daft Club' card included that permitted a web access to the Daft Club (Daftpunk.com). An exclusive unreleased track ('Ouverture') and several remixes (streaming only) were then accessible.\r\n" +
+      "After several technical problems (one of them omitted Mac users to connect to the site and asked them to search on peer to peer networks, such as Napster, to download 'Ouverture' - which came in total contradiction with the existence of the club), the concept was abandoned.\r\n" +
+      '\r\n' +
+      "'Interstella 5555: The 5tory Of The 5ecret 5tar 5ystem'\r\n" +
+      "Click [url=http://www.discogs.com/Daft-Punk-Interstella-5555-The-5tory-Of-The-5ecret-5tar-5ystem/master/26948]here[/url] to access the master page of the movie related to 'Discovery'.",
     trackList: [
-      {
-        position: '1',
-        title: 'Long Way To Go',
-      },
-      {
-        position: '2',
-        title: 'Keep Moving',
-      },
-      {
-        position: '3',
-        title: "Somebody's Calling",
-      },
-      {
-        position: '4',
-        title: 'Vicarious',
-      },
-      {
-        position: '5',
-        title: 'Year Of The Dragon',
-      },
-      {
-        position: '6',
-        title: 'Meridian',
-      },
-      {
-        position: '7',
-        title: 'Ghetto',
-      },
-      {
-        position: '8',
-        title: 'Suitcase (One More Time)',
-      },
-      {
-        position: '9',
-        title: 'Of The Earth',
-      },
-      {
-        position: '10',
-        title: 'Let It Go',
-      },
-      {
-        position: '11',
-        title: 'Let Somebody Love You',
-      },
-      {
-        position: '12',
-        title: "She's A Motorhead",
-      },
-      {
-        position: '13',
-        title: 'Standing On The Corner',
-      },
-      {
-        position: '14',
-        title: 'Country',
-      },
-      {
-        position: '15',
-        title: 'Black Swan',
-      },
-      {
-        position: '16',
-        title: 'Everyday Drone',
-      },
-      {
-        position: '17',
-        title: 'It Occurred To Me',
-      },
+      { position: 'A1', title: 'One More Time' },
+      { position: 'A2', title: 'Aerodynamic' },
+      { position: 'A3', title: 'Digital Love' },
+      { position: 'B1', title: 'Harder, Better, Faster, Stronger' },
+      { position: 'B2', title: 'Crescendolls' },
+      { position: 'B3', title: 'Nightvision' },
+      { position: 'B4', title: 'Superheroes' },
+      { position: 'C1', title: 'High Life' },
+      { position: 'C2', title: 'Something About Us' },
+      { position: 'C3', title: 'Voyager' },
+      { position: 'C4', title: 'Veridis Quo' },
+      { position: 'D1', title: 'Short Circuit' },
+      { position: 'D2', title: 'Face To Face' },
+      { position: 'D3', title: 'Too Long' },
     ],
     rating: 0,
-    availableInventory: 51,
-    createdAt: '2022-04-23T18:41:10.066Z',
-    updatedAt: '2022-04-23T18:41:10.066Z',
+    availableInventory: 765,
+  },
+
+  {
+    id: 38722,
+    albumName: 'Rumours',
+    albumArt:
+      'https://i.discogs.com/1KjJ_yVdW-8raz-Ris-l8WVeoywZunoEdtrbadnrYMw/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTczMjQ0/MzQtMTY0NDE0OTcz/OS0xMTAyLmpwZWc.jpeg',
+    thumbNail:
+      'https://i.discogs.com/hx6AzY36Enct3mbTzgNF-xx472CyMOnfH4R-hDrkPGk/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTczMjQ0/MzQtMTY0NDE0OTcz/OS0xMTAyLmpwZWc.jpeg',
+    artistName: 'Fleetwood Mac',
+    genre: 'Rock',
+    style: 'Soft Rock',
+    year: 1977,
+    price: 1,
+    albumDetails: undefined,
+    trackList: [
+      { position: 'A1', title: 'Second Hand News' },
+      { position: 'A2', title: 'Dreams' },
+      { position: 'A3', title: 'Never Going Back Again' },
+      { position: 'A4', title: "Don't Stop" },
+      { position: 'A5', title: 'Go Your Own Way' },
+      { position: 'A6', title: 'Songbird' },
+      { position: 'B1', title: 'The Chain' },
+      { position: 'B2', title: 'You Make Loving Fun' },
+      { position: 'B3', title: "I Don't Want To Know" },
+      { position: 'B4', title: 'Oh Daddy' },
+      { position: 'B5', title: 'Gold Dust Woman' },
+    ],
+    rating: 0,
+    availableInventory: 3391,
+  },
+  {
+    id: 70133,
+    albumName: 'The Pleasure Principle',
+    albumArt:
+      'https://i.discogs.com/kTzbddVgGcHgVsKSmG8AIf0sNtrW4y5VqWjcnovEcTc/rs:fit/g:sm/q:90/h:604/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTQ1OTk2/LTE0Nzg3MTI3MTYt/MTk5OC5qcGVn.jpeg',
+    thumbNail:
+      'https://i.discogs.com/Cd4QdDGlOgtSy7Dbigachvng_9k4pHiZgTQnXXjP8ak/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTQ1OTk2/LTE0Nzg3MTI3MTYt/MTk5OC5qcGVn.jpeg',
+    artistName: 'Gary Numan',
+    genre: 'Electronic',
+    style: 'Synth-pop',
+    year: 1979,
+    price: 1.87,
+    albumDetails:
+      'Front cover art mimics the 1937 work and title "Pleasure Principle" by [a=René Magritte]',
+    trackList: [
+      { position: 'A1', title: 'Airlane' },
+      { position: 'A2', title: 'Metal' },
+      { position: 'A3', title: 'Complex' },
+      { position: 'A4', title: 'Films' },
+      { position: 'A5', title: 'M.E.' },
+      { position: 'B1', title: 'Tracks' },
+      { position: 'B2', title: 'Observer' },
+      { position: 'B3', title: 'Conversation' },
+      { position: 'B4', title: 'Cars' },
+      { position: 'B5', title: 'Engineers' },
+    ],
+    rating: 0,
+    availableInventory: 417,
   },
   {
     id: 2124985,
@@ -34468,6 +34497,94 @@ const albumSeed = [
     availableInventory: 7,
     createdAt: '2022-04-23T19:19:42.366Z',
     updatedAt: '2022-04-23T19:19:42.366Z',
+  },
+  {
+    id: 565486,
+    albumName: 'Keep Moving',
+    albumArt:
+      'https://i.discogs.com/BeVK6mOk5M5pRgGx5_Dbxtgh6u1OiHxqhsmTgpcgtpY/rs:fit/g:sm/q:90/h:594/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTQ2NDc3/NDEtMTM3MDk4Nzgz/MS02NDg2LnBuZw.jpeg',
+    thumbNail:
+      'https://i.discogs.com/bbeEtbnhUPiHYoL0TPlWFDolme_v1jzjCF7Zmb2q3mg/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTQ2NDc3/NDEtMTM3MDk4Nzgz/MS02NDg2LnBuZw.jpeg',
+    artistName: 'Andrew Stockdale',
+    genre: 'Rock',
+    style: 'Blues Rock',
+    year: '2013',
+    price: '3.99',
+    albumDetails: null,
+    trackList: [
+      {
+        position: '1',
+        title: 'Long Way To Go',
+      },
+      {
+        position: '2',
+        title: 'Keep Moving',
+      },
+      {
+        position: '3',
+        title: "Somebody's Calling",
+      },
+      {
+        position: '4',
+        title: 'Vicarious',
+      },
+      {
+        position: '5',
+        title: 'Year Of The Dragon',
+      },
+      {
+        position: '6',
+        title: 'Meridian',
+      },
+      {
+        position: '7',
+        title: 'Ghetto',
+      },
+      {
+        position: '8',
+        title: 'Suitcase (One More Time)',
+      },
+      {
+        position: '9',
+        title: 'Of The Earth',
+      },
+      {
+        position: '10',
+        title: 'Let It Go',
+      },
+      {
+        position: '11',
+        title: 'Let Somebody Love You',
+      },
+      {
+        position: '12',
+        title: "She's A Motorhead",
+      },
+      {
+        position: '13',
+        title: 'Standing On The Corner',
+      },
+      {
+        position: '14',
+        title: 'Country',
+      },
+      {
+        position: '15',
+        title: 'Black Swan',
+      },
+      {
+        position: '16',
+        title: 'Everyday Drone',
+      },
+      {
+        position: '17',
+        title: 'It Occurred To Me',
+      },
+    ],
+    rating: 0,
+    availableInventory: 51,
+    createdAt: '2022-04-23T18:41:10.066Z',
+    updatedAt: '2022-04-23T18:41:10.066Z',
   },
 ];
 

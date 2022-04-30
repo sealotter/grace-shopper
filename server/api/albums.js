@@ -11,7 +11,7 @@ const {
 router.get('/', async (req, res, next) => {
   try {
     const albums = await Album.findAll({});
-    res.json(albums);
+    res.send(albums);
   } catch (err) {
     next(err);
   }
@@ -22,7 +22,6 @@ router.get('/', async (req, res, next) => {
 router.post('/search', async (req, res, next) => {
   try {
     let statusCode = 201;
-    // console.log('QUERY>>>', req.body);
     const rawData = await axios.get(
       `https://api.discogs.com/database/search?q=${req.body.query}&page=1&per_page=5&key=${DISCOGS_KEY}&secret=${DISCOGS_SECRET}`
     );

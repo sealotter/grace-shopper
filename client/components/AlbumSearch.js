@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { albumSearch } from '../store';
+import { albumSearch, addAlbums } from '../store';
 
 class AlbumSearch extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       genre: '',
@@ -29,7 +29,6 @@ class AlbumSearch extends React.Component {
 
   handleOnClick(ev) {
     ev.preventDefault();
-
     const { genre, style, artist, title, track } = this.state;
     const searchString = `&genre=${genre}&style=${style}&artist=${artist}&title=${title}&track=${track}`;
     this.props.albumSearch(searchString);
@@ -71,7 +70,11 @@ class AlbumSearch extends React.Component {
                       {album.albumName}, {album.artistName}
                     </div>
                     <Link to={`/albums/${album.id}`}>
-                      <img src={album.thumbNail}></img>
+                      {album.thumbNail.length ? (
+                        <img src={album.thumbNail}></img>
+                      ) : (
+                        <img src={'https://i.imgur.com/PHNYhhO.png'}></img>
+                      )}
                     </Link>
                   </li>
                 );

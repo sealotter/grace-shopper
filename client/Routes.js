@@ -14,7 +14,7 @@ import AlbumSearch from './components/AlbumSearch';
  */
 class Routes extends Component {
   componentDidMount() {
-    console.log(this.props);
+    // console.log(this.props);
     this.props.loadInitialData();
     this.props.loadAlbums();
     this.props.getLineItems();
@@ -53,7 +53,7 @@ class Routes extends Component {
         )}
         {/* <Switch> */}
         {/* <Route path="/albums/:id" component={AlbumDetail} /> */}
-        { /* <Route path="/" component={AlbumList} /> */}
+        {/* <Route path="/" component={AlbumList} /> */}
         {/* </Switch> */}
       </div>
     );
