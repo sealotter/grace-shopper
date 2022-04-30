@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { authenticate } from '../store';
+import AlbumList from './AlbumList';
 
 /**
  * COMPONENT
@@ -28,6 +29,7 @@ const AuthForm = (props) => {
         </div>
         {error && error.response && <div> {error.response.data} </div>}
       </form>
+      <AlbumList />
     </div>
   );
 };
