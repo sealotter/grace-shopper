@@ -4,17 +4,19 @@ import { withRouter, Route, Switch, Redirect, Link } from 'react-router-dom';
 import { Login, Signup } from './components/AuthForm';
 import Home from './components/Home';
 import Cart from './components/Cart';
-import { me, loadAlbums, getCart, getLineItems } from './store';
+import { me, loadAlbums, getCart, getLineItems, loadUsers } from './store';
 import AlbumList from './components/AlbumList';
 import AlbumDetail from './components/AlbumDetail';
 import AlbumSearch from './components/AlbumSearch';
+import Admin from './components/Admin/AdminHome';
+import searchResults from './store/searchResults';
 
 /**
  * COMPONENT
  */
 class Routes extends Component {
   componentDidMount() {
-    // console.log(this.props);
+    //console.log(this.props)
     this.props.loadInitialData();
     this.props.loadAlbums();
     this.props.getLineItems();
@@ -25,15 +27,22 @@ class Routes extends Component {
       console.log('I logged in');
       this.props.getCart();
       this.props.getLineItems();
-    }
+    } 
   }
 
   render() {
-    const { isLoggedIn } = this.props;
+    const { isLoggedIn, users } = this.props;
+    const user = users.find((u) => u.id === this.props.auth.id) || {}; //need empty object or else user.find will return undefined 
 
     return (
       <div>
-        {isLoggedIn ? (
+        { isLoggedIn && user.isAdmin === true ? (
+          <Switch>
+            <Route path= "/admin" component={Admin} />
+            <Redirect to ="/admin" />
+          </Switch>
+
+        ) : isLoggedIn && user.isAdmin === false ? (
           <Switch>
             <Route path="/home" component={Home} />
             <Route path="/cart" component={Cart} />
@@ -51,6 +60,7 @@ class Routes extends Component {
             <Route path="/albums/:id" component={AlbumDetail} />
           </Switch>
         )}
+       
       </div>
     );
   }
@@ -64,14 +74,18 @@ const mapState = (state) => {
     // Being 'logged in' for our purposes will be defined has having a state.auth that has a truthy id.
     // Otherwise, state.auth will be an empty object, and state.auth.id will be falsey
     isLoggedIn: !!state.auth.id,
-    albums: state.albums,
+    //need all state 
+    ...state
+    //albums: state.albums,
+    
   };
 };
 
 const mapDispatch = (dispatch) => {
   return {
-    loadInitialData() {
+    loadInitialData(data) {
       dispatch(me());
+      dispatch(loadUsers(data));
     },
     loadAlbums: () => {
       return dispatch(loadAlbums());
@@ -82,7 +96,8 @@ const mapDispatch = (dispatch) => {
     },
     getLineItems: () => {
       return dispatch(getLineItems());
-    },
+    }
+   
   };
 };
 
