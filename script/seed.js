@@ -4,7 +4,7 @@ const albumSeed = require('../server/db/albumSeed');
 
 const {
   db,
-  models: { User, Album, Cart, LineItem },
+  models: { User, Guest, Album, Cart, LineItem },
 } = require('../server/db');
 // const testData = require('../server/db/testData');
 const realData = require('../server/db/realData');
@@ -103,8 +103,6 @@ async function seed() {
 
     // Create Albums
 
-    //const albums = await Album.bulkCreate(testData);
-
     try {
       await Album.bulkCreate(albumSeed);
     } catch (error) {
@@ -123,6 +121,10 @@ async function seed() {
       LineItem.create({ cartId: 5, albumId: 1048886, quantity: 1 }),
       LineItem.create({ cartId: 6, albumId: 96123, quantity: 2 }),
     ]);
+
+    //create guests:
+    await Guest.create();
+    await Guest.create();
 
     // ------------
     //console.log(`seeded ${users.length} users and ${albumSeed.length} albums`);

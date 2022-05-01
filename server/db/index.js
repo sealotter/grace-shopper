@@ -3,6 +3,7 @@
 const db = require('./db');
 
 const User = require('./models/User');
+const Guest = require('./models/Guest');
 const Album = require('./models/Album');
 const Cart = require('./models/Cart');
 const LineItem = require('./models/LineItem');
@@ -18,13 +19,13 @@ Cart.hasMany(LineItem);
 LineItem.belongsTo(Album);
 Album.hasMany(LineItem);
 
-
 module.exports = {
   db,
   models: {
     User,
+    Guest,
     Album,
     Cart,
-    LineItem
+    LineItem,
   },
 };

@@ -17,11 +17,11 @@ export const getCart = () => {
         },
       });
       dispatch({ type: 'GET_CART', carts: response.data });
-    } else if (!window.localStorage.cartId) {
-      const newCart = await axios.post('/api/cart');
-      window.localStorage.setItem('GuestCartId', newCart.data.id);
-      console.log(newCart);
-      dispatch({ type: CREATE_CART, cart: newCart.data });
+      // } else if (!window.localStorage.cartId) {
+      //   const newCart = await axios.post('/api/cart');
+      //   window.localStorage.setItem('GuestCartId', newCart.data.id);
+      //   console.log(newCart);
+      //   dispatch({ type: CREATE_CART, cart: newCart.data });
     }
   };
 };
