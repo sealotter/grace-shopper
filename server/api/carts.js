@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const {
-  models: { Cart, LineItem, User },
+  models: { Cart, User },
 } = require('../db');
 
 router.get('/', async (req, res, next) => {
@@ -15,6 +15,18 @@ router.get('/', async (req, res, next) => {
     res.send(userCart);
   } catch (err) {
     next(err);
+  }
+});
+
+//this is for testing and should probably be removed when no longer needed
+//also url is /api/cart/all for some reason?
+router.get('/all', async (req, res, next) => {
+  console.log('hi');
+  try {
+    const allCarts = await Cart.findAll();
+    res.send(allCarts);
+  } catch (error) {
+    next(error);
   }
 });
 

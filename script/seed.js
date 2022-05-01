@@ -90,6 +90,10 @@ async function seed() {
       )
     );
 
+    //create guests:
+    const testGuest1 = await Guest.create();
+    const testGuest2 = await Guest.create();
+
     // Create Carts
 
     const carts = await Promise.all([
@@ -99,6 +103,7 @@ async function seed() {
       Cart.create({ userId: lisaK.id, isPurchased: false }),
       Cart.create({ userId: annaK.id, isPurchased: false }),
       Cart.create({ userId: ericR.id, isPurchased: false }),
+      Cart.create({ guestId: testGuest1.id, isPurchased: false }),
     ]);
 
     // Create Albums
@@ -121,10 +126,6 @@ async function seed() {
       LineItem.create({ cartId: 5, albumId: 1048886, quantity: 1 }),
       LineItem.create({ cartId: 6, albumId: 96123, quantity: 2 }),
     ]);
-
-    //create guests:
-    await Guest.create();
-    await Guest.create();
 
     // ------------
     //console.log(`seeded ${users.length} users and ${albumSeed.length} albums`);

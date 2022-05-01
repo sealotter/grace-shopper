@@ -26,7 +26,7 @@ class Routes extends Component {
   componentDidUpdate(prevProps) {
     if (!prevProps.isLoggedIn && this.props.isLoggedIn) {
       console.log('I logged in');
-      // this.props.getLineItems();
+      this.props.getLineItems();
     }
   }
 

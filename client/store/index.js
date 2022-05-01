@@ -7,6 +7,7 @@ import albums from './albums';
 import carts from './carts';
 import lineItems from './lineItems';
 import searchResults from './searchResults';
+import guests from './guests';
 
 const reducer = combineReducers({
   auth,
@@ -14,6 +15,7 @@ const reducer = combineReducers({
   carts,
   lineItems,
   searchResults,
+  guests,
 });
 
 const middleware = composeWithDevTools(
@@ -27,3 +29,4 @@ export * from './albums';
 export * from './carts';
 export * from './lineItems';
 export * from './searchResults';
+export * from './guests';

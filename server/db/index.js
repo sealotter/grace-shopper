@@ -13,6 +13,8 @@ const LineItem = require('./models/LineItem');
 Cart.belongsTo(User); //, {as: 'buyer'}
 User.hasMany(Cart); // , {foreignKey: 'buyerId'}
 
+Cart.belongsTo(Guest);
+
 LineItem.belongsTo(Cart);
 Cart.hasMany(LineItem);
 
