@@ -4,10 +4,11 @@ import { withRouter, Route, Switch, Redirect, Link } from 'react-router-dom';
 import { Login, Signup } from './components/AuthForm';
 import Home from './components/Home';
 import Cart from './components/Cart';
-import { me, loadAlbums, getCart, getLineItems } from './store';
-import AlbumList from './components/AlbumList';
+import { me, loadAlbums, getCart, createCart, getLineItems } from './store';
+// import AlbumList from './components/AlbumList';
 import AlbumDetail from './components/AlbumDetail';
 import AlbumSearch from './components/AlbumSearch';
+import auth from './store/auth';
 
 /**
  * COMPONENT
@@ -18,15 +19,23 @@ class Routes extends Component {
     // window.localStorage.removeItem('foo');
     this.props.loadInitialData();
     this.props.loadAlbums();
-    this.props.getLineItems();
-    this.props.getCart();
+    // this.props.getLineItems();
+    // this.props.getCart();
     console.log(window.localStorage);
   }
 
   componentDidUpdate(prevProps) {
-    if (!prevProps.isLoggedIn && this.props.isLoggedIn) {
+    if (prevProps.isLoggedIn !== this.props.isLoggedIn) {
       console.log('I logged in');
+      this.props.getCart();
       this.props.getLineItems();
+    }
+    if (!this.props.cart.length) {
+      const idForNewCart = this.props.auth.id
+        ? this.props.auth.id
+        : window.localStorage.guestId;
+      this.props.createCart(idForNewCart);
+      console.log('hi ther', this.props);
     }
   }
 
@@ -67,6 +76,8 @@ const mapState = (state) => {
     // Otherwise, state.auth will be an empty object, and state.auth.id will be falsey
     isLoggedIn: !!state.auth.id,
     albums: state.albums,
+    cart: state.carts,
+    auth: state.auth,
   };
 };
 
@@ -84,6 +95,9 @@ const mapDispatch = (dispatch) => {
     },
     getLineItems: () => {
       return dispatch(getLineItems());
+    },
+    createCart: (id) => {
+      return dispatch(createCart(id));
     },
   };
 };

@@ -16,13 +16,22 @@ export const getCart = () => {
           authorization: token,
         },
       });
-      dispatch({ type: 'GET_CART', carts: response.data });
-      // } else if (!window.localStorage.cartId) {
-      //   const newCart = await axios.post('/api/cart');
-      //   window.localStorage.setItem('GuestCartId', newCart.data.id);
-      //   console.log(newCart);
-      //   dispatch({ type: CREATE_CART, cart: newCart.data });
+      dispatch({ type: GET_CART, carts: response.data });
+    } else if (window.localStorage.guestId) {
+      const guestId = window.localStorage.getItem('guestId');
+      const response = await axios.get(`/api/cart/${guestId}`);
+      dispatch({ type: GET_CART, carts: response.data });
     }
+  };
+};
+
+export const createCart = (userOrGuest) => {
+  return async (dispatch) => {
+    const userProp = userOrGuest.userName ? 'userId' : 'guestId';
+    const newCart = await axios.post('/api/cart', {
+      [userProp]: userOrGuest.id,
+    });
+    dispatch({ type: CREATE_CART, cart: newCart.data });
   };
 };
 

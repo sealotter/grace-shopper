@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const {
-  models: { Cart, User },
+  models: { Cart, User, Guest },
 } = require('../db');
 
 router.get('/', async (req, res, next) => {
@@ -18,6 +18,21 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+router.get('/:guestId', async (req, res, next) => {
+  try {
+    console.log(req.params.guestId);
+    const guest = await Guest.findByPk(req.params.guestId);
+    const guestCart = await Cart.findOne({
+      where: {
+        guestId: guest.id,
+      },
+    });
+    res.send(guestCart);
+  } catch (error) {
+    next(error);
+  }
+});
+
 //this is for testing and should probably be removed when no longer needed
 //also url is /api/cart/all for some reason?
 router.get('/all', async (req, res, next) => {
@@ -32,7 +47,8 @@ router.get('/all', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
-    const newCart = await Cart.create();
+    const idContext = req.body;
+    const newCart = await Cart.create(req.body);
     res.send(newCart);
   } catch (error) {
     next(error);

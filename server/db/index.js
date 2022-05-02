@@ -14,6 +14,7 @@ Cart.belongsTo(User); //, {as: 'buyer'}
 User.hasMany(Cart); // , {foreignKey: 'buyerId'}
 
 Cart.belongsTo(Guest);
+Guest.hasMany(Cart);
 
 LineItem.belongsTo(Cart);
 Cart.hasMany(LineItem);
