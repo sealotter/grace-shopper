@@ -8,7 +8,6 @@ import carts from './carts';
 import lineItems from './lineItems';
 import searchResults from './searchResults';
 import { profileReducer } from './profile/reducerProfile';
-profileReducer;
 
 const reducer = combineReducers({
   auth,
