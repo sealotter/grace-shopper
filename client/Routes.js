@@ -19,12 +19,10 @@ class Routes extends Component {
     // window.localStorage.removeItem('foo');
     this.props.loadInitialData();
     this.props.loadAlbums();
-    // this.props.getLineItems();
-    // this.props.getCart();
-    console.log(window.localStorage);
   }
 
   componentDidUpdate(prevProps) {
+    console.log(window.localStorage);
     if (prevProps.isLoggedIn !== this.props.isLoggedIn) {
       console.log('I logged in');
       this.props.getCart();
@@ -32,10 +30,9 @@ class Routes extends Component {
     }
     if (!this.props.cart.length) {
       const idForNewCart = this.props.auth.id
-        ? this.props.auth.id
-        : window.localStorage.guestId;
+        ? { userId: this.props.auth.id }
+        : { guestId: window.localStorage.guestId };
       this.props.createCart(idForNewCart);
-      console.log('hi ther', this.props);
     }
   }
 

@@ -47,8 +47,9 @@ router.get('/all', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
-    const idContext = req.body;
-    const newCart = await Cart.create(req.body);
+    const idContext = req.body.idForNewCart;
+    console.log('context??', idContext);
+    const newCart = await Cart.create(idContext);
     res.send(newCart);
   } catch (error) {
     next(error);

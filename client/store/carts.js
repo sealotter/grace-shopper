@@ -25,12 +25,13 @@ export const getCart = () => {
   };
 };
 
-export const createCart = (userOrGuest) => {
+export const createCart = (idForNewCart) => {
   return async (dispatch) => {
-    const userProp = userOrGuest.userName ? 'userId' : 'guestId';
     const newCart = await axios.post('/api/cart', {
-      [userProp]: userOrGuest.id,
+      idForNewCart,
+      // test: 'test',
     });
+    console.log('newCart??', newCart);
     dispatch({ type: CREATE_CART, cart: newCart.data });
   };
 };
