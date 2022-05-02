@@ -1,8 +1,4 @@
-import React, { useEffect } from 'react';
-
-import FormUpdateProfile from './FormUpdateProfile';
-
-import Stack from '@mui/material/Stack';
+import React from 'react';
 import Button from '@mui/material/Button';
 import { Box, Grid, TextField } from '@mui/material';
 import ProfileUpdate from './ProfileUpdate';
@@ -14,20 +10,15 @@ const Profile = () => {
         <Box
           sx={{
             marginTop: 8,
+            marginBottom: 5,
             marginLeft: 1,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
           }}
-        >
-          <Button variant='text'>Text</Button>
-          <Button variant='contained'>Contained</Button>
-          <Button variant='outlined'>Outlined</Button>
-        </Box>
+        ></Box>
       </Grid>
       <Grid item xs={12} sm={12} md={12} lg={6} xl={6}>
-        <TextField id='outlined-basic' label='Outlined' variant='outlined' />
-
         <ProfileUpdate />
       </Grid>
     </Grid>

@@ -1,1 +1,2 @@
 export const READ_PROFILE = 'READ_PROFILE';
+export const UPDATE_PROFILE = 'UPDATE_PROFILE';

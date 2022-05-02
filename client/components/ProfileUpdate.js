@@ -1,17 +1,18 @@
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
+
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+
 import { useDispatch, useSelector } from 'react-redux';
-// import { createStudent } from '../store/students/studentActions';
-import { readProfile } from '../store/profile/actionsProfile';
-import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+
+import { readProfile, updateProfile } from '../store/profile/actionsProfile';
+
 import React, { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 
 export default function ProfileUpdate() {
   const token = window.localStorage.getItem('token');
@@ -21,81 +22,33 @@ export default function ProfileUpdate() {
     dispatch(readProfile(token));
   }, []);
 
-  // const history = useHistory();
+  const history = useHistory();
+  const firstNameRef = React.useRef(null);
 
-  // const student = useSelector((state) => state.student.student);
-
-  // const [campusSelect, setCampusSelect] = React.useState('');
-  // const handleChange = (ev) => {
-  //   setCampusSelect(ev.target.value);
-  // };
-
-  // const campuses = useSelector((state) => state.campus.campuses);
   const handleSubmit = (event) => {
-    // event.preventDefault();
-    // const data = new FormData(event.currentTarget);
-    // const payload = {
-    //   id: student.id,
-    //   firstName:
-    //     data.get('firstName') === ''
-    //       ? student.firstName
-    //       : data.get('firstName'),
-    //   lastName:
-    //     data.get('lastName') === '' ? student.lastName : data.get('lastName'),
-    //   email: data.get('email') === '' ? student.email : data.get('email'),
-    //   gpa: data.get('gpa') === '' ? student.gpa : data.get('gpa'),
-    //   imageUrl:
-    //     data.get('imageUrl') === '' ? student.imageUrl : data.get('imageUrl'),
-    //   bio: data.get('bio') === '' ? student.bio : data.get('bio'),
-    //   campusId: campusSelect == '' ? student.campusId : campusSelect,
-    // };
-    // dispatch(updateStudent(payload));
-    // setTimeout(function () {
-    //   history.push('/');
-    // }, 750);
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const name = data.get('firstName');
+    console.log(name);
+    const payload = {
+      token,
+      firstName:
+        data.get('firstName') === ''
+          ? profile.firstName
+          : data.get('firstName'),
+      lastName:
+        data.get('lastName') === '' ? profile.lastName : data.get('lastName'),
+      email: data.get('email') === '' ? profile.email : data.get('email'),
+      address:
+        data.get('address') === '' ? profile.address : data.get('address'),
+      password: data.get('password') === '' ? null : data.get('password'),
+    };
+
+    dispatch(updateProfile(payload));
+    setTimeout(function () {
+      history.push('/');
+    }, 750);
   };
-
-  // console.log(profile);
-
-  // const theme = createTheme();
-
-  // const firstNameRef = React.useRef(profile.firstName);
-  // const lastNameRef = React.useRef(null);
-  // const emailRef = React.useRef(null);
-  // const gpaRef = React.useRef(null);
-  // const imageUrlRef = React.useRef(null);
-  // const bioRef = React.useRef(null);
-  // const campusRef = React.useRef(null);
-
-  // const [campusSelect, setCampusSelect] = React.useState('');
-
-  // const handleChange = (ev) => {
-  //   setCampusSelect(ev.target.value);
-  // };
-
-  // const handleSubmit = (event) => {
-  //   // event.preventDefault();
-  //   // const data = new FormData(event.currentTarget);
-  //   // const payload = {
-  //   //   firstName: data.get('firstName'),
-  //   //   lastName: data.get('lastName'),
-  //   //   email: data.get('email'),
-  //   //   gpa: data.get('gpa'),
-  //   //   imageUrl: data.get('imageUrl'),
-  //   //   bio: data.get('bio'),
-  //   //   campusId: campusSelect,
-  //   // };
-  //   // dispatch(createStudent(payload));
-  //   // firstNameRef.current.value = '';
-  //   // lastNameRef.current.value = '';
-  //   // imageUrlRef.current.value = '';
-  //   // emailRef.current.value = '';
-  //   // gpaRef.current.value = '';
-  //   // bioRef.current.value = '';
-  //   // campusRef.current.value = '';
-  // };
-
-  // //   const campuses = useSelector((state) => state.campus.campuses);
 
   return (
     <Container component='main' maxWidth='md'>
@@ -123,6 +76,7 @@ export default function ProfileUpdate() {
                 label={profile.firstName}
                 autoFocus
                 helperText='First Name'
+                inputRef={firstNameRef}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -147,111 +101,41 @@ export default function ProfileUpdate() {
                 helperText='Email'
               />
             </Grid>
-
-            {/* <Grid item xs={12}>
+            <Grid item xs={12}>
               <TextField
-                inputProps={{ maxLength: 490 }}
+                inputProps={{ maxLength: 250 }}
                 fullWidth
-                name='imageUrl'
-                label={profile.imageUrl}
-                type='imageUrl'
-                id='imageUrl'
-                autoComplete='photo'
+                id='address'
+                label={profile.address}
+                name='address'
+                autoComplete='street-address'
+                helperText='Address'
               />
-            </Grid> */}
-            {/* <Grid item xs={12}>
-              <TextField
-                inputProps={{ maxLength: 990 }}
-                fullWidth
-                name='bio'
-                label={profile.bio}
-                id='bio'
-                multiline
-                rows={3}
-              />
-            </Grid> */}
-            {/* {profile.campusId ? (
-              <Grid item xs={12}>
-                <FormControl fullWidth>
-                  <InputLabel id='create-label'>Campus</InputLabel>
-                  <Select
-                    labelId='create-label'
-                    id='demo-simple-select'
-                    label='Campus'
-                    value={campusSelect}
-                    onChange={handleChange}
-                  >
-                    {campuses &&
-                      campuses.map((campus) => (
-                        <MenuItem key={campus.id} value={campus.id}>
-                          {campus.name}
-                        </MenuItem>
-                      ))}
-                  </Select>
-                </FormControl>
-                <Grid item xs={12}>
-                  <TextField
-                    inputProps={{ maxLength: 4 }}
-                    fullWidth
-                    id='gpa'
-                    label={student.gpa}
-                    name='gpa'
-                    autoComplete=''
-                  />
-                </Grid>
-                <Button
-                  type='submit'
-                  fullWidth
-                  variant='contained'
-                  sx={{ mt: 3, mb: 2 }}
-                >
-                  UPDATE
-                </Button>
-              </Grid>
+            </Grid>
+            {profile.isOauthUser ? (
+              ''
             ) : (
               <Grid item xs={12}>
-                <FormControl fullWidth>
-                  <InputLabel id='create-label'>Required</InputLabel>
-                  <Select
-                    required
-                    labelId='create-label'
-                    id='demo-simple-select'
-                    label='Campus'
-                    value={campusSelect}
-                    onChange={handleChange}
-                  >
-                    {campuses &&
-                      campuses.map((campus) => (
-                        <MenuItem key={campus.id} value={campus.id}>
-                          {campus.name}
-                        </MenuItem>
-                      ))}
-                  </Select>
-                  <Grid item xs={12}>
-                    <TextField
-                      required
-                      inputProps={{ maxLength: 4 }}
-                      fullWidth
-                      id='gpa'
-                      label={student.gpa}
-                      name='gpa'
-                      autoComplete=''
-                    />
-                  </Grid>
-                </FormControl>
-
-                <Button
-                  disabled={campusSelect == ''}
-                  type='submit'
+                <TextField
+                  inputProps={{ maxLength: 250 }}
                   fullWidth
-                  variant='contained'
-                  sx={{ mt: 3, mb: 2 }}
-                >
-                  UPDATE
-                </Button>
+                  id='password'
+                  label='Password'
+                  name='password'
+                  helperText='Password'
+                  autoComplete='new-password'
+                />
               </Grid>
-            )} */}
+            )}
           </Grid>
+          <Button
+            type='submit'
+            fullWidth
+            variant='contained'
+            sx={{ mt: 3, mb: 2 }}
+          >
+            UPDATE
+          </Button>
         </Box>
       </Box>
     </Container>

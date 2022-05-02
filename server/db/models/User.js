@@ -2,8 +2,6 @@ const Sequelize = require('sequelize');
 const db = require('../db');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-// const axios = require('axios');
-
 const SALT_ROUNDS = 5;
 
 const User = db.define('user', {
@@ -96,26 +94,6 @@ User.byGithub = async (id) => {
     },
   });
 
-  User.getProfile = async (token) => {
-    try {
-      const { id } = jwt.verify(token, process.env.JWT);
-      const user = await User.findByPk(id, {
-        attributes: {
-          exclude: ['id', 'password'],
-        },
-      });
-
-      if (!user) {
-        throw error;
-      }
-      return user;
-    } catch (ex) {
-      const error = Error('Not Authorized To View');
-      error.status = 401;
-      throw error;
-    }
-  };
-
   if (!user) {
     const createdUser = await User.create({
       username: id,
@@ -128,6 +106,74 @@ User.byGithub = async (id) => {
     return createdUser;
   }
   return user;
+};
+
+User.getProfile = async (token) => {
+  try {
+    const { id } = jwt.verify(token, process.env.JWT);
+    const user = await User.findByPk(id, {
+      attributes: {
+        exclude: ['id', 'password'],
+      },
+    });
+
+    if (!user) {
+      throw error;
+    }
+    return user;
+  } catch (ex) {
+    const error = Error('Not Authorized To View');
+    error.status = 401;
+    throw error;
+  }
+};
+
+User.putProfile = async ({
+  password,
+  firstName,
+  lastName,
+  token,
+  email,
+  address,
+}) => {
+  try {
+    const { id } = jwt.verify(token, process.env.JWT);
+    const user = await User.findByPk(id, {
+      attributes: {
+        exclude: [
+          'password',
+          'createdAt',
+          'isAdmin',
+          'isOauthUser',
+          'updatedAt',
+        ],
+      },
+    });
+    if (!user) {
+      throw error;
+    }
+    if (user.isOauthUser) {
+      user.set({
+        firstName,
+        lastName,
+        email,
+        address,
+      });
+      const updated = await user.save();
+      return updated;
+    } else {
+      user.set({
+        firstName,
+        lastName,
+        email,
+        address,
+      });
+      const updated = await user.save();
+      return updated;
+    }
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 /**

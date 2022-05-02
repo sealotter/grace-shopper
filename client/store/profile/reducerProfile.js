@@ -1,4 +1,4 @@
-const { READ_PROFILE } = require('../types');
+const { READ_PROFILE, UPDATE_PROFILE } = require('../types');
 
 const initialState = {
   loading: false,
@@ -9,6 +9,11 @@ const initialState = {
 export const profileReducer = (state = initialState, action) => {
   switch (action.type) {
     case READ_PROFILE:
+      return {
+        ...state,
+        profile: action.payload,
+      };
+    case UPDATE_PROFILE:
       return {
         ...state,
         profile: action.payload,
