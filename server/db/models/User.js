@@ -35,7 +35,9 @@ const User = db.define("user", {
     type: Sequelize.STRING,
   },
   isAdmin: {
-    type: Sequelize.BOOLEAN
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
+    allowNull: false
   }
 });
 
@@ -67,7 +69,7 @@ User.authenticate = async function ({ username, password }) {
 };
 
 User.findByToken = async function (token) {
-  console.log(token)
+  //console.log(token)
   try {
     //console.log("LOOK HERE", id)
     const { id } = await jwt.verify(token, process.env.JWT);
