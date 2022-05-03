@@ -4,7 +4,14 @@ import { withRouter, Route, Switch, Redirect, Link } from 'react-router-dom';
 import { Login, Signup } from './components/AuthForm';
 import Home from './components/Home';
 import Cart from './components/Cart';
-import { me, loadAlbums, getCart, createCart, getLineItems } from './store';
+import {
+  me,
+  loadAlbums,
+  loadCarts,
+  // getCart,
+  // createCart,
+  getLineItems,
+} from './store';
 // import AlbumList from './components/AlbumList';
 import AlbumDetail from './components/AlbumDetail';
 import AlbumSearch from './components/AlbumSearch';
@@ -18,22 +25,28 @@ class Routes extends Component {
     // window.localStorage.setItem('foo', 'bar');
     // window.localStorage.removeItem('foo');
     this.props.loadInitialData();
+    this.props.getLineItems();
     this.props.loadAlbums();
+    this.props.loadCarts();
+    // this.props.getCart();
   }
 
   componentDidUpdate(prevProps) {
-    console.log(window.localStorage);
-    if (prevProps.isLoggedIn !== this.props.isLoggedIn) {
+    console.log(window.localStorage, this.props);
+    if (!prevProps.isLoggedIn && this.props.isLoggedIn) {
       console.log('I logged in');
-      this.props.getCart();
       this.props.getLineItems();
+
+      // this.props.getCart();
     }
-    if (!this.props.cart.length) {
-      const idForNewCart = this.props.auth.id
-        ? { userId: this.props.auth.id }
-        : { guestId: window.localStorage.guestId };
-      this.props.createCart(idForNewCart);
-    }
+    // if (!this.props.carts.length) {
+    //   //here
+    //   console.log(this.props.carts);
+    //   const idForNewCart = this.props.auth.id
+    //     ? { userId: this.props.auth.id }
+    //     : { guestId: window.localStorage.guestId };
+    //   this.props.createCart(idForNewCart);
+    // }
   }
 
   render() {
@@ -73,7 +86,7 @@ const mapState = (state) => {
     // Otherwise, state.auth will be an empty object, and state.auth.id will be falsey
     isLoggedIn: !!state.auth.id,
     albums: state.albums,
-    cart: state.carts,
+    carts: state.carts,
     auth: state.auth,
   };
 };
@@ -95,6 +108,9 @@ const mapDispatch = (dispatch) => {
     },
     createCart: (id) => {
       return dispatch(createCart(id));
+    },
+    loadCarts: () => {
+      return dispatch(loadCarts());
     },
   };
 };

@@ -20,24 +20,26 @@ class LineItems extends React.Component {
   }
 
   render() {
-    const { albums, lineItems, carts } = this.props;
-    if (carts.length) {
-      const myLineItems = lineItems.filter((x) => x.cartId === carts[0].id);
-    }
+    const { albums, lineItems, carts, auth } = this.props;
+    let myCart = carts.find((cart) =>
+      auth.id ? cart.id === auth.id : cart.id === window.localStorage.guestId
+    );
     return (
       <div>
         Items:
         <ul>
-          {carts.length
+          {albums.length && carts.length
             ? lineItems
-                .filter((x) => x.cartId === carts[0].id)
+                .filter((item) => item.cartId === myCart.id)
                 .map((lineItem) => {
                   const album = albums.find(
                     (album) => album.id === lineItem.albumId
                   );
                   return (
                     <li key={lineItem.id}>
-                      <div>album: {album.albumName} </div>
+                      <div>
+                        album: {album.albumName} id: {album.id}
+                      </div>
                       <div> by: {album.artistName}</div>
                       <div>
                         quantity:{' '}
@@ -69,7 +71,6 @@ const mapDispatchToProps = (dispatch) => {
     },
     deleteItem: (item) => {
       return dispatch(deleteItem(item));
-
     },
   };
 };

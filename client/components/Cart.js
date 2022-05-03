@@ -1,23 +1,28 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import LineItems from './LineItems';
+import { createCart } from '../store';
 
-const Cart = ({ carts, lineItems }) => {
+const Cart = ({ carts, auth, createCart }) => {
+  let myCart = carts.find((cart) =>
+    auth.id ? cart.id === auth.id : cart.id === window.localStorage.guestId
+  );
   return (
     <div>
       Shopping Cart:
-      <ul>
-        {carts.map((cart) => {
-          return <div key={cart.id}> Your cart id is: {cart.id}. </div>;
-        })}
-      </ul>
+      <div> Your cart id is: {myCart ? myCart.id : ''}. </div>
       <LineItems />
       <hr />
     </div>
   );
 };
 
-export default connect((state) => {
-  console.log(state);
-  return state;
-})(Cart);
+const mapDispatch = (dispatch) => {
+  return {
+    createCart: () => {
+      dispatch(createCart());
+    },
+  };
+};
+
+export default connect((state) => state, mapDispatch)(Cart);

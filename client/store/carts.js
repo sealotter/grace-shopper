@@ -1,37 +1,47 @@
 import axios from 'axios';
 
 // constants ---------
-
+const LOAD_CARTS = 'LOAD_CARTS';
 const GET_CART = 'GET_CART';
 const CREATE_CART = 'CREATE_CART';
 
 // thunks -----------
 
-export const getCart = () => {
+export const loadCarts = () => {
   return async (dispatch) => {
-    const token = window.localStorage.getItem('token');
-    if (token) {
-      const response = await axios.get('/api/cart', {
-        headers: {
-          authorization: token,
-        },
-      });
-      dispatch({ type: GET_CART, carts: response.data });
-    } else if (window.localStorage.guestId) {
-      const guestId = window.localStorage.getItem('guestId');
-      const response = await axios.get(`/api/cart/${guestId}`);
-      dispatch({ type: GET_CART, carts: response.data });
-    }
+    const response = await axios.get('/api/cart/all');
+    dispatch({ type: LOAD_CARTS, carts: response.data });
   };
 };
 
+// export const getCart = () => {
+//   return async (dispatch) => {
+//     console.log('store ', window.localStorage);
+//     const token = window.localStorage.getItem('token');
+//     if (token) {
+//       const response = await axios.get('/api/cart', {
+//         headers: {
+//           authorization: token,
+//         },
+//       });
+
+//       dispatch({ type: GET_CART, carts: response.data });
+//     } else if (window.localStorage.guestId) {
+//       console.log('guestId is present, no need to create cart');
+//       const guestId = window.localStorage.getItem('guestId');
+//       const response = await axios.get(`/api/cart/${guestId}`);
+//       dispatch({ type: GET_CART, carts: response.data });
+//     }
+//   };
+// };
+
 export const createCart = (idForNewCart) => {
+  console.log(idForNewCart);
   return async (dispatch) => {
     const newCart = await axios.post('/api/cart', {
       idForNewCart,
       // test: 'test',
     });
-    console.log('newCart??', newCart);
     dispatch({ type: CREATE_CART, cart: newCart.data });
   };
 };
@@ -39,12 +49,19 @@ export const createCart = (idForNewCart) => {
 // reducer ----------
 
 const carts = (state = [], action) => {
-  if (action.type === GET_CART) {
-    return action.carts;
+  switch (action.type) {
+    case LOAD_CARTS:
+      return action.carts;
+    case CREATE_CART:
+      return [...state, action.cart];
   }
-  if (action.type === CREATE_CART) {
-    return state.concat([action.cart]);
-  }
+  // if (action.type === GET_CART) {
+  //   return [action.carts];
+  // }
+  // if (action.type === CREATE_CART) {
+  //   console.log('state', state, 'action:', action);
+  //   return [...state, action.cart];
+  // }
   return state;
 };
 
