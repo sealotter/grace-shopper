@@ -1,9 +1,15 @@
 import axios from 'axios';
-import { READ_PROFILE, UPDATE_PROFILE } from '../types';
+import { READ_PROFILE, UPDATE_PROFILE, UPDATE_AUTH } from '../types';
 
 const _updateProfile = (payload) => {
   return {
     type: UPDATE_PROFILE,
+    payload,
+  };
+};
+const _updateAuth = (payload) => {
+  return {
+    type: UPDATE_AUTH,
     payload,
   };
 };
@@ -34,6 +40,9 @@ export const updateProfile = (payload) => {
     try {
       const { data } = await axios.put('api/profile/', payload);
       dispatch(_updateProfile(data));
+      console.log('this is the actions data');
+      console.log(data);
+      dispatch(_updateAuth(data));
     } catch (error) {
       console.log(error);
     }

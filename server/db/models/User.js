@@ -15,12 +15,12 @@ const User = db.define('user', {
   },
   firstName: {
     type: Sequelize.STRING,
-    unique: true,
+    unique: false,
     allowNull: false,
   },
   lastName: {
     type: Sequelize.STRING,
-    unique: true,
+    unique: false,
     allowNull: false,
   },
   email: {
@@ -160,6 +160,18 @@ User.putProfile = async ({
         address,
       });
       const updated = await user.save();
+      console.log('isOauth');
+      return updated;
+    } else if (password) {
+      user.set({
+        password,
+        firstName,
+        lastName,
+        email,
+        address,
+      });
+      const updated = await user.save();
+      console.log('Has Password');
       return updated;
     } else {
       user.set({
@@ -169,6 +181,7 @@ User.putProfile = async ({
         address,
       });
       const updated = await user.save();
+      console.log('No Password');
       return updated;
     }
   } catch (error) {
