@@ -1,17 +1,15 @@
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
+import React, { useEffect } from 'react';
 
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 
-import { useDispatch, useSelector } from 'react-redux';
-
 import { readProfile, updateProfile } from '../store/profile/actionsProfile';
 
-import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 export default function ProfileUpdate() {
@@ -23,13 +21,12 @@ export default function ProfileUpdate() {
   }, []);
 
   const history = useHistory();
-  const firstNameRef = React.useRef(null);
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
     const data = new FormData(event.currentTarget);
-    const name = data.get('firstName');
-    console.log(name);
+
     const payload = {
       token,
       firstName:
@@ -52,7 +49,6 @@ export default function ProfileUpdate() {
 
   return (
     <Container component='main' maxWidth='md'>
-      <CssBaseline />
       <Box
         sx={{
           marginTop: 8,
@@ -76,7 +72,6 @@ export default function ProfileUpdate() {
                 label={profile.firstName}
                 autoFocus
                 helperText='First Name'
-                inputRef={firstNameRef}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
