@@ -14,25 +14,27 @@ const User = db.define("user", {
   },
   password: {
     type: Sequelize.STRING,
+    allowNull: false
   },
   firstName: {
     type: Sequelize.STRING,
     unique: true,
-    allowNull: false,
+    allowNull: true,
   },
   lastName: {
     type: Sequelize.STRING,
     unique: true,
-    allowNull: false,
+    allowNull: true,
   },
   email: {
     type: Sequelize.STRING,
     isEmail: true,
     unique: true,
-    allowNull: false,
+    allowNull: true,
   },
   address: {
     type: Sequelize.STRING,
+    allowNull: true
   },
   isAdmin: {
     type: Sequelize.BOOLEAN

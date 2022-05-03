@@ -5,9 +5,11 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { logout } from '../store';
 import AlbumSearch from './AlbumSearch';
+import lineItems from '../store/lineItems';
+import carts from '../store/carts';
 
 
-const Navbar = ({ handleClick, isLoggedIn }) => (
+const Navbar = ({ handleClick, isLoggedIn, lineItems, cart }) => (
   <div>
     <Link to="/home">
       <h1>Grace Vinyls</h1>
@@ -20,7 +22,7 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
           <a href="#" onClick={handleClick}>
             Logout
           </a>
-          <Link to="/cart">Cart(0)</Link>
+          <Link to="/cart">Cart</Link> 
         </div>
       ) : (
         <div>

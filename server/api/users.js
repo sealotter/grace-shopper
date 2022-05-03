@@ -15,3 +15,16 @@ router.get('/', async (req, res, next) => {
     next(err)
   }
 })
+
+router.post('/', async (req, res, next) => {
+  try {
+    const { username, password } = req.body;
+    const newUser = await User.create({
+      username, 
+      password
+    });
+    res.send(newUser);
+  } catch(err) {
+    next(err)
+  }
+});
