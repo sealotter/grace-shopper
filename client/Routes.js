@@ -8,6 +8,7 @@ import {
   me,
   loadAlbums,
   loadCarts,
+  createGuest,
   createCart,
   getLineItems,
   selectCart,
@@ -20,14 +21,16 @@ import AlbumSearch from './components/AlbumSearch';
  */
 class Routes extends Component {
   async componentDidMount() {
-    this.props.loadInitialData();
-    this.props.getLineItems();
-    this.props.loadAlbums();
+    await this.props.loadInitialData();
+    await this.props.getLineItems();
+    await this.props.loadAlbums();
     await this.props.loadCarts();
     //select cart here
     console.log('CDM runs');
     const { isLoggedIn, auth, carts, selectCart, selectedCart, createCart } =
       this.props;
+    if (!window.localStorage.guestId && !auth.id)
+      await this.props.createGuest();
     if (!selectedCart.id) {
       const toSelect = isLoggedIn
         ? carts.find((cart) => cart.userId === auth.id)
@@ -43,21 +46,10 @@ class Routes extends Component {
   componentDidUpdate(prevProps) {
     console.log(window.localStorage, this.props);
 
-    const { isLoggedIn, auth, carts, selectCart, selectedCart, createCart } =
-      this.props;
+    const { isLoggedIn } = this.props;
     if (!prevProps.isLoggedIn && isLoggedIn) {
       console.log('I logged in');
       this.props.getLineItems();
-      if (!selectedCart.id && carts.length) {
-        const toSelect = isLoggedIn
-          ? carts.find((cart) => cart.userId === auth.id)
-          : carts.find((cart) => cart.guestId === window.localStorage.guestId);
-        toSelect && !selectedCart.id
-          ? selectCart(toSelect)
-          : isLoggedIn
-          ? createCart({ userId: auth.id })
-          : createCart({ guestId: window.localStorage.guestId });
-      }
     }
   }
 
@@ -123,6 +115,9 @@ const mapDispatch = (dispatch) => {
     },
     selectCart: (id) => {
       return dispatch(selectCart(id));
+    },
+    createGuest: () => {
+      return dispatch(createGuest());
     },
   };
 };

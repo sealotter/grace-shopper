@@ -4,6 +4,7 @@ import store from '.';
 //constants------------------------------
 const LOAD_ALBUMS = 'LOAD_ALBUMS';
 const ADD_ALBUMS = 'ADD_ALBUMS';
+const UPDATE_ALBUM = 'UPDATE_ALBUMS';
 
 //thunks---------------------------------
 export const loadAlbums = () => {
@@ -19,6 +20,13 @@ export const loadAlbums = () => {
 
 export const addAlbums = (searchResults) => {
   store.dispatch({ type: ADD_ALBUMS, albums: searchResults });
+};
+
+export const updateAlbum = (album) => {
+  return async (dispatch) => {
+    const updatedAlbum = axios.put('/api/albums', { album });
+    dispatch({ type: UPDATE_ALBUM, album: updatedAlbum.data });
+  };
 };
 
 //reducer-------------------------------

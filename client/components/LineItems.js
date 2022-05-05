@@ -12,29 +12,39 @@ class LineItems extends React.Component {
     };
     this.handleOnChange = this.handleOnChange.bind(this);
     this.handleRemove = this.handleRemove.bind(this);
+    this.handlePurchase = this.handlePurchase.bind(this);
   }
 
   componentDidMount() {
-    // this.setState({ price: this.calculateTotal() });
+    this.setState({ price: this.calculateTotal() });
   }
 
   handleOnChange(ev, item) {
     item.quantity = ev.target.value;
     this.props.updateItem(item);
-    // this.setState({ price: this.calculateTotal() });
+    this.setState({ price: this.calculateTotal() });
   }
 
   handleRemove(item) {
     this.props.deleteItem(item);
-    // this.setState({ price: this.calculateTotal() });
+    this.setState({ price: this.calculateTotal() });
+  }
+
+  handlePurchase() {
+    console.log('purchased');
+    //update inventory
+    //change isPurchased to true
+    //(this means initial cart fetch should unly find isPurchased:false)
+    //create new cart and assign to user
   }
 
   calculateTotal() {
     const { selectedCart, lineItems, albums } = this.props;
-    console.log(selectedCart, lineItems);
+    console.log('HERE', selectedCart, lineItems);
     const itemList = lineItems.filter(
       (item) => item.cartId === selectedCart.id
     );
+    if (!itemList.length) return 0;
     const prices = itemList.map((item) => {
       return (
         albums.find((album) => album.id === item.albumId).price * item.quantity
@@ -45,6 +55,7 @@ class LineItems extends React.Component {
   }
 
   render() {
+    console.log(this.props);
     const { albums, lineItems, selectedCart } = this.props;
     return (
       <div>
@@ -85,7 +96,7 @@ class LineItems extends React.Component {
             : 'No items in cart'}
         </ul>
         <div>total price: ${this.state.price}</div>
-        <button>complete purchase?</button>
+        <button onClick={this.handlePurchase}>complete purchase?</button>
       </div>
     );
   }
