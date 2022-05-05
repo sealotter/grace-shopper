@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import LineItems from './LineItems';
 
 const Cart = ({ selectedCart }) => {
+  console.log('selectedCart', selectedCart);
   return (
     <div>
       Shopping Cart:
@@ -13,8 +14,4 @@ const Cart = ({ selectedCart }) => {
   );
 };
 
-const mapDispatch = (dispatch) => {
-  return {};
-};
-
-export default connect((state) => state, mapDispatch)(Cart);
+export default connect((state) => state)(Cart);

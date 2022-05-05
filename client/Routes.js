@@ -19,11 +19,25 @@ import AlbumSearch from './components/AlbumSearch';
  * COMPONENT
  */
 class Routes extends Component {
-  componentDidMount() {
+  async componentDidMount() {
     this.props.loadInitialData();
     this.props.getLineItems();
     this.props.loadAlbums();
-    this.props.loadCarts();
+    await this.props.loadCarts();
+    //select cart here
+    console.log('CDM runs');
+    const { isLoggedIn, auth, carts, selectCart, selectedCart, createCart } =
+      this.props;
+    if (!selectedCart.id) {
+      const toSelect = isLoggedIn
+        ? carts.find((cart) => cart.userId === auth.id)
+        : carts.find((cart) => cart.guestId === window.localStorage.guestId);
+      toSelect && !selectedCart.id
+        ? selectCart(toSelect)
+        : isLoggedIn
+        ? createCart({ userId: auth.id })
+        : createCart({ guestId: window.localStorage.guestId });
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -31,7 +45,7 @@ class Routes extends Component {
 
     const { isLoggedIn, auth, carts, selectCart, selectedCart, createCart } =
       this.props;
-    if (prevProps.isLoggedIn != isLoggedIn) {
+    if (!prevProps.isLoggedIn && isLoggedIn) {
       console.log('I logged in');
       this.props.getLineItems();
       if (!selectedCart.id && carts.length) {
