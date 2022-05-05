@@ -8,50 +8,47 @@ import {
   me,
   loadAlbums,
   loadCarts,
-  // getCart,
-  // createCart,
+  createCart,
   getLineItems,
+  selectCart,
 } from './store';
-// import AlbumList from './components/AlbumList';
 import AlbumDetail from './components/AlbumDetail';
 import AlbumSearch from './components/AlbumSearch';
-import auth from './store/auth';
 
 /**
  * COMPONENT
  */
 class Routes extends Component {
   componentDidMount() {
-    // window.localStorage.setItem('foo', 'bar');
-    // window.localStorage.removeItem('foo');
     this.props.loadInitialData();
     this.props.getLineItems();
     this.props.loadAlbums();
     this.props.loadCarts();
-    // this.props.getCart();
   }
 
   componentDidUpdate(prevProps) {
     console.log(window.localStorage, this.props);
-    if (!prevProps.isLoggedIn && this.props.isLoggedIn) {
+
+    const { isLoggedIn, auth, carts, selectCart, selectedCart, createCart } =
+      this.props;
+    if (prevProps.isLoggedIn != isLoggedIn) {
       console.log('I logged in');
       this.props.getLineItems();
-
-      // this.props.getCart();
+      if (!selectedCart.id && carts.length) {
+        const toSelect = isLoggedIn
+          ? carts.find((cart) => cart.userId === auth.id)
+          : carts.find((cart) => cart.guestId === window.localStorage.guestId);
+        toSelect && !selectedCart.id
+          ? selectCart(toSelect)
+          : isLoggedIn
+          ? createCart({ userId: auth.id })
+          : createCart({ guestId: window.localStorage.guestId });
+      }
     }
-    // if (!this.props.carts.length) {
-    //   //here
-    //   console.log(this.props.carts);
-    //   const idForNewCart = this.props.auth.id
-    //     ? { userId: this.props.auth.id }
-    //     : { guestId: window.localStorage.guestId };
-    //   this.props.createCart(idForNewCart);
-    // }
   }
 
   render() {
     const { isLoggedIn } = this.props;
-
     return (
       <div>
         {isLoggedIn ? (
@@ -85,9 +82,7 @@ const mapState = (state) => {
     // Being 'logged in' for our purposes will be defined has having a state.auth that has a truthy id.
     // Otherwise, state.auth will be an empty object, and state.auth.id will be falsey
     isLoggedIn: !!state.auth.id,
-    albums: state.albums,
-    carts: state.carts,
-    auth: state.auth,
+    ...state,
   };
 };
 
@@ -99,10 +94,10 @@ const mapDispatch = (dispatch) => {
     loadAlbums: () => {
       return dispatch(loadAlbums());
     },
-    getCart: () => {
-      // console.log('cart');
-      return dispatch(getCart());
-    },
+    // getCart: () => {
+    //   // console.log('cart');
+    //   return dispatch(getCart());
+    // },
     getLineItems: () => {
       return dispatch(getLineItems());
     },
@@ -111,6 +106,9 @@ const mapDispatch = (dispatch) => {
     },
     loadCarts: () => {
       return dispatch(loadCarts());
+    },
+    selectCart: (id) => {
+      return dispatch(selectCart(id));
     },
   };
 };

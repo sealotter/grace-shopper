@@ -9,7 +9,6 @@ export const createGuest = () => {
   return async (dispatch) => {
     try {
       const newGuest = await axios.post('/api/guests');
-      console.log(newGuest);
       window.localStorage.setItem('guestId', newGuest.data.id);
       dispatch({ type: CREATE_GUEST, guest: newGuest.data });
     } catch (error) {

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import store from '.';
 
 // constants ---------
 const LOAD_CARTS = 'LOAD_CARTS';
@@ -36,13 +37,16 @@ export const loadCarts = () => {
 // };
 
 export const createCart = (idForNewCart) => {
-  console.log(idForNewCart);
   return async (dispatch) => {
-    const newCart = await axios.post('/api/cart', {
-      idForNewCart,
-      // test: 'test',
-    });
-    dispatch({ type: CREATE_CART, cart: newCart.data });
+    const state = store.getState();
+    console.log('SELECTED', state);
+    if (!state.selectedCart.id) {
+      const newCart = await axios.post('/api/cart', {
+        idForNewCart,
+      });
+      dispatch({ type: CREATE_CART, cart: newCart.data });
+      store.dispatch({ type: 'SELECT_CART', cart: newCart.data });
+    }
   };
 };
 

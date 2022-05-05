@@ -20,17 +20,14 @@ class LineItems extends React.Component {
   }
 
   render() {
-    const { albums, lineItems, carts, auth } = this.props;
-    let myCart = carts.find((cart) =>
-      auth.id ? cart.id === auth.id : cart.id === window.localStorage.guestId
-    );
+    const { albums, lineItems, carts, auth, selectedCart } = this.props;
     return (
       <div>
         Items:
         <ul>
           {albums.length && carts.length
             ? lineItems
-                .filter((item) => item.cartId === myCart.id)
+                .filter((item) => item.cartId === selectedCart.id)
                 .map((lineItem) => {
                   const album = albums.find(
                     (album) => album.id === lineItem.albumId

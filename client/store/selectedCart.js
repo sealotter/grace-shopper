@@ -1,19 +1,29 @@
-import carts from './carts';
-
 const SELECT_CART = 'SELECT_CART';
+const DESELECT_CART = 'DESELECT_CART';
 
-export const selectCart = (cartId) => {
+export const selectCart = (cart) => {
   return (dispatch) => {
-    const selectedCart = carts.find((cart) => cart.id === cartId);
-    dispatch({ type: SELECT_CART, cart: selectedCart });
+    dispatch({ type: SELECT_CART, cart: cart });
+  };
+};
+
+export const deselectCart = () => {
+  console.log('DESELECT_CART');
+
+  return (dispatch) => {
+    dispatch({ type: DESELECT_CART, cart: {} });
   };
 };
 
 const selectedCart = (state = {}, action) => {
-  if (action.type === SELECT_CART) {
-    return action.cart;
+  switch (action.type) {
+    case SELECT_CART:
+      return action.cart;
+    case DESELECT_CART:
+      return {};
+    default:
+      return state;
   }
-  return state;
 };
 
 export default selectedCart;

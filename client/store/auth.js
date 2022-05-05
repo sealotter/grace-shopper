@@ -2,7 +2,6 @@ import axios from 'axios';
 import history from '../history';
 import store from '.';
 import { createGuest } from './guests';
-import { createCart } from './carts';
 
 const TOKEN = 'token';
 
@@ -29,9 +28,7 @@ export const me = () => async (dispatch) => {
     });
     return dispatch(setAuth(res.data));
   } else if (!window.localStorage.guestId) {
-    console.log(store);
     return store.dispatch(createGuest());
-    // store.dispatch(createCart())
   }
 };
 
@@ -49,6 +46,7 @@ export const authenticate =
 export const logout = () => {
   window.localStorage.removeItem(TOKEN);
   history.push('/login');
+  store.dispatch({ type: 'DESELECT_CART' });
   return {
     type: SET_AUTH,
     auth: {},
