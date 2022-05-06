@@ -40,7 +40,7 @@ class LineItems extends React.Component {
 
   calculateTotal() {
     const { selectedCart, lineItems, albums } = this.props;
-    console.log('HERE', selectedCart, lineItems);
+    // console.log('HERE', selectedCart, lineItems);
     const itemList = lineItems.filter(
       (item) => item.cartId === selectedCart.id
     );
@@ -55,7 +55,7 @@ class LineItems extends React.Component {
   }
 
   render() {
-    console.log(this.props);
+    // console.log(this.props);
     const { albums, lineItems, selectedCart } = this.props;
     return (
       <div>

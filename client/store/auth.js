@@ -2,6 +2,7 @@ import axios from 'axios';
 import history from '../history';
 import store from '.';
 import { createGuest } from './guests';
+import carts from './carts';
 
 import { SET_AUTH, UPDATE_AUTH } from './types';
 const TOKEN = 'token';
@@ -33,7 +34,6 @@ export const authenticate =
     try {
       const res = await axios.post(`/auth/${method}`, { username, password });
       window.localStorage.setItem(TOKEN, res.data.token);
-      window.localStorage.removeItem('guestId');
       dispatch(me());
     } catch (authError) {
       return dispatch(setAuth({ error: authError }));
@@ -43,7 +43,7 @@ export const authenticate =
 export const logout = () => {
   window.localStorage.removeItem(TOKEN);
   history.push('/login');
-  store.dispatch({ type: 'DESELECT_CART' });
+  // store.dispatch({ type: 'SELECT_CART' });
   return {
     type: SET_AUTH,
     auth: {},

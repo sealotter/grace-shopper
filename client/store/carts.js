@@ -39,7 +39,6 @@ export const loadCarts = () => {
 export const createCart = (idForNewCart) => {
   return async (dispatch) => {
     const state = store.getState();
-    console.log('SELECTED', state);
     if (!state.selectedCart.id) {
       const newCart = await axios.post('/api/cart', {
         idForNewCart,

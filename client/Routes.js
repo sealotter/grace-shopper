@@ -43,7 +43,9 @@ class Routes extends Component {
     if (!selectedCart.id) {
       const toSelect = isLoggedIn
         ? carts.find((cart) => cart.userId === auth.id)
-        : carts.find((cart) => cart.guestId === window.localStorage.guestId);
+        : carts.find(
+            (cart) => cart.guestId === window.localStorage.guestId * 1
+          );
       toSelect || selectedCart.id
         ? selectCart(toSelect)
         : isLoggedIn
@@ -55,10 +57,11 @@ class Routes extends Component {
   componentDidUpdate(prevProps) {
     console.log(window.localStorage, this.props);
 
-    const { isLoggedIn } = this.props;
+    const { isLoggedIn, auth, carts } = this.props;
     if (!prevProps.isLoggedIn && isLoggedIn) {
       console.log('I logged in');
       this.props.getLineItems();
+      this.props.selectCart(carts.find((cart) => cart.userId === auth.id));
     }
   }
 

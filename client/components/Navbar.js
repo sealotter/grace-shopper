@@ -3,23 +3,23 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { logout } from '../store';
 import AlbumSearch from './AlbumSearch';
-import { deselectCart } from '../store';
+import { selectCart } from '../store';
 
-const Navbar = ({ handleClick, isLoggedIn }) => (
+const Navbar = ({ handleClick, isLoggedIn, carts }) => (
   <div>
-    <Link to='/home'>
+    <Link to="/home">
       <h1>Grace Vinyls</h1>
     </Link>
     <nav>
       {isLoggedIn ? (
         <div>
           {/* The navbar will show these links after you log in */}
-          <Link to='/home'>Home</Link>
-          <a href='#' onClick={handleClick}>
+          <Link to="/home">Home</Link>
+          <a href="#" onClick={handleClick}>
             Logout
           </a>
-          <Link to='/profile'>profile</Link>
-          <Link to='/cart'>Cart(0)</Link>
+          <Link to="/profile">profile</Link>
+          <Link to="/cart">Cart(0)</Link>
         </div>
       ) : (
         <div>
@@ -31,12 +31,12 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
           >
             <p>Login via GitHub</p>
           </a>
-          <Link to='/login'>Login</Link>
-          <Link to='/signup'>Sign Up</Link>
-          <Link to='/cart'>Cart(0)</Link>
+          <Link to="/login">Login</Link>
+          <Link to="/signup">Sign Up</Link>
+          <Link to="/cart">Cart(0)</Link>
         </div>
       )}
-      <Link to='/albums/search'>Search</Link>
+      <Link to="/albums/search">Search</Link>
     </nav>
     <hr />
   </div>
@@ -48,13 +48,19 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
 const mapState = (state) => {
   return {
     isLoggedIn: !!state.auth.id,
+    ...state,
   };
 };
 
 const mapDispatch = (dispatch) => {
   return {
     handleClick() {
-      // deselectCart();
+      // need to reselect here
+      // dispatch(
+      //   selectCart(
+      //     carts.find((cart) => cart.guestId === window.localStorage.guestId * 1)
+      //   )
+      // );
       return dispatch(logout());
     },
   };
