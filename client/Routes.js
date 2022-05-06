@@ -22,8 +22,9 @@ import Profile from './components/Profile';
 import AlbumList from './components/AlbumList';
 import AlbumDetail from './components/AlbumDetail';
 import AlbumSearch from './components/AlbumSearch';
-import Admin from './components/Admin/AdminHome';
 import searchResults from './store/searchResults';
+import AdminHome from './components/Admin/AdminHome';
+import A_AlbumDetail from './components/Admin/A_AlbumDetail'
 
 /**
  * COMPONENT
@@ -70,7 +71,8 @@ class Routes extends Component {
       <div>
         { isLoggedIn && user.isAdmin === true ? (
           <Switch>
-            <Route path= "/admin" component={Admin} />
+            <Route path= "/admin" component={AdminHome} />
+            <Route path="/admin/albums/:id" component={A_AlbumDetail} />
             <Redirect to ="/admin" />
           </Switch>
 

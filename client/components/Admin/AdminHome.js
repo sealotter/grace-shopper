@@ -1,11 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import { Home } from '../Home';
+import UserList from './A_UserList';
+import Admin_AlbumsList from './A_AlbumList'
 
-const Admin = ({auth}) => { 
+const AdminHome = ({ auth }) => { 
   return (
     <div>
-        <h1>Hello Admin, {auth.firstName} </h1> 
+        <h3>Hello Admin, {auth.firstName} </h3> 
+        <UserList />
+        { /*<Admin_AlbumsList />*/ } 
     
     </div>
       
@@ -13,5 +17,5 @@ const Admin = ({auth}) => {
 }
 
 
-export default connect((state)=>state)(Admin)
+export default connect((state)=>state)(AdminHome)
 
