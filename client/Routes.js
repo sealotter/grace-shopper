@@ -12,9 +12,18 @@ import {
   createCart,
   getLineItems,
   selectCart,
+  loadUsers,
+  getCart,
 } from './store';
+
+import Profile from './components/Profile';
+
+
+import AlbumList from './components/AlbumList';
 import AlbumDetail from './components/AlbumDetail';
 import AlbumSearch from './components/AlbumSearch';
+import Admin from './components/Admin/AdminHome';
+import searchResults from './store/searchResults';
 
 /**
  * COMPONENT
@@ -50,31 +59,41 @@ class Routes extends Component {
     if (!prevProps.isLoggedIn && isLoggedIn) {
       console.log('I logged in');
       this.props.getLineItems();
-    }
+    } 
   }
 
   render() {
-    const { isLoggedIn } = this.props;
+    const { isLoggedIn, users } = this.props;
+    const user = users.find((u) => u.id === this.props.auth.id) || {}; //need empty object or else user.find will return undefined 
+
     return (
       <div>
-        {isLoggedIn ? (
+        { isLoggedIn && user.isAdmin === true ? (
           <Switch>
-            <Route path="/home" component={Home} />
-            <Route path="/cart" component={Cart} />
-            <Route path="/albums/search" component={AlbumSearch} />
-            <Route path="/albums/:id" component={AlbumDetail} />
-            <Redirect to="/home" />
+            <Route path= "/admin" component={Admin} />
+            <Redirect to ="/admin" />
+          </Switch>
+
+        ) : isLoggedIn && user.isAdmin === false ? (
+          <Switch>
+            <Route path='/home' component={Home} />
+            <Route path='/cart' component={Cart} />
+            <Route path='/profile' component={Profile} />
+            <Route path='/albums/search' component={AlbumSearch} />
+            <Route path='/albums/:id' component={AlbumDetail} />
+            <Redirect to='/home' />
           </Switch>
         ) : (
           <Switch>
-            <Route path="/" exact component={Login} />
-            <Route path="/login" component={Login} />
-            <Route path="/signup" component={Signup} />
-            <Route path="/cart" component={Cart} />
-            <Route path="/albums/search" component={AlbumSearch} />
-            <Route path="/albums/:id" component={AlbumDetail} />
+            <Route path='/' exact component={Login} />
+            <Route path='/login' component={Login} />
+            <Route path='/signup' component={Signup} />
+            <Route path='/cart' component={Cart} />
+            <Route path='/albums/search' component={AlbumSearch} />
+            <Route path='/albums/:id' component={AlbumDetail} />
           </Switch>
         )}
+       
       </div>
     );
   }
@@ -88,14 +107,18 @@ const mapState = (state) => {
     // Being 'logged in' for our purposes will be defined has having a state.auth that has a truthy id.
     // Otherwise, state.auth will be an empty object, and state.auth.id will be falsey
     isLoggedIn: !!state.auth.id,
-    ...state,
+    //need all state 
+    ...state
+    //albums: state.albums,
+    
   };
 };
 
 const mapDispatch = (dispatch) => {
   return {
-    loadInitialData() {
+    loadInitialData(data) {
       dispatch(me());
+      dispatch(loadUsers(data));
     },
     loadAlbums: () => {
       return dispatch(loadAlbums());
@@ -119,6 +142,7 @@ const mapDispatch = (dispatch) => {
     createGuest: () => {
       return dispatch(createGuest());
     },
+   
   };
 };
 

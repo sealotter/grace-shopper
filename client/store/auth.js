@@ -3,12 +3,9 @@ import history from '../history';
 import store from '.';
 import { createGuest } from './guests';
 
-const TOKEN = 'token';
 
-/**
- * ACTION TYPES
- */
-const SET_AUTH = 'SET_AUTH';
+import { SET_AUTH, UPDATE_AUTH } from './types';
+const TOKEN = 'token';
 
 /**
  * ACTION CREATORS
@@ -60,6 +57,9 @@ export default function (state = {}, action) {
   switch (action.type) {
     case SET_AUTH:
       return action.auth;
+    case UPDATE_AUTH:
+      return { ...state, ...action.payload };
+    // return { ...state, firstName: action.payload.firstName };
     default:
       return state;
   }
