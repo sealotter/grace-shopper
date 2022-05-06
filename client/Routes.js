@@ -8,20 +8,18 @@ import {
   me,
   loadAlbums,
   loadCarts,
+  loadGuests,
   createGuest,
   createCart,
   getLineItems,
   selectCart,
   loadUsers,
-  getCart,
 } from './store';
 
 import Profile from './components/Profile';
 
-import AlbumList from './components/AlbumList';
 import AlbumDetail from './components/AlbumDetail';
 import AlbumSearch from './components/AlbumSearch';
-import searchResults from './store/searchResults';
 import AdminHome from './components/Admin/AdminHome';
 // import A_AlbumDetail from './components/Admin/A_AlbumDetail'
 
@@ -31,14 +29,25 @@ import AdminHome from './components/Admin/AdminHome';
 class Routes extends Component {
   async componentDidMount() {
     await this.props.loadInitialData();
+    await this.props.loadGuests();
     await this.props.getLineItems();
     await this.props.loadAlbums();
     await this.props.loadCarts();
     //select cart here
     console.log('CDM runs');
-    const { isLoggedIn, auth, carts, selectCart, selectedCart, createCart } =
-      this.props;
-    if (!window.localStorage.guestId && !auth.id)
+    const {
+      isLoggedIn,
+      auth,
+      carts,
+      selectCart,
+      selectedCart,
+      createCart,
+      guests,
+    } = this.props;
+    if (
+      (!window.localStorage.guestId && !auth.id) ||
+      window.localStorage.guestId * 1 > guests.length
+    )
       await this.props.createGuest();
     if (!selectedCart.id) {
       const toSelect = isLoggedIn
@@ -56,12 +65,11 @@ class Routes extends Component {
 
   componentDidUpdate(prevProps) {
     console.log(window.localStorage, this.props);
-
+    console.log('CDU runs');
     const { isLoggedIn, auth, carts } = this.props;
     if (!prevProps.isLoggedIn && isLoggedIn) {
       console.log('I logged in');
       this.props.getLineItems();
-      this.props.selectCart(carts.find((cart) => cart.userId === auth.id));
     }
   }
 
@@ -124,10 +132,9 @@ const mapDispatch = (dispatch) => {
     loadAlbums: () => {
       return dispatch(loadAlbums());
     },
-    // getCart: () => {
-    //   // console.log('cart');
-    //   return dispatch(getCart());
-    // },
+    loadGuests: () => {
+      return dispatch(loadGuests());
+    },
     getLineItems: () => {
       return dispatch(getLineItems());
     },
@@ -137,8 +144,8 @@ const mapDispatch = (dispatch) => {
     loadCarts: () => {
       return dispatch(loadCarts());
     },
-    selectCart: (id) => {
-      return dispatch(selectCart(id));
+    selectCart: (cart) => {
+      return dispatch(selectCart(cart));
     },
     createGuest: () => {
       return dispatch(createGuest());

@@ -18,10 +18,11 @@ const Navbar = ({ handleClick, isLoggedIn, carts }) => (
           <a
             href="#"
             onClick={() => {
-              const cart = carts.find(
-                (cart) => cart.guestId === window.localStorage.guestId * 1
-              );
-              return handleClick(cart);
+              // const cart = carts.find(
+              //   (cart) => cart.guestId === window.localStorage.guestId * 1
+              // );
+              // if (!cart) console.log('no cart');
+              return handleClick();
             }}
           >
             Logout
@@ -64,7 +65,7 @@ const mapDispatch = (dispatch) => {
   return {
     handleClick(cart) {
       // need to reselect here
-      dispatch(selectCart(cart));
+      // dispatch(selectCart(cart));
       return dispatch(logout(cart));
     },
   };
