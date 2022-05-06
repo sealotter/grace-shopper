@@ -44,7 +44,7 @@ class Routes extends Component {
       const toSelect = isLoggedIn
         ? carts.find((cart) => cart.userId === auth.id)
         : carts.find((cart) => cart.guestId === window.localStorage.guestId);
-      toSelect && !selectedCart.id
+      toSelect || selectedCart.id
         ? selectCart(toSelect)
         : isLoggedIn
         ? createCart({ userId: auth.id })

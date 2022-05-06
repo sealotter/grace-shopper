@@ -3,7 +3,6 @@ import history from '../history';
 import store from '.';
 import { createGuest } from './guests';
 
-
 import { SET_AUTH, UPDATE_AUTH } from './types';
 const TOKEN = 'token';
 
@@ -24,8 +23,8 @@ export const me = () => async (dispatch) => {
       },
     });
     return dispatch(setAuth(res.data));
-  } else if (!window.localStorage.guestId) {
-    return store.dispatch(createGuest());
+    // } else if (!window.localStorage.guestId) {
+    //   return store.dispatch(createGuest());
   }
 };
 
@@ -34,6 +33,7 @@ export const authenticate =
     try {
       const res = await axios.post(`/auth/${method}`, { username, password });
       window.localStorage.setItem(TOKEN, res.data.token);
+      window.localStorage.removeItem('guestId');
       dispatch(me());
     } catch (authError) {
       return dispatch(setAuth({ error: authError }));
