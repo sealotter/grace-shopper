@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { logout } from '../store';
@@ -15,7 +15,15 @@ const Navbar = ({ handleClick, isLoggedIn, carts }) => (
         <div>
           {/* The navbar will show these links after you log in */}
           <Link to="/home">Home</Link>
-          <a href="#" onClick={handleClick}>
+          <a
+            href="#"
+            onClick={() => {
+              const cart = carts.find(
+                (cart) => cart.guestId === window.localStorage.guestId * 1
+              );
+              return handleClick(cart);
+            }}
+          >
             Logout
           </a>
           <Link to="/profile">profile</Link>
@@ -54,14 +62,10 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    handleClick() {
+    handleClick(cart) {
       // need to reselect here
-      // dispatch(
-      //   selectCart(
-      //     carts.find((cart) => cart.guestId === window.localStorage.guestId * 1)
-      //   )
-      // );
-      return dispatch(logout());
+      dispatch(selectCart(cart));
+      return dispatch(logout(cart));
     },
   };
 };
