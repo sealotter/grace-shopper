@@ -23,9 +23,7 @@ const reducer = combineReducers({
   searchResults,
   guests,
   selectedCart,
-
   profileReducer,
-
   users
 
 });

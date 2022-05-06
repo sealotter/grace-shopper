@@ -74,4 +74,17 @@ router.post('/search', async (req, res, next) => {
   }
 });
 
+
+router.delete('/api/admin/:id', async(req, res, next) => {
+  try{
+    const album = await Album.findByPk(req.params.id)
+   
+    await album.destory()
+    console.log(album)
+    res.sendStatus(204)
+  }catch(ex) {
+    next(ex)
+  }
+})
+
 module.exports = router;

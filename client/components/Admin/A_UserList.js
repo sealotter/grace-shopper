@@ -18,7 +18,6 @@ const UserList = ({ users }) => {
               </li>
             )
           })}
-
         </ol>
       </div>
 

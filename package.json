@@ -61,5 +61,14 @@
     "supertest": "^4.0.2",
     "webpack": "^5.15.0",
     "webpack-cli": "^4.3.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sealotter/grace-shopper.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/sealotter/grace-shopper/issues"
+  },
+  "homepage": "https://github.com/sealotter/grace-shopper#readme"
 }

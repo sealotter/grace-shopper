@@ -4,6 +4,7 @@ import { withRouter, Route, Switch, Redirect, Link } from 'react-router-dom';
 import { Login, Signup } from './components/AuthForm';
 import Home from './components/Home';
 import Cart from './components/Cart';
+import A_AlbumDetail from './components/Admin/A_AlbumDetail';
 import {
   me,
   loadAlbums,
@@ -24,7 +25,7 @@ import AlbumDetail from './components/AlbumDetail';
 import AlbumSearch from './components/AlbumSearch';
 import searchResults from './store/searchResults';
 import AdminHome from './components/Admin/AdminHome';
-import A_AlbumDetail from './components/Admin/A_AlbumDetail'
+//import A_AlbumDetail from './components/Admin/A_AlbumDetail'
 
 /**
  * COMPONENT
@@ -59,6 +60,9 @@ class Routes extends Component {
     const { isLoggedIn } = this.props;
     if (!prevProps.isLoggedIn && isLoggedIn) {
       console.log('I logged in');
+
+      //this.props.loadInitialData();
+      this.props.getCart();
       this.props.getLineItems();
     } 
   }
@@ -72,8 +76,10 @@ class Routes extends Component {
         { isLoggedIn && user.isAdmin === true ? (
           <Switch>
             <Route path= "/admin" component={AdminHome} />
-            <Route path="/admin/albums/:id" component={A_AlbumDetail} />
+            <Route exact path= "/admin" component={AdminHome} />
+            <Route exact path="/admin/albums/:id" component={A_AlbumDetail} />
             <Redirect to ="/admin" />
+
           </Switch>
 
         ) : isLoggedIn && user.isAdmin === false ? (
@@ -118,9 +124,12 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    loadInitialData(data) {
+    loadInitialData() {
       dispatch(me());
-      dispatch(loadUsers(data));
+      dispatch(loadUsers());
+      // dispatch(loadAlbums());
+      // dispatch(getCart());
+      // dispatch(getLineItems());
     },
     loadAlbums: () => {
       return dispatch(loadAlbums());
