@@ -9,11 +9,11 @@ class AlbumDetail extends React.Component {
   }
 
   handleOnClick(album) {
-    const { carts, match, lineItems } = this.props;
-    if (carts[0]) {
+    const { carts, match, lineItems, selectedCart } = this.props;
+    if (selectedCart) {
       const item = lineItems.find((item) => item.albumId === album.id);
       if (!item) {
-        this.props.createItem(carts[0].id, match.params.id * 1);
+        this.props.createItem(selectedCart.id, match.params.id * 1);
       } else {
         item.quantity++;
         this.props.updateItem(item);
@@ -24,7 +24,6 @@ class AlbumDetail extends React.Component {
   render() {
     const { albums, match } = this.props;
     const album = albums.find((album) => album.id === match.params.id * 1);
-    // console.log(album, 'art url: ', album.albumArt[8] === 's');
     return (
       <div>
         {album ? (

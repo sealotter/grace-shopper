@@ -4,7 +4,7 @@ const albumSeed = require('../server/db/albumSeed');
 
 const {
   db,
-  models: { User, Album, Cart, LineItem },
+  models: { User, Guest, Album, Cart, LineItem },
 } = require('../server/db');
 // const testData = require('../server/db/testData');
 const realData = require('../server/db/realData');
@@ -90,6 +90,10 @@ async function seed() {
       )
     );
 
+    //create guests:
+    const testGuest1 = await Guest.create();
+    const testGuest2 = await Guest.create();
+
     // Create Carts
 
     const carts = await Promise.all([
@@ -99,11 +103,10 @@ async function seed() {
       Cart.create({ userId: lisaK.id, isPurchased: false }),
       Cart.create({ userId: annaK.id, isPurchased: false }),
       Cart.create({ userId: ericR.id, isPurchased: false }),
+      Cart.create({ guestId: testGuest1.id, isPurchased: false }),
     ]);
 
     // Create Albums
-
-    //const albums = await Album.bulkCreate(testData);
 
     try {
       await Album.bulkCreate(albumSeed);

@@ -4,10 +4,20 @@ import { withRouter, Route, Switch, Redirect, Link } from 'react-router-dom';
 import { Login, Signup } from './components/AuthForm';
 import Home from './components/Home';
 import Cart from './components/Cart';
+import {
+  me,
+  loadAlbums,
+  loadCarts,
+  createGuest,
+  createCart,
+  getLineItems,
+  selectCart,
+  loadUsers,
+  getCart,
+} from './store';
 
 import Profile from './components/Profile';
 
-import { me, loadAlbums, getCart, getLineItems, loadUsers } from './store';
 
 import AlbumList from './components/AlbumList';
 import AlbumDetail from './components/AlbumDetail';
@@ -19,17 +29,35 @@ import searchResults from './store/searchResults';
  * COMPONENT
  */
 class Routes extends Component {
-  componentDidMount() {
-    //console.log(this.props)
-    this.props.loadInitialData();
-    this.props.loadAlbums();
-    this.props.getLineItems();
+  async componentDidMount() {
+    await this.props.loadInitialData();
+    await this.props.getLineItems();
+    await this.props.loadAlbums();
+    await this.props.loadCarts();
+    //select cart here
+    console.log('CDM runs');
+    const { isLoggedIn, auth, carts, selectCart, selectedCart, createCart } =
+      this.props;
+    if (!window.localStorage.guestId && !auth.id)
+      await this.props.createGuest();
+    if (!selectedCart.id) {
+      const toSelect = isLoggedIn
+        ? carts.find((cart) => cart.userId === auth.id)
+        : carts.find((cart) => cart.guestId === window.localStorage.guestId);
+      toSelect && !selectedCart.id
+        ? selectCart(toSelect)
+        : isLoggedIn
+        ? createCart({ userId: auth.id })
+        : createCart({ guestId: window.localStorage.guestId });
+    }
   }
 
   componentDidUpdate(prevProps) {
-    if (!prevProps.isLoggedIn && this.props.isLoggedIn) {
+    console.log(window.localStorage, this.props);
+
+    const { isLoggedIn } = this.props;
+    if (!prevProps.isLoggedIn && isLoggedIn) {
       console.log('I logged in');
-      this.props.getCart();
       this.props.getLineItems();
     } 
   }
@@ -95,13 +123,25 @@ const mapDispatch = (dispatch) => {
     loadAlbums: () => {
       return dispatch(loadAlbums());
     },
-    getCart: () => {
-      // console.log('cart');
-      return dispatch(getCart());
-    },
+    // getCart: () => {
+    //   // console.log('cart');
+    //   return dispatch(getCart());
+    // },
     getLineItems: () => {
       return dispatch(getLineItems());
-    }
+    },
+    createCart: (id) => {
+      return dispatch(createCart(id));
+    },
+    loadCarts: () => {
+      return dispatch(loadCarts());
+    },
+    selectCart: (id) => {
+      return dispatch(selectCart(id));
+    },
+    createGuest: () => {
+      return dispatch(createGuest());
+    },
    
   };
 };

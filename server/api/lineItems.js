@@ -5,7 +5,7 @@ const {
 
 router.get('/', async (req, res, next) => {
   try {
-    const user = await User.findByToken(req.headers.authorization);
+    // const user = await User.findByToken(req.headers.authorization);
     const userLineItems = await LineItem.findAll();
 
     res.send(userLineItems);

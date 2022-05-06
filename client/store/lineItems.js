@@ -7,21 +7,12 @@ const CREATE_ITEM = 'CREATE_ITEM';
 const UPDATE_ITEM = 'UPDATE_ITEM';
 const DELETE_ITEM = 'DELETE_ITEM';
 
-
 // thunks -----------------
 
 export const getLineItems = () => {
   return async (dispatch) => {
-    const token = window.localStorage.getItem('token');
-    if (token) {
-      const response = await axios.get('/api/lineItems', {
-        headers: {
-          authorization: token,
-        },
-      });
-      dispatch({ type: GET_ITEMS, lineItems: response.data });
-
-    }
+    const response = await axios.get('/api/lineItems');
+    dispatch({ type: GET_ITEMS, lineItems: response.data });
   };
 };
 

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { logout } from '../store';
 import AlbumSearch from './AlbumSearch';
+import { deselectCart } from '../store';
 
 const Navbar = ({ handleClick, isLoggedIn }) => (
   <div>
@@ -53,7 +54,8 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     handleClick() {
-      dispatch(logout());
+      // deselectCart();
+      return dispatch(logout());
     },
   };
 };
