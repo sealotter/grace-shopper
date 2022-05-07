@@ -70,27 +70,27 @@ class Routes extends Component {
       <div>
         {isLoggedIn && user.isAdmin === true ? (
           <Switch>
-            <Route path="/admin" component={AdminHome} />
-            <Route path="/admin/albums/:id" component={A_AlbumDetail} />
-            <Redirect to="/admin" />
+            <Route path='/admin' component={AdminHome} />
+            {/* <Route path='/admin/albums/:id' component={A_AlbumDetail} /> */}
+            <Redirect to='/admin' />
           </Switch>
         ) : isLoggedIn && user.isAdmin === false ? (
           <Switch>
-            <Route path="/home" component={Home} />
-            <Route path="/cart" component={Cart} />
-            <Route path="/profile" component={Profile} />
-            <Route path="/albums/search" component={AlbumSearch} />
-            <Route path="/albums/:id" component={AlbumDetail} />
-            <Redirect to="/home" />
+            <Route path='/home' component={Home} />
+            <Route path='/cart' component={Cart} />
+            <Route path='/profile' component={Profile} />
+            <Route path='/albums/search' component={AlbumSearch} />
+            <Route path='/albums/:id' component={AlbumDetail} />
+            <Redirect to='/home' />
           </Switch>
         ) : (
           <Switch>
-            <Route path="/" exact component={Login} />
-            <Route path="/login" component={Login} />
-            <Route path="/signup" component={Signup} />
-            <Route path="/cart" component={Cart} />
-            <Route path="/albums/search" component={AlbumSearch} />
-            <Route path="/albums/:id" component={AlbumDetail} />
+            <Route path='/' exact component={Login} />
+            <Route path='/login' component={Login} />
+            <Route path='/signup' component={Signup} />
+            <Route path='/cart' component={Cart} />
+            <Route path='/albums/search' component={AlbumSearch} />
+            <Route path='/albums/:id' component={AlbumDetail} />
           </Switch>
         )}
       </div>
