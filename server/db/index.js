@@ -7,6 +7,7 @@ const Guest = require('./models/Guest');
 const Album = require('./models/Album');
 const Cart = require('./models/Cart');
 const LineItem = require('./models/LineItem');
+const PreviousOrder = require('./models/PreviousOrder');
 
 //associations -----------
 
@@ -22,6 +23,15 @@ Cart.hasMany(LineItem);
 LineItem.belongsTo(Album);
 Album.hasMany(LineItem);
 
+PreviousOrder.belongsTo(User); //, {as: 'buyer'}
+User.hasMany(PreviousOrder); // , {foreignKey: 'buyerId'}
+
+PreviousOrder.belongsTo(Guest);
+Guest.hasMany(PreviousOrder);
+
+LineItem.belongsTo(PreviousOrder);
+PreviousOrder.hasMany(LineItem);
+
 module.exports = {
   db,
   models: {
@@ -30,5 +40,6 @@ module.exports = {
     Album,
     Cart,
     LineItem,
+    PreviousOrder,
   },
 };

@@ -4,7 +4,7 @@ const albumSeed = require('../server/db/albumSeed');
 
 const {
   db,
-  models: { User, Guest, Album, Cart, LineItem },
+  models: { User, Guest, Album, Cart, LineItem, PreviousOrder },
 } = require('../server/db');
 // const testData = require('../server/db/testData');
 const realData = require('../server/db/realData');
@@ -104,6 +104,15 @@ async function seed() {
       Cart.create({ userId: annaK.id, isPurchased: false }),
       Cart.create({ userId: ericR.id, isPurchased: false }),
       Cart.create({ guestId: testGuest1.id, isPurchased: false }),
+    ]);
+
+    //create previous orders
+
+    const previousOrders = await Promise.all([
+      PreviousOrder.create({ userId: codyP.id }),
+      PreviousOrder.create({ userId: murphyM.id }),
+      PreviousOrder.create({ userId: lisaK.id }),
+      PreviousOrder.create({ userId: lisaK.id }),
     ]);
 
     // Create Albums

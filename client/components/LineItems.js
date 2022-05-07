@@ -41,9 +41,11 @@ class LineItems extends React.Component {
       album.availableInventory -= lineItem.quantity;
       this.props.updateAlbum(album);
     });
-    //change isPurchased to true
-    //convert to previous order object and delete cart
-    //store previous order object in an array associated with the user
+    this.props.selectedCart.isPurchased = true;
+    //convert to previous order object
+    //store previous order object in an table associated with the user
+    //new db model, same as order but with no put or delete route
+    //accessible via profile page
     //create new cart and assign to user
   }
 
