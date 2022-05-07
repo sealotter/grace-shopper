@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
-import { updateItem, deleteItem } from '../store/lineItems';
+import { updateAlbum, updateItem, deleteItem } from '../store';
 import selectedCart from '../store/selectedCart';
 
 class LineItems extends React.Component {
@@ -31,10 +30,17 @@ class LineItems extends React.Component {
   }
 
   handlePurchase() {
-    console.log('purchased');
-    //update inventory
-    // - get each album id and quantity from line items
-    // - album.put with new quantity
+    const checkoutList = this.props.lineItems.filter(
+      (item) => item.cartId === this.props.selectedCart.id
+    );
+    console.log('purchased', checkoutList);
+    checkoutList.forEach((lineItem) => {
+      const album = this.props.albums.find(
+        (album) => album.id === lineItem.albumId
+      );
+      album.availableInventory -= lineItem.quantity;
+      this.props.updateAlbum(album);
+    });
     //change isPurchased to true
     //convert to previous order object and delete cart
     //store previous order object in an array associated with the user
@@ -115,6 +121,7 @@ const mapDispatchToProps = (dispatch) => {
     deleteItem: (item) => {
       return dispatch(deleteItem(item));
     },
+    updateAlbum: (album) => dispatch(updateAlbum(album)),
   };
 };
 
