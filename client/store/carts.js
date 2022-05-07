@@ -15,31 +15,9 @@ export const loadCarts = () => {
   };
 };
 
-// export const getCart = () => {
-//   return async (dispatch) => {
-//     console.log('store ', window.localStorage);
-//     const token = window.localStorage.getItem('token');
-//     if (token) {
-//       const response = await axios.get('/api/cart', {
-//         headers: {
-//           authorization: token,
-//         },
-//       });
-
-//       dispatch({ type: GET_CART, carts: response.data });
-//     } else if (window.localStorage.guestId) {
-//       console.log('guestId is present, no need to create cart');
-//       const guestId = window.localStorage.getItem('guestId');
-//       const response = await axios.get(`/api/cart/${guestId}`);
-//       dispatch({ type: GET_CART, carts: response.data });
-//     }
-//   };
-// };
-
 export const createCart = (idForNewCart) => {
   return async (dispatch) => {
     const state = store.getState();
-    console.log('SELECTED', state);
     if (!state.selectedCart.id) {
       const newCart = await axios.post('/api/cart', {
         idForNewCart,
@@ -59,13 +37,6 @@ const carts = (state = [], action) => {
     case CREATE_CART:
       return [...state, action.cart];
   }
-  // if (action.type === GET_CART) {
-  //   return [action.carts];
-  // }
-  // if (action.type === CREATE_CART) {
-  //   console.log('state', state, 'action:', action);
-  //   return [...state, action.cart];
-  // }
   return state;
 };
 

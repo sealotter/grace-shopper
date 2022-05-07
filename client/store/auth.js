@@ -2,7 +2,7 @@ import axios from 'axios';
 import history from '../history';
 import store from '.';
 import { createGuest } from './guests';
-
+import carts from './carts';
 
 import { SET_AUTH, UPDATE_AUTH } from './types';
 const TOKEN = 'token';
@@ -24,8 +24,8 @@ export const me = () => async (dispatch) => {
       },
     });
     return dispatch(setAuth(res.data));
-  } else if (!window.localStorage.guestId) {
-    return store.dispatch(createGuest());
+    // } else if (!window.localStorage.guestId) {
+    //   return store.dispatch(createGuest());
   }
 };
 
@@ -43,7 +43,7 @@ export const authenticate =
 export const logout = () => {
   window.localStorage.removeItem(TOKEN);
   history.push('/login');
-  store.dispatch({ type: 'DESELECT_CART' });
+  // store.dispatch({ type: 'SELECT_CART' });
   return {
     type: SET_AUTH,
     auth: {},

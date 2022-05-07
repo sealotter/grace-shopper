@@ -9,11 +9,8 @@ import lineItems from './lineItems';
 import searchResults from './searchResults';
 import guests from './guests';
 import selectedCart from './selectedCart';
-
 import { profileReducer } from './profile/reducerProfile';
-
 import { users } from './users';
-
 
 const reducer = combineReducers({
   auth,
@@ -23,11 +20,8 @@ const reducer = combineReducers({
   searchResults,
   guests,
   selectedCart,
-
   profileReducer,
-
-  users
-
+  users,
 });
 
 const middleware = composeWithDevTools(
@@ -43,8 +37,5 @@ export * from './lineItems';
 export * from './searchResults';
 export * from './guests';
 export * from './selectedCart';
-
 export * from './profile/reducerProfile';
-
 export * from './users';
-

@@ -4,7 +4,7 @@ const albumSeed = require('../server/db/albumSeed');
 
 const {
   db,
-  models: { User, Guest, Album, Cart, LineItem },
+  models: { User, Guest, Album, Cart, LineItem, PreviousOrder },
 } = require('../server/db');
 // const testData = require('../server/db/testData');
 const realData = require('../server/db/realData');

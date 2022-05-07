@@ -5,6 +5,13 @@ const LOAD_GUESTS = 'LOAD_GUESTS';
 const CREATE_GUEST = 'CREATE_GUEST';
 
 //thunks--------------------------
+export const loadGuests = () => {
+  return async (dispatch) => {
+    const response = await axios.get('/api/guests');
+    dispatch({ type: LOAD_GUESTS, guests: response.data });
+  };
+};
+
 export const createGuest = () => {
   return async (dispatch) => {
     try {
@@ -20,6 +27,8 @@ export const createGuest = () => {
 //reducer------------------------
 const guests = (state = [], action) => {
   switch (action.type) {
+    case LOAD_GUESTS:
+      return action.guests;
     case CREATE_GUEST:
       return state.concat([action.guest]);
     default:

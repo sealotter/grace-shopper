@@ -1,7 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
-import { updateItem, deleteItem } from '../store/lineItems';
+import {
+  updateAlbum,
+  updateItem,
+  deleteItem,
+  createCart,
+  deselectCart,
+} from '../store';
 import selectedCart from '../store/selectedCart';
 
 class LineItems extends React.Component {
@@ -31,16 +36,33 @@ class LineItems extends React.Component {
   }
 
   handlePurchase() {
-    console.log('purchased');
-    //update inventory
-    //change isPurchased to true
-    //(this means initial cart fetch should unly find isPurchased:false)
-    //create new cart and assign to user
+    const {
+      auth,
+      lineItems,
+      selectedCart,
+      deselectCart,
+      albums,
+      updateAlbum,
+      // createPreviousOrder,
+      createCart,
+    } = this.props;
+    const checkoutList = lineItems.filter(
+      (item) => item.cartId === selectedCart.id
+    );
+    console.log('purchased line items', checkoutList);
+    checkoutList.forEach((lineItem) => {
+      const album = albums.find((album) => album.id === lineItem.albumId);
+      album.availableInventory -= lineItem.quantity;
+      updateAlbum(album);
+    });
+    selectedCart.isPurchased = true;
+    deselectCart();
+    createCart(auth.id);
   }
 
   calculateTotal() {
     const { selectedCart, lineItems, albums } = this.props;
-    console.log('HERE', selectedCart, lineItems);
+    // console.log('HERE', selectedCart, lineItems);
     const itemList = lineItems.filter(
       (item) => item.cartId === selectedCart.id
     );
@@ -56,7 +78,7 @@ class LineItems extends React.Component {
 
   render() {
     console.log(this.props);
-    const { albums, lineItems, selectedCart } = this.props;
+    const { albums, lineItems, selectedCart, auth } = this.props;
     return (
       <div>
         Items:
@@ -70,6 +92,7 @@ class LineItems extends React.Component {
                   );
                   return (
                     <li key={lineItem.id}>
+                      <img src={album.thumbNail} />
                       <div>
                         album: {album.albumName} id: {album.id}
                       </div>
@@ -96,7 +119,9 @@ class LineItems extends React.Component {
             : 'No items in cart'}
         </ul>
         <div>total price: ${this.state.price}</div>
-        <button onClick={this.handlePurchase}>complete purchase?</button>
+        <button disabled={!auth.id} onClick={this.handlePurchase}>
+          complete purchase?
+        </button>
       </div>
     );
   }
@@ -104,12 +129,12 @@ class LineItems extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateItem: (item) => {
-      return dispatch(updateItem(item));
-    },
-    deleteItem: (item) => {
-      return dispatch(deleteItem(item));
-    },
+    updateItem: (item) => dispatch(updateItem(item)),
+    deleteItem: (item) => dispatch(deleteItem(item)),
+    updateAlbum: (album) => dispatch(updateAlbum(album)),
+    createCart: (id) => dispatch(createCart({ userId: id })),
+    deselectCart: () => dispatch(deselectCart()),
+    // createPreviousOrder: (order) => dispatch(createPreviousOrder(order)),
   };
 };
 
