@@ -15,10 +15,12 @@ router.get('/', async (req, res, next) => {
 //post not working yet
 router.post('/', async (req, res, next) => {
   try {
-    const order = req.body;
-    const newPreviousOrder = await LineItem.create({
+    const order = req.body.order;
+    console.log(order);
+    const newPreviousOrder = await PreviousOrder.create({
       order,
     });
+    console.log(newPreviousOrder);
     res.send(newPreviousOrder);
   } catch (error) {
     next(error);

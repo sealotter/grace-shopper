@@ -1,6 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { updateAlbum, updateItem, deleteItem } from '../store';
+import {
+  updateAlbum,
+  updateItem,
+  deleteItem,
+  createPreviousOrder,
+} from '../store';
 import selectedCart from '../store/selectedCart';
 
 class LineItems extends React.Component {
@@ -30,18 +35,24 @@ class LineItems extends React.Component {
   }
 
   handlePurchase() {
-    const checkoutList = this.props.lineItems.filter(
-      (item) => item.cartId === this.props.selectedCart.id
+    const {
+      lineItems,
+      selectedCart,
+      albums,
+      updateAlbum,
+      createPreviousOrder,
+    } = this.props;
+    const checkoutList = lineItems.filter(
+      (item) => item.cartId === selectedCart.id
     );
-    console.log('purchased', checkoutList);
+    console.log('purchased line items', checkoutList);
     checkoutList.forEach((lineItem) => {
-      const album = this.props.albums.find(
-        (album) => album.id === lineItem.albumId
-      );
+      const album = albums.find((album) => album.id === lineItem.albumId);
       album.availableInventory -= lineItem.quantity;
-      this.props.updateAlbum(album);
+      updateAlbum(album);
     });
-    this.props.selectedCart.isPurchased = true;
+    selectedCart.isPurchased = true;
+    // createPreviousOrder(selectedCart);
     //convert to previous order object
     //store previous order object in an table associated with the user
     //new db model, same as order but with no put or delete route
@@ -125,6 +136,7 @@ const mapDispatchToProps = (dispatch) => {
       return dispatch(deleteItem(item));
     },
     updateAlbum: (album) => dispatch(updateAlbum(album)),
+    createPreviousOrder: (order) => dispatch(createPreviousOrder(order)),
   };
 };
 
