@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
+
+import React, { useEffect, useState } from 'react';
+import { connect, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { logout } from '../store';
 import AlbumSearch from './AlbumSearch';
@@ -18,10 +19,6 @@ const Navbar = ({ handleClick, isLoggedIn, carts }) => (
           <a
             href="#"
             onClick={() => {
-              // const cart = carts.find(
-              //   (cart) => cart.guestId === window.localStorage.guestId * 1
-              // );
-              // if (!cart) console.log('no cart');
               return handleClick();
             }}
           >
