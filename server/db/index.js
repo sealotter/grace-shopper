@@ -23,11 +23,8 @@ Cart.hasMany(LineItem);
 LineItem.belongsTo(Album);
 Album.hasMany(LineItem);
 
-PreviousOrder.belongsTo(User); //, {as: 'buyer'}
-User.hasMany(PreviousOrder); // , {foreignKey: 'buyerId'}
-
-PreviousOrder.belongsTo(Guest);
-Guest.hasMany(PreviousOrder);
+PreviousOrder.belongsTo(User);
+User.hasMany(PreviousOrder);
 
 LineItem.belongsTo(PreviousOrder);
 PreviousOrder.hasMany(LineItem);

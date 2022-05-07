@@ -14,6 +14,7 @@ import {
   getLineItems,
   selectCart,
   loadUsers,
+  loadPreviousOrders,
 } from './store';
 
 import Profile from './components/Profile';
@@ -21,7 +22,7 @@ import Profile from './components/Profile';
 import AlbumDetail from './components/AlbumDetail';
 import AlbumSearch from './components/AlbumSearch';
 import AdminHome from './components/Admin/AdminHome';
-// import A_AlbumDetail from './components/Admin/A_AlbumDetail'
+// import A_AlbumDetail from './components/Admin/A_AlbumDetail';
 
 /**
  * COMPONENT
@@ -69,6 +70,7 @@ class Routes extends Component {
     if (!prevProps.isLoggedIn && isLoggedIn) {
       console.log('I logged in');
       this.props.getLineItems();
+      this.props.loadPreviousOrders();
     }
   }
 
@@ -148,6 +150,7 @@ const mapDispatch = (dispatch) => {
     createGuest: () => {
       return dispatch(createGuest());
     },
+    loadPreviousOrders: () => dispatch(loadPreviousOrders()),
   };
 };
 

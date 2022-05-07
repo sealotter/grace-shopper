@@ -81,6 +81,7 @@ class LineItems extends React.Component {
                   );
                   return (
                     <li key={lineItem.id}>
+                      <img src={album.thumbNail} />
                       <div>
                         album: {album.albumName} id: {album.id}
                       </div>
