@@ -14,7 +14,6 @@ import {
   getLineItems,
   selectCart,
   loadUsers,
-  loadPreviousOrders,
 } from './store';
 
 import Profile from './components/Profile';
@@ -70,7 +69,6 @@ class Routes extends Component {
     if (!prevProps.isLoggedIn && isLoggedIn) {
       console.log('I logged in');
       this.props.getLineItems();
-      // this.props.loadPreviousOrders();
     }
   }
 
@@ -150,7 +148,6 @@ const mapDispatch = (dispatch) => {
     createGuest: () => {
       return dispatch(createGuest());
     },
-    loadPreviousOrders: () => dispatch(loadPreviousOrders()),
   };
 };
 

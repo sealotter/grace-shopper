@@ -11,7 +11,6 @@ import guests from './guests';
 import selectedCart from './selectedCart';
 import { profileReducer } from './profile/reducerProfile';
 import { users } from './users';
-import previousOrders from './previousOrders';
 
 const reducer = combineReducers({
   auth,
@@ -21,7 +20,6 @@ const reducer = combineReducers({
   searchResults,
   guests,
   selectedCart,
-  previousOrders,
   profileReducer,
   users,
 });
@@ -41,4 +39,3 @@ export * from './guests';
 export * from './selectedCart';
 export * from './profile/reducerProfile';
 export * from './users';
-export * from './previousOrders';

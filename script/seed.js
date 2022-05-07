@@ -106,15 +106,6 @@ async function seed() {
       Cart.create({ guestId: testGuest1.id, isPurchased: false }),
     ]);
 
-    //create previous orders
-
-    const previousOrders = await Promise.all([
-      PreviousOrder.create({ userId: codyP.id }),
-      PreviousOrder.create({ userId: murphyM.id }),
-      PreviousOrder.create({ userId: lisaK.id }),
-      PreviousOrder.create({ userId: lisaK.id }),
-    ]);
-
     // Create Albums
 
     try {

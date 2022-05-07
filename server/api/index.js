@@ -7,7 +7,6 @@ router.use('/albums', require('./albums'));
 router.use('/cart', require('./carts'));
 router.use('/lineItems', require('./lineItems'));
 router.use('/profile', require('./profile'));
-router.use('/previousOrders', require('./previousOrders'));
 
 router.use((req, res, next) => {
   const error = new Error('Not Found');

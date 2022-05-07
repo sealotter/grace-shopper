@@ -4,7 +4,8 @@ import {
   updateAlbum,
   updateItem,
   deleteItem,
-  createPreviousOrder,
+  createCart,
+  deselectCart,
 } from '../store';
 import selectedCart from '../store/selectedCart';
 
@@ -36,11 +37,14 @@ class LineItems extends React.Component {
 
   handlePurchase() {
     const {
+      auth,
       lineItems,
       selectedCart,
+      deselectCart,
       albums,
       updateAlbum,
-      createPreviousOrder,
+      // createPreviousOrder,
+      createCart,
     } = this.props;
     const checkoutList = lineItems.filter(
       (item) => item.cartId === selectedCart.id
@@ -52,12 +56,8 @@ class LineItems extends React.Component {
       updateAlbum(album);
     });
     selectedCart.isPurchased = true;
-    // createPreviousOrder(selectedCart);
-    //convert to previous order object
-    //store previous order object in an table associated with the user
-    //new db model, same as order but with no put or delete route
-    //accessible via profile page
-    //create new cart and assign to user
+    deselectCart();
+    createCart(auth.id);
   }
 
   calculateTotal() {
@@ -129,14 +129,12 @@ class LineItems extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateItem: (item) => {
-      return dispatch(updateItem(item));
-    },
-    deleteItem: (item) => {
-      return dispatch(deleteItem(item));
-    },
+    updateItem: (item) => dispatch(updateItem(item)),
+    deleteItem: (item) => dispatch(deleteItem(item)),
     updateAlbum: (album) => dispatch(updateAlbum(album)),
-    createPreviousOrder: (order) => dispatch(createPreviousOrder(order)),
+    createCart: (id) => dispatch(createCart({ userId: id })),
+    deselectCart: () => dispatch(deselectCart()),
+    // createPreviousOrder: (order) => dispatch(createPreviousOrder(order)),
   };
 };
 
