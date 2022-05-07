@@ -33,7 +33,6 @@ class Routes extends Component {
     await this.props.getLineItems();
     await this.props.loadAlbums();
     await this.props.loadCarts();
-    //select cart here
     console.log('CDM runs');
     const {
       isLoggedIn,
@@ -119,7 +118,6 @@ const mapState = (state) => {
     isLoggedIn: !!state.auth.id,
     //need all state
     ...state,
-    //albums: state.albums,
   };
 };
 

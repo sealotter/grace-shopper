@@ -33,8 +33,11 @@ class LineItems extends React.Component {
   handlePurchase() {
     console.log('purchased');
     //update inventory
+    // - get each album id and quantity from line items
+    // - album.put with new quantity
     //change isPurchased to true
-    //(this means initial cart fetch should unly find isPurchased:false)
+    //convert to previous order object and delete cart
+    //store previous order object in an array associated with the user
     //create new cart and assign to user
   }
 
@@ -55,8 +58,8 @@ class LineItems extends React.Component {
   }
 
   render() {
-    // console.log(this.props);
-    const { albums, lineItems, selectedCart } = this.props;
+    console.log(this.props);
+    const { albums, lineItems, selectedCart, auth } = this.props;
     return (
       <div>
         Items:
@@ -96,7 +99,9 @@ class LineItems extends React.Component {
             : 'No items in cart'}
         </ul>
         <div>total price: ${this.state.price}</div>
-        <button onClick={this.handlePurchase}>complete purchase?</button>
+        <button disabled={!auth.id} onClick={this.handlePurchase}>
+          complete purchase?
+        </button>
       </div>
     );
   }
