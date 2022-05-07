@@ -16,18 +16,18 @@ const User = db.define('user', {
   firstName: {
     type: Sequelize.STRING,
     unique: false,
-    allowNull: false,
+    allowNull: true,
   },
   lastName: {
     type: Sequelize.STRING,
     unique: false,
-    allowNull: false,
+    allowNull: true,
   },
   email: {
     type: Sequelize.STRING,
     isEmail: true,
     unique: true,
-    allowNull: false,
+    allowNull: true,
   },
   address: {
     type: Sequelize.STRING,
@@ -42,10 +42,6 @@ const User = db.define('user', {
     type: Sequelize.BOOLEAN,
     defaultValue: false,
   },
-
-   
-  }
-
 });
 
 module.exports = User;
