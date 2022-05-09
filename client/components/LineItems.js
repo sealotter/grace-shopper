@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
 import { updateItem, deleteItem } from '../store/lineItems';
+import Checkout from './Stripe/Checkout';
 import selectedCart from '../store/selectedCart';
 
 class LineItems extends React.Component {
@@ -95,8 +95,10 @@ class LineItems extends React.Component {
                 })
             : 'No items in cart'}
         </ul>
+        
         <div>total price: ${this.state.price}</div>
-        <button onClick={this.handlePurchase}>complete purchase?</button>
+        <Checkout />
+          { /* <button onClick={this.handlePurchase}>complete purchase?</button> */ }
       </div>
     );
   }
