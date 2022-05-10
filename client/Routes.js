@@ -21,6 +21,7 @@ import Profile from './components/Profile';
 import AlbumDetail from './components/AlbumDetail';
 import AlbumSearch from './components/AlbumSearch';
 import AdminHome from './components/Admin/AdminHome';
+import Genre from './components/Genre/Genre';
 // import A_AlbumDetail from './components/Admin/A_AlbumDetail';
 
 /**
@@ -91,6 +92,7 @@ class Routes extends Component {
             <Route path='/profile' component={Profile} />
             <Route path='/albums/search' component={AlbumSearch} />
             <Route path='/albums/:id' component={AlbumDetail} />
+            <Route path='/genre/:id' component={Genre} />
             <Redirect to='/home' />
           </Switch>
         ) : (
@@ -101,6 +103,7 @@ class Routes extends Component {
             <Route path='/cart' component={Cart} />
             <Route path='/albums/search' component={AlbumSearch} />
             <Route path='/albums/:id' component={AlbumDetail} />
+            <Route path='/genre/:id' component={Genre} />
           </Switch>
         )}
       </div>
