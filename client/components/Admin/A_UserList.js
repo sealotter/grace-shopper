@@ -1,5 +1,5 @@
 import React from 'react'
-import {connect } from 'react-redux'
+import { connect } from 'react-redux'
 
 const UserList = ({ users }) => {
     const sansAdmin = users.filter((user) => user.isAdmin === false)
@@ -14,6 +14,7 @@ const UserList = ({ users }) => {
                   <ol>
                     {user.email}
                     {user.address}
+                    {user.isAdmin}
                   </ol>
               </li>
             )

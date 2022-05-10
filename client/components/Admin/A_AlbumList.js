@@ -2,14 +2,19 @@ import React from 'react';
 import {connect} from 'react-redux'
 import AlbumList from '../AlbumList';
 import { Link } from 'react-router-dom'
-import { deleteAlbum } from '../../store'
+//import { deleteAlbum } from '../../store'
+import { deleteAlbum } from '../../store/albums';
 
 
-class Admin_AlbumsList extends React.Component {
+// class Admin_AlbumsList extends React.Component {
 
-  render() {
-    const {albums, destroy} = this.props
 
+const Admin_AlbumsList = ({albums, destroy}) => {
+
+  
+
+  
+   
     return(
       <div>
         <ol>
@@ -30,13 +35,13 @@ class Admin_AlbumsList extends React.Component {
       </div>
 
     )
-  }
+  
 }
 
 const mapDispatch = function(dispatch) {
   return {
     destroy: (album) => {
-      dispatch(deleteAlbum(album))
+     return dispatch(deleteAlbum(album))
     }
   }
   

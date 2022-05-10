@@ -62,7 +62,7 @@ class Routes extends Component {
       console.log('I logged in');
 
       //this.props.loadInitialData();
-      this.props.getCart();
+      //this.props.getCart();
       this.props.getLineItems();
     }
   }

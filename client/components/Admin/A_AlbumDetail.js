@@ -11,9 +11,8 @@ class A_AlbumDetail extends React.Component {
   handleOnClick(album){
     const {match} = this.props
   }
-
   render() {
-    const { albums, match, destory } = this.props;
+    const { albums, match } = this.props;
     const album = albums.find((album) => album.id === match.params.id * 1);
     // console.log(album, 'art url: ', album.albumArt[8] === 's');
     return (
@@ -26,7 +25,7 @@ class A_AlbumDetail extends React.Component {
               <img src={album.albumArt} />
             )}
             <h1>{album.albumName}
-            <button className='delete' onClick={() => destory(album)}>Delete</button>
+            
             </h1>
             <div>
               {album.year} release by {album.artistName}
@@ -56,15 +55,7 @@ class A_AlbumDetail extends React.Component {
 
 }
 
-const mapDispatch = function(dispatch) {
-  return {
-    destory: (album) => {
-      dispatch(deleteAlbum(album))
-    }
-  }
-  
-}
 
 
 
-export default connect((state) => state, mapDispatch)(A_AlbumDetail)
+export default connect((state) => state)(A_AlbumDetail)
