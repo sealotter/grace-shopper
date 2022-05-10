@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const stripe = require('stripe')(process.env.STRIPE_KEY);
-const axios = require('axios');
+
 
 router.post('/create-checkout-session', async (req, res) => {
     const session = await stripe.checkout.sessions.create({

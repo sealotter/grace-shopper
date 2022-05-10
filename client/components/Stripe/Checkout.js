@@ -41,4 +41,3 @@ export default connect((state) => state)(Checkout);
 
 // remove button from <LineItems /> component and add it to <Checkout /> add functionality there
 // need to import <Checkout /> as a component to LineItems (where the button is currently)
-// 
