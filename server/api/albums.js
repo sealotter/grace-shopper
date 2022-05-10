@@ -17,6 +17,16 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+router.put('/', async (req, res, next) => {
+  try {
+    const album = await Album.findByPk(req.body.album.id);
+    await album.update(req.body.album);
+    res.sendStatus(204);
+  } catch (error) {
+    next(error);
+  }
+});
+
 // curl -G localhost:8080/api/albums/search -d "style=style=Funk"
 
 router.post('/search', async (req, res, next) => {
