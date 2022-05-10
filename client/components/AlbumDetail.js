@@ -57,7 +57,7 @@ class AlbumDetail extends React.Component {
             <div>
               Current Price: {album.price ? `$${album.price}` : 'unavailable'}
             </div>
-            <div>Available Inventory: {album.availableInventory}</div>
+            {/*<div>Available Inventory: {album.availableInventory}</div>*/}
             {album.availableInventory > 0 ? (
               <button onClick={() => this.handleOnClick(album)}>
                 Add to Cart

@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom';
 import { deleteAlbum } from '../../store'
 
 
@@ -14,9 +15,9 @@ class A_AlbumDetail extends React.Component {
   render() {
     const { albums, match } = this.props;
     const album = albums.find((album) => album.id === match.params.id * 1);
-    // console.log(album, 'art url: ', album.albumArt[8] === 's');
     return (
       <div>
+        <Link to = {'/admin'}>Back</Link>
         {album ? (
           <div>
             {album.albumArt[8] === 's' ? (
@@ -25,7 +26,6 @@ class A_AlbumDetail extends React.Component {
               <img src={album.albumArt} />
             )}
             <h1>{album.albumName}
-            
             </h1>
             <div>
               {album.year} release by {album.artistName}
@@ -43,7 +43,14 @@ class A_AlbumDetail extends React.Component {
             <div>
               {album.albumDetails ? `Album Details: ${album.albumDetails}` : ''}
             </div>
+            <div>
+              Community Rating:{' '}
+              {album.rating ? `${album.rating} / 5` : 'unavilable'}
+              </div>
+              <div>
+              Current Price: {album.price ? `$${album.price}` : 'unavailable'}
             </div>
+          </div>
             
         ) : (
           ''
@@ -54,7 +61,6 @@ class A_AlbumDetail extends React.Component {
   }
 
 }
-
 
 
 
