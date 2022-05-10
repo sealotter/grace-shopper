@@ -22,6 +22,7 @@ const reducer = combineReducers({
   selectedCart,
   profileReducer,
   users,
+
 });
 
 const middleware = composeWithDevTools(

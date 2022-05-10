@@ -6,16 +6,23 @@ import { logout } from '../store';
 import AlbumSearch from './AlbumSearch';
 import { selectCart } from '../store';
 
-const Navbar = ({ handleClick, isLoggedIn, carts }) => (
+const Navbar = ({ handleClick, isLoggedIn, carts}) => {
+  const userId = useSelector((state) => state.auth.id)
+  const user = useSelector((state) => state.users.find((u) => u.id === userId)) || {}
+   //const user = useri.find((u) => u.id === this.props.auth.id) || {}
+  return(
   <div>
     <Link to="/home">
       <h1>Grace Vinyls</h1>
     </Link>
     <nav>
-      {isLoggedIn ? (
+      {isLoggedIn && user.isAdmin === false ? (
         <div>
           {/* The navbar will show these links after you log in */}
           <Link to="/home">Home</Link>
+          <Link to="/profile">profile</Link>
+          <Link to="/cart">Cart(0)</Link>
+          <Link to="/albums/search">Search</Link>
           <a
             href="#"
             onClick={() => {
@@ -24,10 +31,25 @@ const Navbar = ({ handleClick, isLoggedIn, carts }) => (
           >
             Logout
           </a>
-          <Link to="/profile">profile</Link>
-          <Link to="/cart">Cart(0)</Link>
         </div>
-      ) : (
+      ) : isLoggedIn && user.isAdmin === true ? (
+        <div>
+            
+          {/* The navbar will show these links after you log in */}
+          <Link to="/admin">Home</Link>
+          <Link to = "/users">Users</Link>
+          <Link to = "/inventory">Inventory</Link>
+          <a
+            href="#"
+            onClick={() => {
+              return handleClick();
+            }}
+          >
+            Logout
+          </a>
+        </div>
+
+      ) :  (
         <div>
           {/* The navbar will show these links before you log in */}
           {/* //Oauth step 1
@@ -40,13 +62,15 @@ const Navbar = ({ handleClick, isLoggedIn, carts }) => (
           <Link to="/login">Login</Link>
           <Link to="/signup">Sign Up</Link>
           <Link to="/cart">Cart(0)</Link>
+          <Link to="/albums/search">Search</Link>
         </div>
       )}
-      <Link to="/albums/search">Search</Link>
+      
     </nav>
     <hr />
   </div>
-);
+  )
+};
 
 /**
  * CONTAINER

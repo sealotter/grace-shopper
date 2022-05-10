@@ -76,6 +76,7 @@ async function seed() {
         isAdmin: false,
       },
     ];
+    
     const [codyP, murphyM, janaeE, lisaK, annaK, ericR] = await Promise.all(
       users.map((user) =>
         User.create({
