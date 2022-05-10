@@ -22,7 +22,10 @@ import AlbumDetail from './components/AlbumDetail';
 import AlbumSearch from './components/AlbumSearch';
 import AdminHome from './components/Admin/AdminHome';
 import Genre from './components/Genre/Genre';
-// import A_AlbumDetail from './components/Admin/A_AlbumDetail';
+import A_UserList from './components/Admin/A_UserList';
+import A_AlbumDetail from './components/Admin/A_AlbumDetail';
+import A_AlbumList from './components/Admin/A_AlbumList';
+
 
 /**
  * COMPONENT
@@ -69,21 +72,27 @@ class Routes extends Component {
     const { isLoggedIn, auth, carts } = this.props;
     if (!prevProps.isLoggedIn && isLoggedIn) {
       console.log('I logged in');
+
+      //this.props.loadInitialData();
+      //this.props.getCart();
       this.props.getLineItems();
     }
   }
 
   render() {
     const { isLoggedIn, users } = this.props;
-    const user = users.find((u) => u.id === this.props.auth.id) || {}; //need empty object or else user.find will return undefined
+    const user = users.find((u) => u.id === this.props.auth.id) || {}; 
 
     return (
       <div>
         {isLoggedIn && user.isAdmin === true ? (
           <Switch>
-            <Route path='/admin' component={AdminHome} />
-            {/* <Route path='/admin/albums/:id' component={A_AlbumDetail} /> */}
-            <Redirect to='/admin' />
+            <Route exact path= '/admin' component={AdminHome} />
+            <Route path = '/users' component={A_UserList} />
+            <Route path = '/inventory' component = {A_AlbumList} />
+            <Route exact path="/admin/albums/:id" component={A_AlbumDetail} />
+            <Redirect to ='/admin' />
+
           </Switch>
         ) : isLoggedIn && user.isAdmin === false ? (
           <Switch>
@@ -119,16 +128,18 @@ const mapState = (state) => {
     // Being 'logged in' for our purposes will be defined has having a state.auth that has a truthy id.
     // Otherwise, state.auth will be an empty object, and state.auth.id will be falsey
     isLoggedIn: !!state.auth.id,
-    //need all state
     ...state,
   };
 };
 
 const mapDispatch = (dispatch) => {
   return {
-    loadInitialData(data) {
+    loadInitialData() {
       dispatch(me());
-      dispatch(loadUsers(data));
+      dispatch(loadUsers());
+      // dispatch(loadAlbums());
+      // dispatch(getCart());
+      // dispatch(getLineItems());
     },
     loadAlbums: () => {
       return dispatch(loadAlbums());

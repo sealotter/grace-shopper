@@ -6,6 +6,7 @@ import MiddleNav from './components/Navbar/MiddleNav';
 import TopNav from './components/Navbar/TopNav';
 import Routes from './Routes';
 //import Cart from './components/Cart';
+
 const App = () => {
   return (
     <div>

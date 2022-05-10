@@ -1,31 +1,23 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { createItem, updateItem } from '../store';
+import { connect } from 'react-redux'
+import { Link } from 'react-router-dom';
+import { deleteAlbum } from '../../store'
 
-class AlbumDetail extends React.Component {
+
+class A_AlbumDetail extends React.Component {
   constructor() {
     super();
     this.handleOnClick = this.handleOnClick.bind(this);
   }
-
-  handleOnClick(album) {
-    const { carts, match, lineItems, selectedCart } = this.props;
-    if (selectedCart) {
-      const item = lineItems.find((item) => item.albumId === album.id);
-      if (!item) {
-        this.props.createItem(selectedCart.id, match.params.id * 1);
-      } else {
-        item.quantity++;
-        this.props.updateItem(item);
-      }
-    }
+  handleOnClick(album){
+    const {match} = this.props
   }
-
   render() {
     const { albums, match } = this.props;
     const album = albums.find((album) => album.id === match.params.id * 1);
     return (
       <div>
+        <Link to = {'/admin'}>Back</Link>
         {album ? (
           <div>
             {album.albumArt[8] === 's' ? (
@@ -33,7 +25,8 @@ class AlbumDetail extends React.Component {
             ) : (
               <img src={album.albumArt} />
             )}
-            <h1>{album.albumName}</h1>
+            <h1>{album.albumName}
+            </h1>
             <div>
               {album.year} release by {album.artistName}
             </div>
@@ -53,36 +46,22 @@ class AlbumDetail extends React.Component {
             <div>
               Community Rating:{' '}
               {album.rating ? `${album.rating} / 5` : 'unavilable'}
-            </div>
-            <div>
+              </div>
+              <div>
               Current Price: {album.price ? `$${album.price}` : 'unavailable'}
             </div>
-            {/*<div>Available Inventory: {album.availableInventory}</div>*/}
-            {album.availableInventory > 0 ? (
-              <button onClick={() => this.handleOnClick(album)}>
-                Add to Cart
-              </button>
-            ) : (
-              'Not available for purchase at this time'
-            )}
           </div>
+            
         ) : (
           ''
         )}
       </div>
+
     );
   }
+
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    createItem: (cartId, albumId) => {
-      return dispatch(createItem(cartId, albumId));
-    },
-    updateItem: (item) => {
-      return dispatch(updateItem(item));
-    },
-  };
-};
 
-export default connect((state) => state, mapDispatchToProps)(AlbumDetail);
+
+export default connect((state) => state)(A_AlbumDetail)
