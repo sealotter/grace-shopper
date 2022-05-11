@@ -13,13 +13,17 @@ const getStripe = () => {
 };
 
 const Checkout = () => {
-    const item = {
-        price: 'price_1KxMRCEzPlA06fKFNSdnjrN1',
-        quantity: 1
-    };
+
+    // const items = [
+    //     {price: 'price_1KyLV9EzPlA06fKFDmJk8x3X', quantity: 1},
+    //     {price: 'price_1KyLUgEzPlA06fKFj706P4Yd', quantity: 5}
+    // ];
 
 const checkoutOptions = {
-    lineItems: [item],
+    lineItems: [
+        {price: 'price_1KyLV9EzPlA06fKFDmJk8x3X', quantity: 1},
+        {price: 'price_1KyLUgEzPlA06fKFj706P4Yd', quantity: 5}
+    ],
     mode: 'payment',
     successUrl: 'http://localhost:8080/success',
     cancelUrl: 'http://localhost:8080/cancel',
@@ -41,3 +45,18 @@ export default connect((state) => state)(Checkout);
 
 // remove button from <LineItems /> component and add it to <Checkout /> add functionality there
 // need to import <Checkout /> as a component to LineItems (where the button is currently)
+
+
+/*
+
+To Do:
+- [X] Pick Sample Albums for the demo and add them to the Stripe Dashboard as Products 
+- [] Edit create checkout session to include multiple line items 
+- [] Add discount/promo code to Checkout? 
+- [] Add Shipping To Stripe Checkout
+- [] Customize Stripe Checkout layout however you want
+- [] Create Success and Cancel Redirect Components for after checkout
+- [] Send email after payment confirmation?
+- [] Do I need to change the API key from test key to live key?
+
+*/
