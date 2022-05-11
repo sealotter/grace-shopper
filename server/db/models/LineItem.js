@@ -6,13 +6,6 @@ const LineItem = db.define('lineItem', {
     type: Sequelize.INTEGER,
     defaultValue: 1,
   },
-  // total: {
-  //     type: Sequelize.INTEGER,
-  //     allowNull: false,
-  //     validate: {
-  //         notEmpty: true
-  //     }
-  // }
 });
 
 module.exports = LineItem;

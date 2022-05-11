@@ -81,7 +81,7 @@ class AlbumSearch extends React.Component {
               })}
             </ol>
           ) : (
-            ''
+            'No results to display'
           )}
         </div>
       </div>
