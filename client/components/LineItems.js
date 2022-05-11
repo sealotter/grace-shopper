@@ -110,6 +110,10 @@ class LineItems extends React.Component {
                           min={0}
                           max={album.availableInventory}
                           value={lineItem.quantity}
+                          onClick={(ev) => {
+                            ev.target.blur();
+                          }}
+                          onKeyDown={(ev) => ev.preventDefault()}
                           onChange={(ev) => this.handleOnChange(ev, lineItem)}
                         ></input>
                         <button onClick={() => this.handleRemove(lineItem)}>
