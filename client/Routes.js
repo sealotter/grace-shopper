@@ -80,7 +80,7 @@ class Routes extends Component {
       selectedCart,
     } = this.props;
     if (prevProps.isLoggedIn != isLoggedIn) {
-      // await deselectCart();
+      await deselectCart();
       console.log('I logged in');
       await this.props.loadCarts();
       getLineItems();
@@ -90,7 +90,11 @@ class Routes extends Component {
       ) {
         await this.props.createGuest();
       }
-      if (!selectedCart || auth.id) {
+      if (
+        !selectedCart ||
+        auth.id ||
+        (!auth.id && window.localStorage.guestId)
+      ) {
         const toSelect = isLoggedIn
           ? carts.find((cart) => cart.userId === auth.id && !cart.isPurchased)
           : carts.find(
@@ -98,7 +102,7 @@ class Routes extends Component {
             );
         toSelect || selectedCart.id
           ? selectCart(toSelect)
-          : isLoggedIn
+          : auth.id
           ? createCart({ userId: auth.id })
           : createCart({ guestId: window.localStorage.guestId });
       }
