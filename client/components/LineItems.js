@@ -5,6 +5,7 @@ import {
   updateItem,
   deleteItem,
   createCart,
+  updateCart,
   deselectCart,
 } from '../store';
 import selectedCart from '../store/selectedCart';
@@ -44,7 +45,7 @@ class LineItems extends React.Component {
     this.setState({ price: this.calculateTotal() });
   }
 
-  handlePurchase() {
+  async handlePurchase() {
     const {
       auth,
       lineItems,
@@ -52,8 +53,12 @@ class LineItems extends React.Component {
       deselectCart,
       albums,
       updateAlbum,
+      updateCart,
       createCart,
     } = this.props;
+    selectedCart.purchasedTotal = this.state.price;
+    selectedCart.isPurchased = true;
+
     const checkoutList = lineItems.filter(
       (item) => item.cartId === selectedCart.id
     );
@@ -62,7 +67,7 @@ class LineItems extends React.Component {
       album.availableInventory -= lineItem.quantity;
       updateAlbum(album);
     });
-    selectedCart.isPurchased = true;
+    await updateCart(selectedCart);
     deselectCart();
     createCart(auth.id);
     this.setState({ price: 0 });
@@ -143,6 +148,7 @@ const mapDispatchToProps = (dispatch) => {
     deleteItem: (item) => dispatch(deleteItem(item)),
     updateAlbum: (album) => dispatch(updateAlbum(album)),
     createCart: (id) => dispatch(createCart({ userId: id })),
+    updateCart: (cart) => dispatch(updateCart(cart)),
     deselectCart: () => dispatch(deselectCart()),
   };
 };

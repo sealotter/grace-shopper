@@ -3,8 +3,8 @@ import store from '.';
 
 // constants ---------
 const LOAD_CARTS = 'LOAD_CARTS';
-const GET_CART = 'GET_CART';
 const CREATE_CART = 'CREATE_CART';
+const UPDATE_CART = 'UPDATE_CART';
 
 // thunks -----------
 
@@ -28,6 +28,14 @@ export const createCart = (idForNewCart) => {
   };
 };
 
+export const updateCart = (cart) => {
+  return async (dispatch) => {
+    const updatedCart = await axios.put('/api/cart', { cart });
+    console.log(updatedCart.data);
+    dispatch({ type: UPDATE_CART, cart: updatedCart.data });
+  };
+};
+
 // reducer ----------
 
 const carts = (state = [], action) => {
@@ -36,6 +44,10 @@ const carts = (state = [], action) => {
       return action.carts;
     case CREATE_CART:
       return [...state, action.cart];
+    case UPDATE_CART:
+      return state.map((cart) =>
+        cart.id === action.cart.id ? action.cart : cart
+      );
   }
   return state;
 };

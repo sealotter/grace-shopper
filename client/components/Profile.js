@@ -25,7 +25,7 @@ const Profile = ({ carts, auth, albums, lineItems }) => {
       </Container>
       <ul>
         {carts
-          .filter((cart) => cart.userId === auth.id)
+          .filter((cart) => cart.userId === auth.id && cart.isPurchased)
           .map((cart) => {
             return (
               <li key={cart.id}>
@@ -49,6 +49,7 @@ const Profile = ({ carts, auth, albums, lineItems }) => {
                         })
                     : ''}
                 </ul>
+                <div>total: ${cart.purchasedTotal}</div>
               </li>
             );
           })}
