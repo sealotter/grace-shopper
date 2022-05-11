@@ -92,7 +92,7 @@ const CusReview = () => {
               variant='h4'
               gutterBottom
             >
-              GACE VINYL
+              GRACE VINYL
             </Typography>
 
             <Typography sx={{ mb: 1.5 }} color='text.secondary'>

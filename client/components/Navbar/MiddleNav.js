@@ -15,6 +15,7 @@ const MiddleNav = () => {
   const handleClick = (cart) => {
     dispatch(logout(cart));
   };
+  const user = useSelector((state) => state.auth);
 
   return (
     <AppBar
@@ -70,7 +71,7 @@ const MiddleNav = () => {
               item
             >
               <nav>
-                {isLoggedIn ? (
+                {isLoggedIn && user.isAdmin === false ? (
                   <div>
                     {/* The navbar will show these links after you log in */}
                     <Link to='/home'>
@@ -93,6 +94,52 @@ const MiddleNav = () => {
                       {' '}
                       <Typography sx={{ color: 'black' }} variant='p'>
                         Profile
+                      </Typography>
+                    </Link>
+                    <Link to='/cart'>
+                      <Typography sx={{ color: 'black' }} variant='p'>
+                        Cart(0)
+                      </Typography>
+                    </Link>
+                    <Link to='/albums/search'>
+                      <Typography sx={{ color: 'black' }} variant='p'>
+                        Search
+                      </Typography>
+                    </Link>
+                  </div>
+                ) : isLoggedIn && user.isAdmin === true ? (
+                  <div>
+                    {/* The navbar will show these links after you log in */}
+                    <Link to='/home'>
+                      {' '}
+                      <Typography sx={{ color: 'black' }} variant='p'>
+                        Home
+                      </Typography>
+                    </Link>
+                    <a
+                      href='#'
+                      onClick={() => {
+                        return handleClick();
+                      }}
+                    >
+                      <Typography sx={{ color: 'black' }} variant='p'>
+                        Logout
+                      </Typography>
+                    </a>
+                    <Link to='/profile'>
+                      {' '}
+                      <Typography sx={{ color: 'black' }} variant='p'>
+                        Profile
+                      </Typography>
+                    </Link>
+                    <Link to='/users'>
+                      <Typography sx={{ color: 'royalBlue' }} variant='p'>
+                        Users
+                      </Typography>
+                    </Link>
+                    <Link to='/inventory'>
+                      <Typography sx={{ color: 'royalBlue' }} variant='p'>
+                        Inventory
                       </Typography>
                     </Link>
                     <Link to='/cart'>
