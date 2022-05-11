@@ -20,6 +20,10 @@ class LineItems extends React.Component {
     this.handlePurchase = this.handlePurchase.bind(this);
   }
 
+  componentDidMount() {
+    this.setState({ price: this.calculateTotal() });
+  }
+
   componentDidUpdate(prevProps) {
     const { selectedCart } = this.props;
     if (!prevProps.selectedCart.id && selectedCart.id) {
