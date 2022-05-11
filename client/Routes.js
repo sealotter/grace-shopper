@@ -68,11 +68,38 @@ class Routes extends Component {
   async componentDidUpdate(prevProps) {
     console.log(window.localStorage, this.props);
     console.log('CDU runs');
-    const { isLoggedIn, getLineItems, carts, auth, selectCart } = this.props;
-    if (!prevProps.isLoggedIn && isLoggedIn) {
+    const {
+      isLoggedIn,
+      getLineItems,
+      carts,
+      auth,
+      selectCart,
+      guests,
+      selectedCart,
+    } = this.props;
+    console.log(prevProps.isLoggedIn, isLoggedIn);
+    if (prevProps.isLoggedIn != isLoggedIn) {
       console.log('I logged in');
       await this.props.loadCarts();
       getLineItems();
+      if (
+        (!auth.id && !window.localStorage.guestId) ||
+        window.localStorage.guestId * 1 > guests.length
+      ) {
+        await this.props.createGuest();
+      }
+      // if (!selectedCart.id) {
+      const toSelect = isLoggedIn
+        ? carts.find((cart) => cart.userId === auth.id && !cart.isPurchased)
+        : carts.find(
+            (cart) => cart.guestId === window.localStorage.guestId * 1
+          );
+      toSelect || selectedCart.id
+        ? selectCart(toSelect)
+        : isLoggedIn
+        ? createCart({ userId: auth.id })
+        : createCart({ guestId: window.localStorage.guestId });
+      // }
     }
   }
 
