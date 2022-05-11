@@ -23,13 +23,14 @@ const Profile = ({ carts, auth, albums, lineItems }) => {
           </Grid>
         </Grid>
       </Container>
+      <div>Previous Orders:</div>
       <ul>
         {carts
           .filter((cart) => cart.userId === auth.id && cart.isPurchased)
           .map((cart) => {
             return (
               <li key={cart.id}>
-                cart id: {cart.id}, date created: {cart.createdAt.slice(0, 10)}
+                cart id: {cart.id}, purchased: {cart.updatedAt.slice(0, 10)}
                 <ul>
                   {lineItems
                     ? lineItems

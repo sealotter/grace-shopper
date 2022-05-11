@@ -80,7 +80,7 @@ class Routes extends Component {
       selectedCart,
     } = this.props;
     if (prevProps.isLoggedIn != isLoggedIn) {
-      await deselectCart();
+      // await deselectCart();
       console.log('I logged in');
       await this.props.loadCarts();
       getLineItems();
