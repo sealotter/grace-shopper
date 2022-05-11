@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Box, Container, Grid } from '@mui/material';
 import ProfileUpdate from './ProfileUpdate';
 
-const Profile = ({ carts, auth }) => {
+const Profile = ({ carts, auth, albums, lineItems }) => {
   return (
     <div>
       <Container component="main" maxWidth="md">
@@ -30,6 +30,25 @@ const Profile = ({ carts, auth }) => {
             return (
               <li key={cart.id}>
                 cart id: {cart.id}, date created: {cart.createdAt.slice(0, 10)}
+                <ul>
+                  {lineItems
+                    ? lineItems
+                        .filter((item) => item.cartId === cart.id)
+                        .map((item) => {
+                          return (
+                            <li key={item.id}>
+                              album:{' '}
+                              {albums.length
+                                ? albums.find(
+                                    (album) => album.id === item.albumId
+                                  ).albumName
+                                : ''}{' '}
+                              x {item.quantity}
+                            </li>
+                          );
+                        })
+                    : ''}
+                </ul>
               </li>
             );
           })}
