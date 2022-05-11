@@ -13,6 +13,7 @@ import {
   createCart,
   getLineItems,
   selectCart,
+  deselectCart,
   loadUsers,
 } from './store';
 
@@ -74,11 +75,12 @@ class Routes extends Component {
       carts,
       auth,
       selectCart,
+      deselectCart,
       guests,
       selectedCart,
     } = this.props;
-    console.log(prevProps.isLoggedIn, isLoggedIn);
     if (prevProps.isLoggedIn != isLoggedIn) {
+      // await deselectCart();
       console.log('I logged in');
       await this.props.loadCarts();
       getLineItems();
@@ -88,18 +90,18 @@ class Routes extends Component {
       ) {
         await this.props.createGuest();
       }
-      // if (!selectedCart.id) {
-      const toSelect = isLoggedIn
-        ? carts.find((cart) => cart.userId === auth.id && !cart.isPurchased)
-        : carts.find(
-            (cart) => cart.guestId === window.localStorage.guestId * 1
-          );
-      toSelect || selectedCart.id
-        ? selectCart(toSelect)
-        : isLoggedIn
-        ? createCart({ userId: auth.id })
-        : createCart({ guestId: window.localStorage.guestId });
-      // }
+      if (!selectedCart || auth.id) {
+        const toSelect = isLoggedIn
+          ? carts.find((cart) => cart.userId === auth.id && !cart.isPurchased)
+          : carts.find(
+              (cart) => cart.guestId === window.localStorage.guestId * 1
+            );
+        toSelect || selectedCart.id
+          ? selectCart(toSelect)
+          : isLoggedIn
+          ? createCart({ userId: auth.id })
+          : createCart({ guestId: window.localStorage.guestId });
+      }
     }
   }
 
@@ -182,6 +184,7 @@ const mapDispatch = (dispatch) => {
     selectCart: (cart) => {
       return dispatch(selectCart(cart));
     },
+    deselectCart: () => dispatch(deselectCart()),
     createGuest: () => {
       return dispatch(createGuest());
     },
