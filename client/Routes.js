@@ -26,7 +26,6 @@ import A_UserList from './components/Admin/A_UserList';
 import A_AlbumDetail from './components/Admin/A_AlbumDetail';
 import A_AlbumList from './components/Admin/A_AlbumList';
 
-
 /**
  * COMPONENT
  */
@@ -69,50 +68,49 @@ class Routes extends Component {
   componentDidUpdate(prevProps) {
     console.log(window.localStorage, this.props);
     console.log('CDU runs');
-    const { isLoggedIn, auth, carts } = this.props;
+    const { isLoggedIn, getLineItems, carts, selectCart } = this.props;
     if (!prevProps.isLoggedIn && isLoggedIn) {
       console.log('I logged in');
-
-      //this.props.loadInitialData();
-      //this.props.getCart();
-      this.props.getLineItems();
+      selectCart(
+        carts.find((cart) => cart.userId === auth.id && !cart.isPurchased)
+      );
+      getLineItems();
     }
   }
 
   render() {
     const { isLoggedIn, users } = this.props;
-    const user = users.find((u) => u.id === this.props.auth.id) || {}; 
+    const user = users.find((u) => u.id === this.props.auth.id) || {};
 
     return (
       <div>
         {isLoggedIn && user.isAdmin === true ? (
           <Switch>
-            <Route exact path= '/admin' component={AdminHome} />
-            <Route path = '/users' component={A_UserList} />
-            <Route path = '/inventory' component = {A_AlbumList} />
+            <Route exact path="/admin" component={AdminHome} />
+            <Route path="/users" component={A_UserList} />
+            <Route path="/inventory" component={A_AlbumList} />
             <Route exact path="/admin/albums/:id" component={A_AlbumDetail} />
-            <Redirect to ='/admin' />
-
+            <Redirect to="/admin" />
           </Switch>
         ) : isLoggedIn && user.isAdmin === false ? (
           <Switch>
-            <Route path='/home' component={Home} />
-            <Route path='/cart' component={Cart} />
-            <Route path='/profile' component={Profile} />
-            <Route path='/albums/search' component={AlbumSearch} />
-            <Route path='/albums/:id' component={AlbumDetail} />
-            <Route path='/genre/:id' component={Genre} />
-            <Redirect to='/home' />
+            <Route path="/home" component={Home} />
+            <Route path="/cart" component={Cart} />
+            <Route path="/profile" component={Profile} />
+            <Route path="/albums/search" component={AlbumSearch} />
+            <Route path="/albums/:id" component={AlbumDetail} />
+            <Route path="/genre/:id" component={Genre} />
+            <Redirect to="/home" />
           </Switch>
         ) : (
           <Switch>
-            <Route path='/' exact component={Login} />
-            <Route path='/login' component={Login} />
-            <Route path='/signup' component={Signup} />
-            <Route path='/cart' component={Cart} />
-            <Route path='/albums/search' component={AlbumSearch} />
-            <Route path='/albums/:id' component={AlbumDetail} />
-            <Route path='/genre/:id' component={Genre} />
+            <Route path="/" exact component={Login} />
+            <Route path="/login" component={Login} />
+            <Route path="/signup" component={Signup} />
+            <Route path="/cart" component={Cart} />
+            <Route path="/albums/search" component={AlbumSearch} />
+            <Route path="/albums/:id" component={AlbumDetail} />
+            <Route path="/genre/:id" component={Genre} />
           </Switch>
         )}
       </div>
