@@ -12,19 +12,14 @@ class AlbumDetail extends React.Component {
   }
 
   handleOnClick(album) {
-    const { albums, match, lineItems, selectedCart } = this.props;
-    if (selectedCart) {
-      const item = lineItems.find((item) => item.albumId === album.id);
-      if (!item) {
-        this.props.createItem(selectedCart.id, match.params.id * 1);
-      } else {
-        const selectedAlbum = albums.find((album) => album.id === item.albumId);
-        if (item.quantity < selectedAlbum.availableInventory) {
-          this.props.updateItem({ ...item, quantity: ++item.quantity });
-        } else {
-          this.setState({ errors: 'No more albums in inventory' });
-        }
-      }
+    const { match, lineItems, selectedCart } = this.props;
+    const item = lineItems.find((item) => item.albumId === album.id);
+    if (item && item.quantity < album.availableInventory) {
+      this.props.updateItem({ ...item, quantity: ++item.quantity });
+    } else if (!item) {
+      this.props.createItem(selectedCart.id, match.params.id * 1);
+    } else {
+      this.setState({ errors: 'No more albums in inventory' });
     }
   }
 
