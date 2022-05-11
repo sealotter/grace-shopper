@@ -65,15 +65,18 @@ class Routes extends Component {
     }
   }
 
-  componentDidUpdate(prevProps) {
+  async componentDidUpdate(prevProps) {
     console.log(window.localStorage, this.props);
     console.log('CDU runs');
-    const { isLoggedIn, getLineItems, carts, selectCart } = this.props;
+    const { isLoggedIn, getLineItems, carts, auth, selectCart } = this.props;
     if (!prevProps.isLoggedIn && isLoggedIn) {
       console.log('I logged in');
-      selectCart(
-        carts.find((cart) => cart.userId === auth.id && !cart.isPurchased)
-      );
+      await this.props.loadCarts();
+
+      // console.log('>>>>>', carts);
+      // selectCart(
+      //   carts.find((cart) => cart.userId === auth.id && !cart.isPurchased)
+      // );
       getLineItems();
     }
   }
