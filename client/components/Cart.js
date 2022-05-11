@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import LineItems from './LineItems';
 
 const Cart = ({ selectedCart }) => {
-  // console.log('selectedCart', selectedCart);
   return (
     <div>
       Shopping Cart:

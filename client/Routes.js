@@ -72,11 +72,6 @@ class Routes extends Component {
     if (!prevProps.isLoggedIn && isLoggedIn) {
       console.log('I logged in');
       await this.props.loadCarts();
-
-      // console.log('>>>>>', carts);
-      // selectCart(
-      //   carts.find((cart) => cart.userId === auth.id && !cart.isPurchased)
-      // );
       getLineItems();
     }
   }

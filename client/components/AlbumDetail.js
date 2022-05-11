@@ -12,6 +12,7 @@ class AlbumDetail extends React.Component {
     const { carts, match, lineItems, selectedCart } = this.props;
     if (selectedCart) {
       const item = lineItems.find((item) => item.albumId === album.id);
+      console.log(item);
       if (!item) {
         this.props.createItem(selectedCart.id, match.params.id * 1);
       } else {
@@ -57,7 +58,7 @@ class AlbumDetail extends React.Component {
             <div>
               Current Price: {album.price ? `$${album.price}` : 'unavailable'}
             </div>
-            {/*<div>Available Inventory: {album.availableInventory}</div>*/}
+            <div>Available Inventory: {album.availableInventory}</div>
             {album.availableInventory > 0 ? (
               <button onClick={() => this.handleOnClick(album)}>
                 Add to Cart

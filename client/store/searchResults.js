@@ -6,7 +6,6 @@ const ALBUM_SEARCH = 'ALBUM_SEARCH';
 
 //Thunks-------------------------
 export const albumSearch = (searchString) => {
-  // console.log(searchString);
   return async (dispatch) => {
     try {
       const albums = await axios.post('/api/albums/search', {

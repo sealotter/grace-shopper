@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import {
   updateAlbum,
@@ -20,18 +20,23 @@ class LineItems extends React.Component {
     this.handlePurchase = this.handlePurchase.bind(this);
   }
 
-  componentDidMount() {
-    this.setState({ price: this.calculateTotal() });
+  componentDidUpdate(prevProps) {
+    const { selectedCart } = this.props;
+    if (!prevProps.selectedCart.id && selectedCart.id) {
+      this.setState({ price: this.calculateTotal() });
+    }
   }
 
   handleOnChange(ev, item) {
     item.quantity = ev.target.value;
+    console.log('item change', item);
     this.props.updateItem(item);
     this.setState({ price: this.calculateTotal() });
   }
 
-  handleRemove(item) {
-    this.props.deleteItem(item);
+  async handleRemove(item) {
+    console.log(item);
+    await this.props.deleteItem(item);
     this.setState({ price: this.calculateTotal() });
   }
 
@@ -43,13 +48,11 @@ class LineItems extends React.Component {
       deselectCart,
       albums,
       updateAlbum,
-      // createPreviousOrder,
       createCart,
     } = this.props;
     const checkoutList = lineItems.filter(
       (item) => item.cartId === selectedCart.id
     );
-    console.log('purchased line items', checkoutList);
     checkoutList.forEach((lineItem) => {
       const album = albums.find((album) => album.id === lineItem.albumId);
       album.availableInventory -= lineItem.quantity;
@@ -58,11 +61,11 @@ class LineItems extends React.Component {
     selectedCart.isPurchased = true;
     deselectCart();
     createCart(auth.id);
+    this.setState({ price: 0 });
   }
 
   calculateTotal() {
     const { selectedCart, lineItems, albums } = this.props;
-    // console.log('HERE', selectedCart, lineItems);
     const itemList = lineItems.filter(
       (item) => item.cartId === selectedCart.id
     );
@@ -77,7 +80,6 @@ class LineItems extends React.Component {
   }
 
   render() {
-    console.log(this.props);
     const { albums, lineItems, selectedCart, auth } = this.props;
     return (
       <div>
@@ -134,7 +136,6 @@ const mapDispatchToProps = (dispatch) => {
     updateAlbum: (album) => dispatch(updateAlbum(album)),
     createCart: (id) => dispatch(createCart({ userId: id })),
     deselectCart: () => dispatch(deselectCart()),
-    // createPreviousOrder: (order) => dispatch(createPreviousOrder(order)),
   };
 };
 
