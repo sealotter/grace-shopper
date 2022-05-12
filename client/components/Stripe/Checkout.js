@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { createCheckoutSession } from '../../store';
 import { loadStripe } from '@stripe/stripe-js';
 
 // deferring loadStripe for only when user is checking out
@@ -38,23 +39,3 @@ const redirectToCheckout = async (session) => {
 }
 
 export default connect((state) => state)(Checkout);
-
-// remove button from <LineItems /> component and add it to <Checkout /> add functionality there
-// need to import <Checkout /> as a component to LineItems (where the button is currently)
-
-
-/*
-
-To Do:
-- [X] Pick Sample Albums for the demo and add them to the Stripe Dashboard as Products 
-- [X] Edit create checkout session to include multiple line items 
-- [] Add discount/promo code to Checkout? 
-- [] Add Shipping To Stripe Checkout
-- [] Customize Stripe Checkout layout however you want
-- [X] Create Success and Cancel Redirect Components for after checkout
-- [] Send email after payment confirmation?
-- [] Do I need to change the API key from test key to live key?
-
-Maybe try to do server side one more time with a thunk for create_session in redux store?
-
-*/
