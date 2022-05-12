@@ -8,9 +8,6 @@ import { updateAdmin } from '../../store/albums'
 class EditAlbum extends React.Component {
   constructor(props) {
     super(props)
-   // console.log(this.props['price'])
-   //console.log(this.props.album.price)
-   //console.log(this.props.album.albumName)
     this.state = {
       price : this.props.album ? this.props.album.price : ''
   
