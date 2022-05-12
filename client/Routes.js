@@ -28,7 +28,8 @@ import Genre from './components/Genre/Genre';
 import A_UserList from './components/Admin/A_UserList';
 import A_AlbumDetail from './components/Admin/A_AlbumDetail';
 import A_AlbumList from './components/Admin/A_AlbumList';
-
+import PageSearch from './components/Search/PageSearch';
+import PageDetail from './components/Detail/PageDetail';
 
 /**
  * COMPONENT
@@ -120,35 +121,49 @@ class Routes extends Component {
       <div>
         {isLoggedIn && user.isAdmin === true ? (
           <Switch>
-            <Route exact path= '/admin' component={AdminHome} />
-            <Route path = '/users' component={A_UserList} />
-            <Route path = '/inventory' component = {A_AlbumList} />
-            <Route path="/admin/albums/:id" component={A_AlbumDetail} />
-            <Redirect to ='/admin' />
+
+            <Route exact path='/admin' component={AdminHome} />
+            <Route path='/users' component={A_UserList} />
+            <Route path='/inventory' component={A_AlbumList} />
+            <Route exact path='/admin/albums/:id' component={A_AlbumDetail} />
+            <Route path='/searchresults' component={PageSearch} />
+            <Route path='/album/:id' component={PageDetail} />
+            <Redirect to='/admin' />
           </Switch>
+       
         ) : isLoggedIn && user.isAdmin === false ? (
           <Switch>
-
+            <Route path='/' exact component={Login} />
             <Route path='/home' component={Home} />
             <Route path='/cart' component={Cart} />
             <Route path='/profile' component={Profile} />
             <Route path='/albums/search' component={AlbumSearch} />
             <Route path='/albums/:id' component={AlbumDetail} />
+            <Route path='/genre/:id' component={Genre} />
+            <Route path='/searchresults' component={PageSearch} />
+            <Route path='/album/:id' component={PageDetail} />
             <Route path='/checkout/success' exact component={Success} />
             <Route path='/checkout/failed' exact component={Failed} />
-            <Route path="/genre/:id" component={Genre} />
-            <Redirect to="/home" />
+            <Redirect to='/' />
           </Switch>
         ) : (
           <Switch>
-            <Route path="/" exact component={Login} />
-            <Route path="/login" component={Login} />
-            <Route path="/signup" component={Signup} />
-            <Route path="/cart" component={Cart} />
-            <Route path="/albums/search" component={AlbumSearch} />
-            <Route path="/albums/:id" component={AlbumDetail} />
-            <Route path="/genre/:id" component={Genre} />
+            <Route path='/' exact component={Login} />
+            <Route path='/login' component={Login} />
+            <Route path='/signup' component={Signup} />
+            <Route path='/cart' component={Cart} />
+            <Route path='/albums/search' component={AlbumSearch} />
+            <Route path='/albums/:id' component={AlbumDetail} />
+            <Route path='/genre/:id' component={Genre} />
+            <Route path='/searchresults' component={PageSearch} />
+            <Route path='/album/:id' component={PageDetail} />
+            
+            <Route path='/checkout/success' exact component={Success} />
+            <Route path='/checkout/failed' exact component={Failed} />
+            
+            <Redirect to='/' />
           </Switch>
+       
         )}
       </div>
     );
