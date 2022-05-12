@@ -97,8 +97,8 @@ class LineItems extends React.Component {
         </ul>
         
         <div>total price: ${this.state.price}</div>
-        <Checkout />
-          { /* <button onClick={this.handlePurchase}>complete purchase?</button> */ }
+         <button onClick={this.handlePurchase}>complete purchase?</button> 
+         <Checkout />
       </div>
     );
   }
@@ -115,4 +115,5 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect((state) => state, mapDispatchToProps)(LineItems);
+export default connect((state) => state, mapDispatchToProps)(LineItems); 
+

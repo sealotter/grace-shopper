@@ -14,24 +14,20 @@ const getStripe = () => {
 
 const Checkout = () => {
 
-    // const items = [
-    //     {price: 'price_1KyLV9EzPlA06fKFDmJk8x3X', quantity: 1},
-    //     {price: 'price_1KyLUgEzPlA06fKFj706P4Yd', quantity: 5}
-    // ];
-
 const checkoutOptions = {
     lineItems: [
         {price: 'price_1KyLV9EzPlA06fKFDmJk8x3X', quantity: 1},
         {price: 'price_1KyLUgEzPlA06fKFj706P4Yd', quantity: 5}
     ],
     mode: 'payment',
-    successUrl: 'http://localhost:8080/success',
-    cancelUrl: 'http://localhost:8080/cancel',
+    successUrl: 'http://localhost:8080/checkout/success',
+    cancelUrl: 'http://localhost:8080/checkout/failed',
 }
 
-const redirectToCheckout = async () => {
+const redirectToCheckout = async (session) => {
     console.log('redirectToCheckout');
     const stripe = await getStripe();
+    //const { error } = await stripe.redirectToCheckout({sessionId: session.id})
     const { error } = await stripe.redirectToCheckout(checkoutOptions);
 }
     return (
@@ -51,11 +47,11 @@ export default connect((state) => state)(Checkout);
 
 To Do:
 - [X] Pick Sample Albums for the demo and add them to the Stripe Dashboard as Products 
-- [] Edit create checkout session to include multiple line items 
+- [X] Edit create checkout session to include multiple line items 
 - [] Add discount/promo code to Checkout? 
 - [] Add Shipping To Stripe Checkout
 - [] Customize Stripe Checkout layout however you want
-- [] Create Success and Cancel Redirect Components for after checkout
+- [X] Create Success and Cancel Redirect Components for after checkout
 - [] Send email after payment confirmation?
 - [] Do I need to change the API key from test key to live key?
 

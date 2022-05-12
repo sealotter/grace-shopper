@@ -23,6 +23,8 @@ import AlbumDetail from './components/AlbumDetail';
 import AlbumSearch from './components/AlbumSearch';
 import searchResults from './store/searchResults';
 import AdminHome from './components/Admin/AdminHome';
+import Success from './components/Stripe/Success';
+import Failed from './components/Stripe/Failed';
 // import A_AlbumDetail from './components/Admin/A_AlbumDetail'
 
 /**
@@ -81,6 +83,8 @@ class Routes extends Component {
             <Route path='/profile' component={Profile} />
             <Route path='/albums/search' component={AlbumSearch} />
             <Route path='/albums/:id' component={AlbumDetail} />
+            <Route path='/checkout/success' exact component={Success} />
+            <Route path='/checkout/failed' exact component={Failed} />
             <Redirect to='/home' />
           </Switch>
         ) : (
