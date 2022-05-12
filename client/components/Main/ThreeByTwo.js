@@ -11,10 +11,14 @@ const ThreeByTwo = () => {
     'Hip Hop',
     'Rock',
     'Electronic',
+    'Funk / Soul',
     'Blues',
     'Stage & Screen',
     'Jazz',
     'Reggae',
+    'Stage & Screen',
+    'Non-Music',
+    'Folk, World, & Country',
   ];
 
   const albumGenres = (genres, albums) => {
@@ -61,21 +65,23 @@ const ThreeByTwo = () => {
           {/* {albumsArr && albumsArr[2].id} */}
           {albumsArr &&
             albumsArr.map((album) => (
-              <Grid
-                key={album && album.id}
-                item
-                xs={12}
-                sm={6}
-                md={4}
-                lg={3}
-                xl={3}
-              >
-                <ThreeByTwoCard
-                  albumGenre={album && album.genre}
-                  albumImg={album && album.albumArt}
-                  albumId={album && album.id}
-                />
-              </Grid>
+              <div key={album && album.id}>
+                <Grid
+                  key={album && album.id}
+                  item
+                  xs={12}
+                  sm={6}
+                  md={4}
+                  lg={3}
+                  xl={3}
+                >
+                  <ThreeByTwoCard
+                    albumGenre={album && album.genre}
+                    albumImg={album && album.albumArt}
+                    albumId={album && album.id}
+                  />
+                </Grid>
+              </div>
             ))}
           {/* <Grid item xs={12} sm={6} md={4} lg={3} xl={3}>
             <ThreeByTwoCard />

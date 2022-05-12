@@ -13,6 +13,8 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { grey } from '@mui/material/colors';
+import { Grid } from '@mui/material';
+import BarSearch from '../Search/BarSearch';
 
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -46,83 +48,175 @@ const BottomNav = () => {
     >
       <Container maxWidth='xl'>
         <Toolbar disableGutters>
-          <Typography
-            variant='h6'
-            noWrap
-            component='a'
-            href='/'
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'black',
-              textDecoration: 'none',
-            }}
-          >
-            Grace Vinyls
-          </Typography>
-
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              sx={{ color: 'black' }}
-              size='large'
-              aria-label='account of current user'
-              aria-controls='menu-appbar'
-              aria-haspopup='true'
-              onClick={handleOpenNavMenu}
-              color='inherit'
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id='menu-appbar'
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
+          <Grid container>
+            <Grid
+              item
               sx={{
-                display: { xs: 'block', md: 'none' },
+                display: { xs: 'flex', lg: 'none' },
+                justifyContent: 'flex-start',
+                alignItems: 'center',
               }}
+              xs={1}
+              md={1}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign='center' sx={{ color: 'black' }}>
-                    {page}
-                  </Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
+              {/* Hamburger Icon */}
+              <Box>
+                <IconButton
+                  sx={{ color: 'black' }}
+                  size='large'
+                  aria-label='account of current user'
+                  aria-controls='menu-appbar'
+                  aria-haspopup='true'
+                  onClick={handleOpenNavMenu}
+                  color='inherit'
+                >
+                  <MenuIcon />
+                </IconButton>
+                <Menu
+                  id='menu-appbar'
+                  anchorEl={anchorElNav}
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left',
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'left',
+                  }}
+                  open={Boolean(anchorElNav)}
+                  onClose={handleCloseNavMenu}
+                  sx={{
+                    display: { xs: 'block', md: 'none' },
+                  }}
+                >
+                  {pages.map((page) => (
+                    <MenuItem key={page} onClick={handleCloseNavMenu}>
+                      <Typography textAlign='center' sx={{ color: 'black' }}>
+                        {page}
+                      </Typography>
+                    </MenuItem>
+                  ))}
+                </Menu>
+              </Box>
+            </Grid>
+            <Grid
+              sx={{
+                color: 'black',
+                display: { xs: 'none', lg: 'flex' },
+                justifyContent: 'flex-start',
+                alignItems: 'center',
+              }}
+              item
+              xs={5}
+              lg={6}
+            >
+              {/* Grace Vinyl Logo Desktop */}
+              <Typography
+                variant='h6'
+                noWrap
+                component='a'
+                href='/'
+                sx={{
+                  display: { xs: 'none', lg: 'flex' },
+                  fontFamily: 'monospace',
+                  fontWeight: 700,
+                  letterSpacing: '.3rem',
+                  color: 'black',
+                  textDecoration: 'none',
+                  alignItems: 'center',
+                }}
+              >
+                Grace Vinyl
+              </Typography>
+            </Grid>
 
-          <Typography
-            variant='h5'
-            noWrap
-            component='a'
-            href=''
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'black',
-              textDecoration: 'none',
-            }}
-          >
-            Grace Vinyls
-          </Typography>
-          {/* <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+            <Grid
+              sx={{
+                display: { xs: 'flex', lg: 'none' },
+                justifyContent: 'flex-start',
+                alignItems: 'center',
+              }}
+              item
+              xs={6}
+              md={5}
+            >
+              {/* Mobile Grace Vinyl Logo */}
+              <Typography
+                variant='h5'
+                noWrap
+                component='a'
+                href='/'
+                sx={{
+                  // mr: 2,
+                  display: { xs: 'flex', lg: 'none' },
+                  fontFamily: 'monospace',
+                  fontWeight: 700,
+                  letterSpacing: '.3rem',
+                  color: 'black',
+                  textDecoration: 'none',
+                }}
+              >
+                Grace Vinyl
+              </Typography>
+            </Grid>
+
+            <Grid
+              sx={{
+                color: 'black',
+                display: { xs: 'none', md: 'flex' },
+                justifyContent: 'flex-end',
+                alignItems: 'center',
+              }}
+              item
+              md={6}
+            >
+              {/* SEARCH BAR */}
+              <BarSearch />
+              {/* Avatar Setting Menu */}
+              {/* <Box sx={{ flexGrow: 0, justifyContent: 'flex-end' }}>
+                <Tooltip title='Open settings'>
+                  <IconButton
+                    onClick={handleOpenUserMenu}
+                    sx={{ p: 0, justifyContent: 'flex-end' }}
+                  >
+                    <Avatar alt='G' src='/static/images/avatar/2.jpg' />
+                  </IconButton>
+                </Tooltip>
+                <Menu
+                  sx={{ mt: '45px' }}
+                  id='menu-appbar'
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
+                >
+                  {settings.map((setting) => (
+                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                      <Typography
+                        textAlign='center'
+                        sx={{
+                          color: 'black',
+                        }}
+                      >
+                        {setting}
+                      </Typography>
+                    </MenuItem>
+                  ))}
+                </Menu>
+              </Box> */}
+            </Grid>
+
+            {/* Pages menu */}
+            {/* <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
                 key={page}
@@ -133,46 +227,7 @@ const BottomNav = () => {
               </Button>
             ))}
           </Box> */}
-
-          {/* <Box sx={{ flexGrow: 0, justifyContent: 'flex-end' }}>
-            <Tooltip title='Open settings'>
-              <IconButton
-                onClick={handleOpenUserMenu}
-                sx={{ p: 0, justifyContent: 'flex-end' }}
-              >
-                <Avatar alt='G' src='/static/images/avatar/2.jpg' />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id='menu-appbar'
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography
-                    textAlign='center'
-                    sx={{
-                      color: 'black',
-                    }}
-                  >
-                    {setting}
-                  </Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box> */}
+          </Grid>
         </Toolbar>
       </Container>
     </AppBar>

@@ -5,11 +5,11 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions, Grid } from '@mui/material';
 import { grey } from '@mui/material/colors';
-grey;
+import { Link } from 'react-router-dom';
 
 const GenreCard = (props) => {
-  const { name, albumImg, artist } = props;
-  console.log(name);
+  const { name, albumImg, artist, albumId } = props;
+
   return (
     <Card
       sx={{
@@ -28,7 +28,7 @@ const GenreCard = (props) => {
           height='300'
           width='300'
           image={albumImg}
-          alt='green iguana'
+          alt='Album Art Coming Soon'
         />
         <CardContent>
           <Typography gutterBottom variant='h6' component='div' noWrap>
@@ -40,9 +40,11 @@ const GenreCard = (props) => {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button sx={{ color: grey[800] }} size='small' color='primary'>
-          View This Album >
-        </Button>
+        <Link to={`/album/${albumId}`}>
+          <Button sx={{ color: grey[800] }} size='small' color='primary'>
+            View This Album >
+          </Button>
+        </Link>
       </CardActions>
     </Card>
   );
