@@ -24,6 +24,7 @@
     "@emotion/styled": "11.8.1",
     "@mui/icons-material": "5.5.1",
     "@mui/material": "5.5.2",
+    "@stripe/stripe-js": "^1.29.0",
     "axios": "^0.21.1",
     "bcrypt": "^5.0.0",
     "compression": "^1.7.3",
@@ -33,7 +34,8 @@
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.9.1",
     "pg": "^8.5.1",
-    "sequelize": "^6.3.5"
+    "sequelize": "^6.3.5",
+    "stripe": "^8.222.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
@@ -44,7 +46,7 @@
     "chai": "^4.2.0",
     "esm": "^3.2.25",
     "mocha": "^6.2.3",
-    "nodemon": "^1.19.4",
+    "nodemon": "^2.0.16",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-redux": "^7.0.1",

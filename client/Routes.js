@@ -13,6 +13,7 @@ import {
   createCart,
   getLineItems,
   selectCart,
+  deselectCart,
   loadUsers,
 } from './store';
 
@@ -21,6 +22,8 @@ import Profile from './components/Profile';
 import AlbumDetail from './components/AlbumDetail';
 import AlbumSearch from './components/AlbumSearch';
 import AdminHome from './components/Admin/AdminHome';
+import Success from './components/Stripe/Success';
+import Failed from './components/Stripe/Failed';
 import Genre from './components/Genre/Genre';
 import A_UserList from './components/Admin/A_UserList';
 import A_AlbumDetail from './components/Admin/A_AlbumDetail';
@@ -67,16 +70,46 @@ class Routes extends Component {
     }
   }
 
-  componentDidUpdate(prevProps) {
+  async componentDidUpdate(prevProps) {
     console.log(window.localStorage, this.props);
     console.log('CDU runs');
-    const { isLoggedIn, auth, carts } = this.props;
-    if (!prevProps.isLoggedIn && isLoggedIn) {
+    const {
+      isLoggedIn,
+      getLineItems,
+      carts,
+      auth,
+      selectCart,
+      deselectCart,
+      guests,
+      selectedCart,
+    } = this.props;
+    if (prevProps.isLoggedIn != isLoggedIn) {
+      // await deselectCart();
       console.log('I logged in');
-
-      //this.props.loadInitialData();
-      //this.props.getCart();
-      this.props.getLineItems();
+      await this.props.loadCarts();
+      getLineItems();
+      if (
+        (!auth.id && !window.localStorage.guestId) ||
+        window.localStorage.guestId * 1 > guests.length
+      ) {
+        await this.props.createGuest();
+      }
+      if (
+        !selectedCart ||
+        auth.id ||
+        (!auth.id && window.localStorage.guestId)
+      ) {
+        const toSelect = isLoggedIn
+          ? carts.find((cart) => cart.userId === auth.id && !cart.isPurchased)
+          : carts.find(
+              (cart) => cart.guestId === window.localStorage.guestId * 1
+            );
+        toSelect || selectedCart.id
+          ? selectCart(toSelect)
+          : auth.id
+          ? createCart({ userId: auth.id })
+          : createCart({ guestId: window.localStorage.guestId });
+      }
     }
   }
 
@@ -88,6 +121,7 @@ class Routes extends Component {
       <div>
         {isLoggedIn && user.isAdmin === true ? (
           <Switch>
+
             <Route exact path='/admin' component={AdminHome} />
             <Route path='/users' component={A_UserList} />
             <Route path='/inventory' component={A_AlbumList} />
@@ -96,6 +130,7 @@ class Routes extends Component {
             <Route path='/album/:id' component={PageDetail} />
             <Redirect to='/admin' />
           </Switch>
+       
         ) : isLoggedIn && user.isAdmin === false ? (
           <Switch>
             <Route path='/' exact component={Login} />
@@ -107,6 +142,8 @@ class Routes extends Component {
             <Route path='/genre/:id' component={Genre} />
             <Route path='/searchresults' component={PageSearch} />
             <Route path='/album/:id' component={PageDetail} />
+            <Route path='/checkout/success' exact component={Success} />
+            <Route path='/checkout/failed' exact component={Failed} />
             <Redirect to='/' />
           </Switch>
         ) : (
@@ -120,8 +157,13 @@ class Routes extends Component {
             <Route path='/genre/:id' component={Genre} />
             <Route path='/searchresults' component={PageSearch} />
             <Route path='/album/:id' component={PageDetail} />
+            
+            <Route path='/checkout/success' exact component={Success} />
+            <Route path='/checkout/failed' exact component={Failed} />
+            
             <Redirect to='/' />
           </Switch>
+       
         )}
       </div>
     );
@@ -167,6 +209,7 @@ const mapDispatch = (dispatch) => {
     selectCart: (cart) => {
       return dispatch(selectCart(cart));
     },
+    deselectCart: () => dispatch(deselectCart()),
     createGuest: () => {
       return dispatch(createGuest());
     },

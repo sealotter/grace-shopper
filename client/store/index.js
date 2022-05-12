@@ -11,6 +11,7 @@ import guests from './guests';
 import selectedCart from './selectedCart';
 import { profileReducer } from './profile/reducerProfile';
 import { users } from './users';
+import sessions from './checkoutSessions';
 
 const reducer = combineReducers({
   auth,
@@ -22,7 +23,7 @@ const reducer = combineReducers({
   selectedCart,
   profileReducer,
   users,
-
+  sessions
 });
 
 const middleware = composeWithDevTools(
@@ -40,3 +41,6 @@ export * from './guests';
 export * from './selectedCart';
 export * from './profile/reducerProfile';
 export * from './users';
+export * from './checkoutSessions';
+
+

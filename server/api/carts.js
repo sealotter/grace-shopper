@@ -55,4 +55,14 @@ router.post('/', async (req, res, next) => {
   }
 });
 
+router.put('/', async (req, res, next) => {
+  try {
+    const cart = await Cart.findByPk(req.body.cart.id);
+    await cart.update(req.body.cart);
+    res.send(cart);
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = router;
