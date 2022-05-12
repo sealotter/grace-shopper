@@ -55,4 +55,6 @@ To Do:
 - [] Send email after payment confirmation?
 - [] Do I need to change the API key from test key to live key?
 
+Maybe try to do server side one more time with a thunk for create_session in redux store?
+
 */

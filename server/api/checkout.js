@@ -41,7 +41,6 @@ router.post('/create-checkout-session', async (req, res) => {
     // need to send session id to client side
      //res.send({ id: session.id })
     // res.json({ id: session.id });
-   
     //res.redirect(303, session.url);
 });
 
