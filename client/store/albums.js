@@ -15,7 +15,6 @@ const _updateAlbumAdmin = (album) => {
   }
 }
 
-
 //thunks---------------------------------
 export const loadAlbums = () => {
   return async (dispatch) => {
@@ -32,7 +31,6 @@ export const addAlbums = (searchResults) => {
   store.dispatch({ type: ADD_ALBUMS, albums: searchResults });
 };
 
-
 export const updateAlbum = (album) => {
   return async (dispatch) => {
     const updatedAlbum = axios.put('/api/albums', { album });
@@ -44,23 +42,21 @@ export const updateAdmin = (album) => {
   return async (dispatch) => {
     const { data: updatedAlbum }= await axios.put(`/api/albums/admin/albums/${album.id}`, album );
     dispatch(_updateAlbumAdmin(updatedAlbum))
-    // const updatedAdmin = axios.put(`/api/albums/admin/albums/${album.id}`, album );
-    // dispatch({ type: UPDATE_ADMIN, album: updatedAdmin.data });
+
   };
 };
 
 export const deleteAlbum = (album) => {
-  return async function(dispatch) {
-      const res = await axios.delete(`/api/albums/admin/${album.id}`)
-      dispatch({type: DELETE_ALBUM, album: res.data})
-   
-  }
-}
+
+  return async function (dispatch) {
+    const res = await axios.delete(`/api/albums/admin/${album.id}`);
+    dispatch({ type: DELETE_ALBUM, album: res.data });
+  };
+};
 
 
 //reducer-------------------------------
 const albums = (state = [], action) => {
-  console.log(action.type, action)
   switch (action.type) {
     case LOAD_ALBUMS:
       return action.albums;
