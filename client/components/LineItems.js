@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import Checkout from './Stripe/Checkout';
 import {
   updateAlbum,
   updateItem,
@@ -133,10 +134,12 @@ class LineItems extends React.Component {
                 })
             : 'No items in cart'}
         </ul>
+        
         <div>total price: ${this.state.price}</div>
         <button disabled={!auth.id} onClick={this.handlePurchase}>
           complete purchase?
         </button>
+        <Checkout />
       </div>
     );
   }
@@ -153,4 +156,5 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect((state) => state, mapDispatchToProps)(LineItems);
+export default connect((state) => state, mapDispatchToProps)(LineItems); 
+
