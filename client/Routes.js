@@ -25,7 +25,8 @@ import Genre from './components/Genre/Genre';
 import A_UserList from './components/Admin/A_UserList';
 import A_AlbumDetail from './components/Admin/A_AlbumDetail';
 import A_AlbumList from './components/Admin/A_AlbumList';
-
+import PageSearch from './components/Search/PageSearch';
+import PageDetail from './components/Detail/PageDetail';
 
 /**
  * COMPONENT
@@ -81,28 +82,32 @@ class Routes extends Component {
 
   render() {
     const { isLoggedIn, users } = this.props;
-    const user = users.find((u) => u.id === this.props.auth.id) || {}; 
+    const user = users.find((u) => u.id === this.props.auth.id) || {};
 
     return (
       <div>
         {isLoggedIn && user.isAdmin === true ? (
           <Switch>
-            <Route exact path= '/admin' component={AdminHome} />
-            <Route path = '/users' component={A_UserList} />
-            <Route path = '/inventory' component = {A_AlbumList} />
-            <Route exact path="/admin/albums/:id" component={A_AlbumDetail} />
-            <Redirect to ='/admin' />
-
+            <Route exact path='/admin' component={AdminHome} />
+            <Route path='/users' component={A_UserList} />
+            <Route path='/inventory' component={A_AlbumList} />
+            <Route exact path='/admin/albums/:id' component={A_AlbumDetail} />
+            <Route path='/searchresults' component={PageSearch} />
+            <Route path='/album/:id' component={PageDetail} />
+            <Redirect to='/admin' />
           </Switch>
         ) : isLoggedIn && user.isAdmin === false ? (
           <Switch>
+            <Route path='/' exact component={Login} />
             <Route path='/home' component={Home} />
             <Route path='/cart' component={Cart} />
             <Route path='/profile' component={Profile} />
             <Route path='/albums/search' component={AlbumSearch} />
             <Route path='/albums/:id' component={AlbumDetail} />
             <Route path='/genre/:id' component={Genre} />
-            <Redirect to='/home' />
+            <Route path='/searchresults' component={PageSearch} />
+            <Route path='/album/:id' component={PageDetail} />
+            <Redirect to='/' />
           </Switch>
         ) : (
           <Switch>
@@ -113,6 +118,9 @@ class Routes extends Component {
             <Route path='/albums/search' component={AlbumSearch} />
             <Route path='/albums/:id' component={AlbumDetail} />
             <Route path='/genre/:id' component={Genre} />
+            <Route path='/searchresults' component={PageSearch} />
+            <Route path='/album/:id' component={PageDetail} />
+            <Redirect to='/' />
           </Switch>
         )}
       </div>

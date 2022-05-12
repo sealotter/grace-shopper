@@ -29,7 +29,12 @@ const TopNav = () => {
             alignItems='center'
           >
             Save 10% Sitewide! &nbsp;&nbsp;&nbsp;&nbsp;
-            <Button sx={{ bgcolor: 'black' }} variant='contained'>
+            <Button
+              sx={{
+                bgcolor: 'black',
+              }}
+              variant='contained'
+            >
               Code: GRACESHOPPER
             </Button>
           </Grid>

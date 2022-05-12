@@ -11,40 +11,39 @@ const ThreeByTwoCard = (props) => {
   const { albumGenre, albumImg, albumId } = props;
   console.log(albumGenre);
   return (
-    <Card
-      sx={{
-        mx: 2,
-        minWidth: 300,
-        maxWidth: 300,
-        minHeight: 560,
-        maxHeight: 560,
-      }}
-      elevation={0}
-      square
-    >
-      <CardActionArea>
-        <CardMedia
-          component='img'
-          height='300'
-          width='300'
-          image={albumImg}
-          alt='green iguana'
-        />
-        <CardContent>
-          <Typography gutterBottom variant='h5' component='div'>
-            {albumGenre}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      <CardActions>
-        <Link to={`/genre/${albumGenre}`}>
-          {' '}
+    <Link to={`/genre/${albumGenre}`}>
+      <Card
+        sx={{
+          mx: 2,
+          minWidth: 300,
+          maxWidth: 300,
+          minHeight: 560,
+          maxHeight: 560,
+        }}
+        elevation={0}
+        square
+      >
+        <CardActionArea>
+          <CardMedia
+            component='img'
+            height='300'
+            width='300'
+            image={albumImg}
+            alt='green iguana'
+          />
+          <CardContent>
+            <Typography gutterBottom variant='h5' component='div'>
+              {albumGenre}
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+        <CardActions>
           <Button sx={{ color: grey[800] }} size='small' color='primary'>
             Shop this genre >
           </Button>
-        </Link>
-      </CardActions>
-    </Card>
+        </CardActions>
+      </Card>
+    </Link>
   );
 };
 
