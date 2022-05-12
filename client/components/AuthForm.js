@@ -14,6 +14,8 @@ const AuthForm = (props) => {
     <div>
       <Main />
       {/* <AlbumList /> */}
+
+     
       <form onSubmit={handleSubmit} name={name}>
         <div>
           <label htmlFor="username">

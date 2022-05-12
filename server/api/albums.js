@@ -27,6 +27,15 @@ router.put('/', async (req, res, next) => {
   }
 });
 
+router.put('/admin/albums/:id', async (req, res, next) => {
+  try {
+    const album = await Album.findByPk(req.params.id);
+    res.send(await album.update(req.body)).status(204)
+  } catch (error) {
+    next(error);
+  }
+});
+
 // curl -G localhost:8080/api/albums/search -d "style=style=Funk"
 
 router.post('/search', async (req, res, next) => {
@@ -84,18 +93,17 @@ router.post('/search', async (req, res, next) => {
   }
 });
 
-//albums/admin/id
+
 router.delete('/admin/:id', async(req, res, next) => {
   try{
     const album = await Album.findByPk(req.params.id) 
       await album.destroy()
       res.send(album).status(204)
-
-    
-    
   }catch(ex) {
     next(ex)
   }
 })
+
+
 
 module.exports = router;
