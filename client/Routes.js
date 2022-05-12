@@ -22,10 +22,13 @@ import Profile from './components/Profile';
 import AlbumDetail from './components/AlbumDetail';
 import AlbumSearch from './components/AlbumSearch';
 import AdminHome from './components/Admin/AdminHome';
+import Success from './components/Stripe/Success';
+import Failed from './components/Stripe/Failed';
 import Genre from './components/Genre/Genre';
 import A_UserList from './components/Admin/A_UserList';
 import A_AlbumDetail from './components/Admin/A_AlbumDetail';
 import A_AlbumList from './components/Admin/A_AlbumList';
+
 
 /**
  * COMPONENT
@@ -125,11 +128,14 @@ class Routes extends Component {
           </Switch>
         ) : isLoggedIn && user.isAdmin === false ? (
           <Switch>
-            <Route path="/home" component={Home} />
-            <Route path="/cart" component={Cart} />
-            <Route path="/profile" component={Profile} />
-            <Route path="/albums/search" component={AlbumSearch} />
-            <Route path="/albums/:id" component={AlbumDetail} />
+
+            <Route path='/home' component={Home} />
+            <Route path='/cart' component={Cart} />
+            <Route path='/profile' component={Profile} />
+            <Route path='/albums/search' component={AlbumSearch} />
+            <Route path='/albums/:id' component={AlbumDetail} />
+            <Route path='/checkout/success' exact component={Success} />
+            <Route path='/checkout/failed' exact component={Failed} />
             <Route path="/genre/:id" component={Genre} />
             <Redirect to="/home" />
           </Switch>

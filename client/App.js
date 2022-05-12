@@ -1,5 +1,5 @@
-import React from 'react';
 
+import React from 'react';
 import Navbar from './components/Navbar';
 import BottomNav from './components/Navbar/BottomNav';
 import MiddleNav from './components/Navbar/MiddleNav';
