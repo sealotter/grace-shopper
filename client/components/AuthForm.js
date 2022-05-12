@@ -14,7 +14,9 @@ const AuthForm = (props) => {
     <div>
       <Main />
       {/* <AlbumList /> */}
-       <form onSubmit={handleSubmit} name={name}>
+
+     
+      <form onSubmit={handleSubmit} name={name}>
         <div>
           <label htmlFor='username'>
             <small>Username</small>
@@ -31,7 +33,7 @@ const AuthForm = (props) => {
           <button type='submit'>{displayName}</button>
         </div>
         {error && error.response && <div> {error.response.data} </div>}
-      </form> 
+      </form>
     </div>
   );
 };

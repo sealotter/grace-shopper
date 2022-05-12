@@ -1,23 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom';
-import { deleteAlbum } from '../../store'
+import EditAlbum from './A_Edit'
+import { Route }from 'react-router-dom'
 
 
-class A_AlbumDetail extends React.Component {
-  constructor() {
-    super();
-    this.handleOnClick = this.handleOnClick.bind(this);
-  }
-  handleOnClick(album){
-    const {match} = this.props
-  }
-  render() {
-    const { albums, match } = this.props;
-    const album = albums.find((album) => album.id === match.params.id * 1);
-    return (
+const A_AlbumDetail = ({ album }) => {
+  
+  return (
+    <div>
+      <h1>{album ? album.albumName : 'album'}</h1>
       <div>
-        <Link to = {'/admin'}>Back</Link>
         {album ? (
           <div>
             {album.albumArt[8] === 's' ? (
@@ -25,8 +17,7 @@ class A_AlbumDetail extends React.Component {
             ) : (
               <img src={album.albumArt} />
             )}
-            <h1>{album.albumName}
-            </h1>
+            <h1>{album.albumName}</h1>
             <div>
               {album.year} release by {album.artistName}
             </div>
@@ -46,22 +37,32 @@ class A_AlbumDetail extends React.Component {
             <div>
               Community Rating:{' '}
               {album.rating ? `${album.rating} / 5` : 'unavilable'}
-              </div>
-              <div>
-              Current Price: {album.price ? `$${album.price}` : 'unavailable'}
             </div>
-          </div>
+            <div>Available Inventory: {album.availableInventory}</div>
+            <div>
+              Current Price: {album.price ? `$${album.price}` : 'unavailable'}
+              <Route path = '/admin/albums/:id' component = { EditAlbum } />
+            </div>
             
+          
+          </div>
         ) : (
           ''
         )}
       </div>
-
-    );
-  }
+      
+    </div>
+  )
 
 }
 
 
+const mapState = ({albums}, {match}) => {
+  const album = albums.find(a => a.id === match.params.id*1)
+  
+  return {
+   album
+  }
+}
 
-export default connect((state) => state)(A_AlbumDetail)
+export default connect(mapState)(A_AlbumDetail)

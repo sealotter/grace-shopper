@@ -90,7 +90,7 @@ class Routes extends Component {
             <Route exact path= '/admin' component={AdminHome} />
             <Route path = '/users' component={A_UserList} />
             <Route path = '/inventory' component = {A_AlbumList} />
-            <Route exact path="/admin/albums/:id" component={A_AlbumDetail} />
+            <Route path="/admin/albums/:id" component={A_AlbumDetail} />
             <Redirect to ='/admin' />
 
           </Switch>
