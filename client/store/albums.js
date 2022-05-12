@@ -33,14 +33,14 @@ export const addAlbums = (searchResults) => {
 
 export const updateAlbum = (album) => {
   return async (dispatch) => {
-    const updatedAlbum = axios.put('/api/albums', { album });
+    const updatedAlbum = await axios.put('/api/albums', { album });
     dispatch({ type: UPDATE_ALBUM, album: updatedAlbum.data });
   };
 };
 
 export const updateAdmin = (album) => {
   return async (dispatch) => {
-    const { data: updatedAlbum }= await axios.put(`/api/albums/admin/albums/${album.id}`, album );
+    const { data: updatedAlbum } = await axios.put(`/api/albums/admin/albums/${album.id}`, album );
     dispatch(_updateAlbumAdmin(updatedAlbum))
 
   };
