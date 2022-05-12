@@ -13,7 +13,6 @@ import { profileReducer } from './profile/reducerProfile';
 import { users } from './users';
 import sessions from './checkoutSessions';
 
-
 const reducer = combineReducers({
   auth,
   albums,
@@ -43,4 +42,5 @@ export * from './selectedCart';
 export * from './profile/reducerProfile';
 export * from './users';
 export * from './checkoutSessions';
+
 

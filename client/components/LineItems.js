@@ -1,7 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { updateItem, deleteItem } from '../store/lineItems';
 import Checkout from './Stripe/Checkout';
+import {
+  updateAlbum,
+  updateItem,
+  deleteItem,
+  createCart,
+  updateCart,
+  deselectCart,
+} from '../store';
 import selectedCart from '../store/selectedCart';
 
 class LineItems extends React.Component {
@@ -19,28 +26,56 @@ class LineItems extends React.Component {
     this.setState({ price: this.calculateTotal() });
   }
 
+  componentDidUpdate(prevProps) {
+    const { selectedCart } = this.props;
+    if (!prevProps.selectedCart.id && selectedCart.id) {
+      this.setState({ price: this.calculateTotal() });
+    }
+  }
+
   handleOnChange(ev, item) {
     item.quantity = ev.target.value;
+    console.log('item change', item);
     this.props.updateItem(item);
     this.setState({ price: this.calculateTotal() });
   }
 
-  handleRemove(item) {
-    this.props.deleteItem(item);
+  async handleRemove(item) {
+    console.log(item);
+    await this.props.deleteItem(item);
     this.setState({ price: this.calculateTotal() });
   }
 
-  handlePurchase() {
-    console.log('purchased');
-    //update inventory
-    //change isPurchased to true
-    //(this means initial cart fetch should unly find isPurchased:false)
-    //create new cart and assign to user
+  async handlePurchase() {
+    const {
+      auth,
+      lineItems,
+      selectedCart,
+      deselectCart,
+      albums,
+      updateAlbum,
+      updateCart,
+      createCart,
+    } = this.props;
+    selectedCart.purchasedTotal = this.state.price;
+    selectedCart.isPurchased = true;
+
+    const checkoutList = lineItems.filter(
+      (item) => item.cartId === selectedCart.id
+    );
+    checkoutList.forEach((lineItem) => {
+      const album = albums.find((album) => album.id === lineItem.albumId);
+      album.availableInventory -= lineItem.quantity;
+      updateAlbum(album);
+    });
+    await updateCart(selectedCart);
+    deselectCart();
+    createCart(auth.id);
+    this.setState({ price: 0 });
   }
 
   calculateTotal() {
     const { selectedCart, lineItems, albums } = this.props;
-    console.log('HERE', selectedCart, lineItems);
     const itemList = lineItems.filter(
       (item) => item.cartId === selectedCart.id
     );
@@ -55,8 +90,7 @@ class LineItems extends React.Component {
   }
 
   render() {
-    console.log(this.props);
-    const { albums, lineItems, selectedCart } = this.props;
+    const { albums, lineItems, selectedCart, auth } = this.props;
     return (
       <div>
         Items:
@@ -70,6 +104,7 @@ class LineItems extends React.Component {
                   );
                   return (
                     <li key={lineItem.id}>
+                      <img src={album.thumbNail} />
                       <div>
                         album: {album.albumName} id: {album.id}
                       </div>
@@ -81,6 +116,10 @@ class LineItems extends React.Component {
                           min={0}
                           max={album.availableInventory}
                           value={lineItem.quantity}
+                          onClick={(ev) => {
+                            ev.target.blur();
+                          }}
+                          onKeyDown={(ev) => ev.preventDefault()}
                           onChange={(ev) => this.handleOnChange(ev, lineItem)}
                         ></input>
                         <button onClick={() => this.handleRemove(lineItem)}>
@@ -97,8 +136,10 @@ class LineItems extends React.Component {
         </ul>
         
         <div>total price: ${this.state.price}</div>
-         <button onClick={this.handlePurchase}>complete purchase?</button> 
-         <Checkout />
+        <button disabled={!auth.id} onClick={this.handlePurchase}>
+          complete purchase?
+        </button>
+        <Checkout />
       </div>
     );
   }
@@ -106,12 +147,12 @@ class LineItems extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateItem: (item) => {
-      return dispatch(updateItem(item));
-    },
-    deleteItem: (item) => {
-      return dispatch(deleteItem(item));
-    },
+    updateItem: (item) => dispatch(updateItem(item)),
+    deleteItem: (item) => dispatch(deleteItem(item)),
+    updateAlbum: (album) => dispatch(updateAlbum(album)),
+    createCart: (id) => dispatch(createCart({ userId: id })),
+    updateCart: (cart) => dispatch(updateCart(cart)),
+    deselectCart: () => dispatch(deselectCart()),
   };
 };
 

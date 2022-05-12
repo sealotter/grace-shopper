@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { authenticate } from '../store';
 import AlbumList from './AlbumList';
+import Main from './Main/Main';
 
 /**
  * COMPONENT
@@ -11,6 +12,8 @@ const AuthForm = (props) => {
 
   return (
     <div>
+      <Main />
+      {/* <AlbumList /> */}
       <form onSubmit={handleSubmit} name={name}>
         <div>
           <label htmlFor="username">
@@ -29,7 +32,6 @@ const AuthForm = (props) => {
         </div>
         {error && error.response && <div> {error.response.data} </div>}
       </form>
-      <AlbumList />
     </div>
   );
 };

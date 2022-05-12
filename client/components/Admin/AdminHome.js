@@ -1,16 +1,35 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import { Home } from '../Home';
-import UserList from './A_UserList';
-import Admin_AlbumsList from './A_AlbumList'
+import { Link } from 'react-router-dom';
 
-const AdminHome = ({ auth }) => { 
+const AdminHome = ({ auth, albums }) => { 
   return (
     <div>
         <h3>Hello Admin, {auth.firstName} </h3> 
-        <UserList />
-        { /*<Admin_AlbumsList />*/ } 
-    
+        <div>
+          <h3>Low Inventory:</h3>
+         
+            {albums.map((album) => 
+            <ul key={album.id}>
+              {0 < album.availableInventory && album.availableInventory < 5 ? 
+              <div>    
+                  {album.albumName}  
+                   <span> has {album.availableInventory} left in stock</span>
+                   <div>
+                     <Link to={`/admin/albums/${album.id}`}>
+                       <img src={album.thumbNail}></img>
+                       </Link>
+                    </div>
+                </div>
+              : ''}
+
+             </ul>
+
+            )}
+       
+
+        </div>
+           
     </div>
       
   )

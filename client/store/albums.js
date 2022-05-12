@@ -5,6 +5,7 @@ import store from '.';
 const LOAD_ALBUMS = 'LOAD_ALBUMS';
 const ADD_ALBUMS = 'ADD_ALBUMS';
 const UPDATE_ALBUM = 'UPDATE_ALBUMS';
+const DELETE_ALBUM = 'DELETE_ALBUM';
 
 //thunks---------------------------------
 export const loadAlbums = () => {
@@ -24,8 +25,15 @@ export const addAlbums = (searchResults) => {
 
 export const updateAlbum = (album) => {
   return async (dispatch) => {
-    const updatedAlbum = axios.put('/api/albums', { album });
+    const updatedAlbum = await axios.put('/api/albums', { album });
     dispatch({ type: UPDATE_ALBUM, album: updatedAlbum.data });
+  };
+};
+
+export const deleteAlbum = (album) => {
+  return async function (dispatch) {
+    const res = await axios.delete(`/api/albums/admin/${album.id}`);
+    dispatch({ type: DELETE_ALBUM, album: res.data });
   };
 };
 
@@ -36,6 +44,8 @@ const albums = (state = [], action) => {
       return action.albums;
     case ADD_ALBUMS:
       return state.concat(action.albums);
+    case DELETE_ALBUM:
+      return state.filter((album) => album.id !== action.album.id);
     default:
       return state;
   }

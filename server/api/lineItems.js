@@ -31,7 +31,7 @@ router.put('/', async (req, res, next) => {
   try {
     const item = await LineItem.findByPk(req.body.item.id);
     await item.update(req.body.item);
-    res.sendStatus(204);
+    res.send(item);
   } catch (error) {
     next(error);
   }

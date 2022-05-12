@@ -3,8 +3,8 @@ import store from '.';
 
 // constants ---------
 const LOAD_CARTS = 'LOAD_CARTS';
-const GET_CART = 'GET_CART';
 const CREATE_CART = 'CREATE_CART';
+const UPDATE_CART = 'UPDATE_CART';
 
 // thunks -----------
 
@@ -15,31 +15,9 @@ export const loadCarts = () => {
   };
 };
 
-// export const getCart = () => {
-//   return async (dispatch) => {
-//     console.log('store ', window.localStorage);
-//     const token = window.localStorage.getItem('token');
-//     if (token) {
-//       const response = await axios.get('/api/cart', {
-//         headers: {
-//           authorization: token,
-//         },
-//       });
-
-//       dispatch({ type: GET_CART, carts: response.data });
-//     } else if (window.localStorage.guestId) {
-//       console.log('guestId is present, no need to create cart');
-//       const guestId = window.localStorage.getItem('guestId');
-//       const response = await axios.get(`/api/cart/${guestId}`);
-//       dispatch({ type: GET_CART, carts: response.data });
-//     }
-//   };
-// };
-
 export const createCart = (idForNewCart) => {
   return async (dispatch) => {
     const state = store.getState();
-    console.log('SELECTED', state);
     if (!state.selectedCart.id) {
       const newCart = await axios.post('/api/cart', {
         idForNewCart,
@@ -47,6 +25,14 @@ export const createCart = (idForNewCart) => {
       dispatch({ type: CREATE_CART, cart: newCart.data });
       store.dispatch({ type: 'SELECT_CART', cart: newCart.data });
     }
+  };
+};
+
+export const updateCart = (cart) => {
+  return async (dispatch) => {
+    const updatedCart = await axios.put('/api/cart', { cart });
+    console.log(updatedCart.data);
+    dispatch({ type: UPDATE_CART, cart: updatedCart.data });
   };
 };
 
@@ -58,14 +44,11 @@ const carts = (state = [], action) => {
       return action.carts;
     case CREATE_CART:
       return [...state, action.cart];
+    case UPDATE_CART:
+      return state.map((cart) =>
+        cart.id === action.cart.id ? action.cart : cart
+      );
   }
-  // if (action.type === GET_CART) {
-  //   return [action.carts];
-  // }
-  // if (action.type === CREATE_CART) {
-  //   console.log('state', state, 'action:', action);
-  //   return [...state, action.cart];
-  // }
   return state;
 };
 

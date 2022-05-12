@@ -5,19 +5,21 @@ import { createItem, updateItem } from '../store';
 class AlbumDetail extends React.Component {
   constructor() {
     super();
+    this.state = {
+      errors: '',
+    };
     this.handleOnClick = this.handleOnClick.bind(this);
   }
 
   handleOnClick(album) {
-    const { carts, match, lineItems, selectedCart } = this.props;
-    if (selectedCart) {
-      const item = lineItems.find((item) => item.albumId === album.id);
-      if (!item) {
-        this.props.createItem(selectedCart.id, match.params.id * 1);
-      } else {
-        item.quantity++;
-        this.props.updateItem(item);
-      }
+    const { match, lineItems, selectedCart } = this.props;
+    const item = lineItems.find((item) => item.albumId === album.id);
+    if (item && item.quantity < album.availableInventory) {
+      this.props.updateItem({ ...item, quantity: ++item.quantity });
+    } else if (!item) {
+      this.props.createItem(selectedCart.id, match.params.id * 1);
+    } else {
+      this.setState({ errors: 'No more albums in inventory' });
     }
   }
 
@@ -59,9 +61,12 @@ class AlbumDetail extends React.Component {
             </div>
             <div>Available Inventory: {album.availableInventory}</div>
             {album.availableInventory > 0 ? (
-              <button onClick={() => this.handleOnClick(album)}>
-                Add to Cart
-              </button>
+              <div>
+                <button onClick={() => this.handleOnClick(album)}>
+                  Add to Cart
+                </button>
+                <span>{this.state.errors}</span>
+              </div>
             ) : (
               'Not available for purchase at this time'
             )}
