@@ -47,6 +47,7 @@ class LineItems extends React.Component {
   }
 
   async handlePurchase() {
+    console.log('handlePurchase called');
     const {
       auth,
       lineItems,
@@ -134,12 +135,8 @@ class LineItems extends React.Component {
                 })
             : 'No items in cart'}
         </ul>
-        
         <div>total price: ${this.state.price}</div>
-        <button disabled={!auth.id} onClick={this.handlePurchase}>
-          complete purchase?
-        </button>
-        <Checkout />
+        <Checkout handlePurchase={this.handlePurchase} />
       </div>
     );
   }
@@ -156,5 +153,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect((state) => state, mapDispatchToProps)(LineItems); 
-
+export default connect((state) => state, mapDispatchToProps)(LineItems);
