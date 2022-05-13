@@ -13,7 +13,7 @@ const getStripe = () => {
   return stripePromise;
 };
 
-const Checkout = ({ handlePurchase }) => {
+const Checkout = ({ handlePurchase, auth }) => {
   const checkoutOptions = {
     lineItems: [
       { price: 'price_1KyLV9EzPlA06fKFDmJk8x3X', quantity: 1 },
@@ -25,15 +25,18 @@ const Checkout = ({ handlePurchase }) => {
   };
 
   const redirectToCheckout = async (session) => {
-    handlePurchase();
     console.log('redirectToCheckout');
     const stripe = await getStripe();
     //const { error } = await stripe.redirectToCheckout({sessionId: session.id})
     const { error } = await stripe.redirectToCheckout(checkoutOptions);
+    handlePurchase();
   };
   return (
     <div>
-      <button onClick={redirectToCheckout}> Stripe Checkout </button>
+      <button disabled={!auth.id} onClick={redirectToCheckout}>
+        {' '}
+        Stripe Checkout{' '}
+      </button>
     </div>
   );
 };
