@@ -11,14 +11,12 @@ const GenreList = () => {
   const albums = useSelector((state) => state.albums);
 
   const albumGenres = (genre, albums) => {
-    console.log(location && location.pathname.slice(7));
     const dispAlbums =
       albums && albums.filter((album) => album.genre === genre);
 
     return dispAlbums;
   };
   albumsArr = albumGenres(genre, albums);
-  console.log(albumsArr && albumsArr);
   return (
     <Container maxWidth='xl'>
       <Grid container spacing={2}>

@@ -11,6 +11,7 @@ import { readProfile, updateProfile } from '../store/profile/actionsProfile';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { grey } from '@mui/material/colors';
 
 export default function ProfileUpdate() {
   const token = window.localStorage.getItem('token');
@@ -124,10 +125,18 @@ export default function ProfileUpdate() {
             )}
           </Grid>
           <Button
+            sx={{
+              bgcolor: 'black',
+              ':hover': {
+                bgcolor: grey[900], // background
+                color: 'white', //text
+              },
+              mt: 3,
+              mb: 2,
+            }}
             type='submit'
             fullWidth
             variant='contained'
-            sx={{ mt: 3, mb: 2 }}
           >
             UPDATE
           </Button>

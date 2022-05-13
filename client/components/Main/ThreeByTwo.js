@@ -32,7 +32,6 @@ const ThreeByTwo = () => {
     return dispAlbums;
   };
   albumsArr = albumGenres(genres, albums);
-  console.log(albumsArr && albumsArr);
   return (
     <Container maxWidth='xl'>
       <Grid container spacing={2}>

@@ -1,4 +1,4 @@
-import { Box, Container, Grid } from '@mui/material';
+import { Grid } from '@mui/material';
 import { grey, red } from '@mui/material/colors';
 import React from 'react';
 import Card from '@mui/material/Card';
@@ -12,14 +12,6 @@ const SideBySideGenre = () => {
   const location = useLocation();
   const genre = location && location.pathname.slice(7);
 
-  const bull = (
-    <Box
-      component='span'
-      sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
-    >
-      •
-    </Box>
-  );
   return (
     //   Add the card medias maxHeight vh for  grid container vh
     <Grid
@@ -90,15 +82,6 @@ const SideBySideGenre = () => {
               <i>{genre}</i>
             </Typography>
           </CardContent>
-          {/* <CardActionArea>
-            <CardMedia
-              sx={{ bgcolor: grey[300], maxHeight: '50vh', width: '100%' }}
-              component='img'
-              //   height='140'
-              //   image='https://wdet.org/wp-content/uploads/2019/09/cri_000000319870.jpg'
-            />
-            <CardContent>Hello</CardContent>
-          </CardActionArea> */}
         </Card>
       </Grid>
       <Grid

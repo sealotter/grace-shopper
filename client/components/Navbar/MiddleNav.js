@@ -7,14 +7,13 @@ import { Grid, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { logout } from '../../store';
-
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
-
-import AuthForm from '../AuthForm';
+import { Login } from '../AuthForm';
 
 const style = {
   position: 'absolute',
@@ -35,6 +34,10 @@ const MiddleNav = () => {
   const isLoggedIn = useSelector((state) => state.auth.id);
   const dispatch = useDispatch();
 
+  React.useEffect(() => {
+    handleClose();
+  }, [isLoggedIn]);
+
   const handleClick = (cart) => {
     dispatch(logout(cart));
   };
@@ -51,7 +54,7 @@ const MiddleNav = () => {
         }}
         position='static'
       >
-        <Container>
+        <Container maxWidth='xl'>
           <Toolbar>
             <Grid container>
               <Grid
@@ -119,14 +122,19 @@ const MiddleNav = () => {
                           Profile
                         </Typography>
                       </Link>
-                      <Link to='/cart'>
-                        <Typography sx={{ color: 'black' }} variant='p'>
-                          Cart(0)
-                        </Typography>
-                      </Link>
-                      <Link to='/albums/search'>
+                      <Link to='/albums/searchresults'>
                         <Typography sx={{ color: 'black' }} variant='p'>
                           Search
+                        </Typography>
+                      </Link>
+                      <Link to='/cart'>
+                        <Typography
+                          sx={{
+                            color: 'black',
+                          }}
+                          variant='p'
+                        >
+                          Cart
                         </Typography>
                       </Link>
                     </div>
@@ -165,14 +173,14 @@ const MiddleNav = () => {
                           Inventory
                         </Typography>
                       </Link>
-                      <Link to='/cart'>
-                        <Typography sx={{ color: 'black' }} variant='p'>
-                          Cart(0)
-                        </Typography>
-                      </Link>
-                      <Link to='/albums/search'>
+                      <Link to='/albums/searchresults'>
                         <Typography sx={{ color: 'black' }} variant='p'>
                           Search
+                        </Typography>
+                      </Link>
+                      <Link to='/cart'>
+                        <Typography sx={{ color: 'black' }} variant='p'>
+                          Cart
                         </Typography>
                       </Link>
                     </div>
@@ -203,14 +211,14 @@ const MiddleNav = () => {
                           Sign Up
                         </Typography>
                       </Link>
-                      <Link to='/cart'>
-                        <Typography sx={{ color: 'black' }} variant='p'>
-                          Cart(0)
-                        </Typography>
-                      </Link>
-                      <Link to='/albums/search'>
+                      <Link to='/albums/searchresults'>
                         <Typography sx={{ color: 'black' }} variant='p'>
                           Search
+                        </Typography>
+                      </Link>
+                      <Link to='/cart'>
+                        <Typography sx={{ color: 'black' }} variant='p'>
+                          Cart
                         </Typography>
                       </Link>
                     </div>
@@ -244,7 +252,7 @@ const MiddleNav = () => {
                 Please Login
               </Typography>
               <Typography id='transition-modal-description' sx={{ mt: 2 }}>
-                {/* <AuthForm></AuthForm> */}
+                <Login />
               </Typography>
             </Box>
           </Fade>

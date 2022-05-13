@@ -7,7 +7,7 @@ import { grey } from '@mui/material/colors';
 import { Grid } from '@mui/material';
 import { useSelector } from 'react-redux';
 
-const TopNav = () => {
+const Footer = () => {
   const name = useSelector((state) => state.auth.firstName);
   return (
     <AppBar
@@ -21,14 +21,7 @@ const TopNav = () => {
     >
       <Container maxWidth='xl'>
         <Toolbar>
-          <Grid
-            sx={{
-              color: 'black',
-            }}
-            container
-            direction='row'
-            alignItems='center'
-          >
+          <Grid sx={{}} container direction='row' alignItems='center'>
             <Grid
               item
               sx={{
@@ -50,19 +43,7 @@ const TopNav = () => {
               md={4}
             >
               {' '}
-              Save 10% Sitewide! &nbsp;&nbsp;&nbsp;&nbsp;
-              <Button
-                sx={{
-                  bgcolor: 'black',
-                  ':hover': {
-                    bgcolor: grey[900], // background
-                    color: 'white', //text
-                  },
-                }}
-                variant='contained'
-              >
-                Code: GRACESHOPPER
-              </Button>
+              By Janae, Lisa, Anna & Eric &nbsp;&nbsp;&nbsp;&nbsp;
             </Grid>
             <Grid
               item
@@ -73,13 +54,11 @@ const TopNav = () => {
               }}
               xs={6}
               md={4}
-            >
-              {name && name ? `Hello ${name}` : ''}
-            </Grid>
+            ></Grid>
           </Grid>
         </Toolbar>
       </Container>
     </AppBar>
   );
 };
-export default TopNav;
+export default Footer;
