@@ -121,6 +121,7 @@ class Routes extends Component {
       <div>
         {isLoggedIn && user.isAdmin === true ? (
           <Switch>
+
             <Route exact path='/admin' component={AdminHome} />
             <Route path='/users' component={A_UserList} />
             <Route path='/inventory' component={A_AlbumList} />
