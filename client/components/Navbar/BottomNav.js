@@ -15,13 +15,35 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { grey } from '@mui/material/colors';
 import { Grid } from '@mui/material';
 import BarSearch from '../Search/BarSearch';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
-const pages = ['Products', 'Pricing', 'Blog'];
+const pages = ['Home', 'Logout', 'Cart'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
+
 const BottomNav = () => {
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const isLoggedIn = useSelector((state) => state.auth.id);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+  React.useEffect(() => {
+    handleClose();
+  }, [isLoggedIn]);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -37,6 +59,12 @@ const BottomNav = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const handleClick = (cart) => {
+    dispatch(logout(cart));
+  };
+
+  const user = useSelector((state) => state.auth);
 
   return (
     <AppBar
@@ -90,13 +118,146 @@ const BottomNav = () => {
                     display: { xs: 'block', md: 'none' },
                   }}
                 >
-                  {pages.map((page) => (
+                  <nav>
+                    {isLoggedIn && user.isAdmin === false ? (
+                      <div>
+                        {/* The navbar will show these links after you log in */}
+                        <Link to='/login'>
+                          <Typography sx={{ color: 'black' }} variant='p'>
+                            Home
+                          </Typography>
+                        </Link>
+                        <a
+                          href='#'
+                          onClick={() => {
+                            return handleClick();
+                          }}
+                        >
+                          <Typography sx={{ color: 'black' }} variant='p'>
+                            Logout
+                          </Typography>
+                        </a>
+                        <Link to='/profile'>
+                          {' '}
+                          <Typography sx={{ color: 'black' }} variant='p'>
+                            Profile
+                          </Typography>
+                        </Link>
+                        <Link to='/albums/search'>
+                          <Typography sx={{ color: 'black' }} variant='p'>
+                            Search
+                          </Typography>
+                        </Link>
+                        <Link to='/cart'>
+                          <Typography
+                            sx={{
+                              color: 'black',
+                            }}
+                            variant='p'
+                          >
+                            Cart
+                          </Typography>
+                        </Link>
+                      </div>
+                    ) : isLoggedIn && user.isAdmin === true ? (
+                      <div>
+                        {/* The navbar will show these links after you log in */}
+                        <Link to='/login'>
+                          {' '}
+                          <Typography sx={{ color: 'black' }} variant='p'>
+                            Home
+                          </Typography>
+                        </Link>
+                        <a
+                          href='#'
+                          onClick={() => {
+                            return handleClick();
+                          }}
+                        >
+                          <Typography sx={{ color: 'black' }} variant='p'>
+                            Logout
+                          </Typography>
+                        </a>
+                        <Link to='/profile'>
+                          {' '}
+                          <Typography sx={{ color: 'black' }} variant='p'>
+                            Profile
+                          </Typography>
+                        </Link>
+                        <Link to='/users'>
+                          <Typography sx={{ color: 'royalBlue' }} variant='p'>
+                            Users
+                          </Typography>
+                        </Link>
+                        <Link to='/inventory'>
+                          <Typography sx={{ color: 'royalBlue' }} variant='p'>
+                            Inventory
+                          </Typography>
+                        </Link>
+                        <Link to='/albums/search'>
+                          <Typography sx={{ color: 'black' }} variant='p'>
+                            Search
+                          </Typography>
+                        </Link>
+                        <Link to='/cart'>
+                          <Typography sx={{ color: 'black' }} variant='p'>
+                            Cart
+                          </Typography>
+                        </Link>
+                      </div>
+                    ) : (
+                      <div>
+                        {/* The navbar will show these links before you log in */}
+
+                        <a
+                          href={`https://github.com/login/oauth/authorize?client_id=${process.env.GIT_CLIENT_ID} `}
+                        >
+                          <Typography sx={{ color: 'black' }} variant='p'>
+                            Login via GitHub
+                          </Typography>
+                        </a>
+
+                        <Button onClick={handleOpen}>
+                          <Typography sx={{ color: 'black' }} variant='p'>
+                            Login
+                          </Typography>
+                        </Button>
+                        {/* <Link to='/login'>
+                        <Typography sx={{ color: 'black' }} variant='p'>
+                          Login
+                        </Typography>
+                      </Link> */}
+                        <Link to='/signup'>
+                          <Typography sx={{ color: 'black' }} variant='p'>
+                            Sign Up
+                          </Typography>
+                        </Link>
+                        <Link to='/albums/search'>
+                          <Typography sx={{ color: 'black' }} variant='p'>
+                            Search
+                          </Typography>
+                        </Link>
+                        <Link to='/cart' onClick={handleCloseNavMenu}>
+                          <MenuItem>
+                            <Typography sx={{ color: 'black' }} variant='p'>
+                              Cart
+                            </Typography>
+                          </MenuItem>
+                        </Link>
+                      </div>
+                    )}
+                  </nav>
+                  {/* {pages.map((page) => (
                     <MenuItem key={page} onClick={handleCloseNavMenu}>
-                      <Typography textAlign='center' sx={{ color: 'black' }}>
+                      <Typography
+                        href='/cart'
+                        textAlign='center'
+                        sx={{ color: 'black' }}
+                      >
                         {page}
                       </Typography>
                     </MenuItem>
-                  ))}
+                  ))} */}
                 </Menu>
               </Box>
             </Grid>
@@ -171,62 +332,8 @@ const BottomNav = () => {
               item
               md={6}
             >
-              {/* SEARCH BAR */}
               <BarSearch />
-              {/* Avatar Setting Menu */}
-              {/* <Box sx={{ flexGrow: 0, justifyContent: 'flex-end' }}>
-                <Tooltip title='Open settings'>
-                  <IconButton
-                    onClick={handleOpenUserMenu}
-                    sx={{ p: 0, justifyContent: 'flex-end' }}
-                  >
-                    <Avatar alt='G' src='/static/images/avatar/2.jpg' />
-                  </IconButton>
-                </Tooltip>
-                <Menu
-                  sx={{ mt: '45px' }}
-                  id='menu-appbar'
-                  anchorEl={anchorElUser}
-                  anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  open={Boolean(anchorElUser)}
-                  onClose={handleCloseUserMenu}
-                >
-                  {settings.map((setting) => (
-                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                      <Typography
-                        textAlign='center'
-                        sx={{
-                          color: 'black',
-                        }}
-                      >
-                        {setting}
-                      </Typography>
-                    </MenuItem>
-                  ))}
-                </Menu>
-              </Box> */}
             </Grid>
-
-            {/* Pages menu */}
-            {/* <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'black', display: 'block' }}
-              >
-                {page}
-              </Button>
-            ))}
-          </Box> */}
           </Grid>
         </Toolbar>
       </Container>

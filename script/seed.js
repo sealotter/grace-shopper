@@ -76,7 +76,7 @@ async function seed() {
         isAdmin: false,
       },
     ];
-    
+
     const [codyP, murphyM, janaeE, lisaK, annaK, ericR] = await Promise.all(
       users.map((user) =>
         User.create({
@@ -118,7 +118,7 @@ async function seed() {
     // Create LineItems:
 
     const lineItems = await Promise.all([
-      LineItem.create({ cartId: 1, albumId: 420645, quantity: 1 }),
+      LineItem.create({ cartId: 1, albumId: 443102, quantity: 1 }),
       LineItem.create({ cartId: 1, albumId: 10107979, quantity: 1 }),
       LineItem.create({ cartId: 2, albumId: 740026, quantity: 2 }),
       LineItem.create({ cartId: 2, albumId: 745710, quantity: 2 }),

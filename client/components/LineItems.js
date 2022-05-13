@@ -10,6 +10,8 @@ import {
   deselectCart,
 } from '../store';
 import selectedCart from '../store/selectedCart';
+import { Container, Grid } from '@mui/material';
+import { grey } from '@mui/material/colors';
 
 class LineItems extends React.Component {
   constructor() {
@@ -35,19 +37,17 @@ class LineItems extends React.Component {
 
   handleOnChange(ev, item) {
     item.quantity = ev.target.value;
-    console.log('item change', item);
+
     this.props.updateItem(item);
     this.setState({ price: this.calculateTotal() });
   }
 
   async handleRemove(item) {
-    console.log(item);
     await this.props.deleteItem(item);
     this.setState({ price: this.calculateTotal() });
   }
 
   async handlePurchase() {
-    console.log('handlePurchase called');
     const {
       auth,
       lineItems,
@@ -93,9 +93,91 @@ class LineItems extends React.Component {
   render() {
     const { albums, lineItems, selectedCart, auth } = this.props;
     return (
-      <div>
-        Items:
-        <ul>
+      <Container maxWidth='xl'>
+        <Grid
+          sx={{
+            my: 2,
+            bgcolor: grey[300],
+            py: 2,
+            display: { xs: 'none', md: 'flex' },
+          }}
+          container
+        >
+          <Grid
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignContent: 'center',
+            }}
+            item
+            xs={2}
+            md={2}
+          >
+            ALBUM
+          </Grid>
+          <Grid
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignContent: 'center',
+            }}
+            item
+            xs={2}
+            md={2}
+          >
+            NAME
+          </Grid>
+          <Grid
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignContent: 'center',
+            }}
+            item
+            xs={2}
+            md={2}
+          >
+            ARTIST
+          </Grid>
+          <Grid
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignContent: 'center',
+            }}
+            item
+            xs={2}
+            md={2}
+          >
+            QUANTITY
+          </Grid>
+          <Grid
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignContent: 'center',
+            }}
+            item
+            xs={2}
+            md={2}
+          >
+            PRICE
+          </Grid>
+          <Grid
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignContent: 'center',
+            }}
+            item
+            xs={2}
+            md={2}
+          >
+            TOTAL
+          </Grid>
+        </Grid>
+
+        <div>
           {albums.length && selectedCart
             ? lineItems
                 .filter((item) => item.cartId === selectedCart.id)
@@ -104,40 +186,236 @@ class LineItems extends React.Component {
                     (album) => album.id === lineItem.albumId
                   );
                   return (
-                    <li key={lineItem.id}>
-                      <img src={album.thumbNail} />
-                      <div>
-                        album: {album.albumName} id: {album.id}
-                      </div>
-                      <div> by: {album.artistName}</div>
-                      <div>
-                        quantity:{' '}
-                        <input
-                          type="number"
-                          min={0}
-                          max={album.availableInventory}
-                          value={lineItem.quantity}
-                          onClick={(ev) => {
-                            ev.target.blur();
+                    <div key={lineItem.id}>
+                      <Grid container spacing={3}>
+                        <Grid
+                          sx={{
+                            my: 2,
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignContent: 'center',
                           }}
-                          onKeyDown={(ev) => ev.preventDefault()}
-                          onChange={(ev) => this.handleOnChange(ev, lineItem)}
-                        ></input>
-                        <button onClick={() => this.handleRemove(lineItem)}>
-                          remove?
-                        </button>
-                      </div>
-                      price: ${(album.price * 1).toFixed(2)} each *{' '}
-                      {lineItem.quantity} = $
-                      {(album.price * lineItem.quantity).toFixed(2)}
-                    </li>
+                          item
+                          column
+                          xs={12}
+                          md={2}
+                        >
+                          <img src={album.thumbNail} />
+                        </Grid>
+                        <Grid
+                          sx={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignContent: 'center',
+                          }}
+                          item
+                          xs={12}
+                          md={2}
+                        >
+                          {album.albumName} id: {album.id}
+                        </Grid>
+                        <Grid
+                          sx={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignContent: 'center',
+                          }}
+                          item
+                          xs={12}
+                          md={2}
+                        >
+                          {album.artistName}
+                        </Grid>
+                        <Grid
+                          sx={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignContent: 'center',
+                          }}
+                          item
+                          xs={12}
+                          md={2}
+                        >
+                          <div>
+                            <input
+                              type='number'
+                              min={0}
+                              max={album.availableInventory}
+                              value={lineItem.quantity}
+                              onClick={(ev) => {
+                                ev.target.blur();
+                              }}
+                              onKeyDown={(ev) => ev.preventDefault()}
+                              onChange={(ev) =>
+                                this.handleOnChange(ev, lineItem)
+                              }
+                            ></input>
+                            <button onClick={() => this.handleRemove(lineItem)}>
+                              REMOVE
+                            </button>
+                          </div>
+                        </Grid>
+                        <Grid
+                          sx={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignContent: 'center',
+                          }}
+                          item
+                          column
+                          xs={12}
+                          md={2}
+                        >
+                          ${(album.price * 1).toFixed(2)} each
+                        </Grid>
+                        <Grid
+                          sx={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignContent: 'center',
+                          }}
+                          item
+                          column
+                          xs={12}
+                          md={2}
+                        >
+                          {(album.price * lineItem.quantity).toFixed(2)}
+                        </Grid>
+                      </Grid>
+                    </div>
                   );
                 })
             : 'No items in cart'}
-        </ul>
-        <div>total price: ${this.state.price}</div>
-        <Checkout handlePurchase={this.handlePurchase} />
-      </div>
+        </div>
+        <Grid sx={{ my: 2, bgcolor: grey[300], py: 2 }} container>
+          <Grid
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignContent: 'center',
+            }}
+            item
+            xs={2}
+            md={2}
+          ></Grid>
+          <Grid
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignContent: 'center',
+            }}
+            item
+            xs={2}
+            md={2}
+          ></Grid>
+          <Grid
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignContent: 'center',
+            }}
+            item
+            xs={2}
+            md={2}
+          ></Grid>
+          <Grid
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignContent: 'center',
+            }}
+            item
+            xs={2}
+            md={2}
+          ></Grid>
+          <Grid
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignContent: 'center',
+            }}
+            item
+            xs={2}
+            md={2}
+          ></Grid>
+          <Grid
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignContent: 'center',
+            }}
+            item
+            xs={2}
+            md={2}
+          >
+            ${this.state.price}
+          </Grid>
+        </Grid>
+        <Grid sx={{ py: 2 }} container>
+          <Grid
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignContent: 'center',
+            }}
+            item
+            xs={2}
+            md={2}
+          ></Grid>
+          <Grid
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignContent: 'center',
+            }}
+            item
+            xs={2}
+            md={2}
+          ></Grid>
+          <Grid
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignContent: 'center',
+            }}
+            item
+            xs={2}
+            md={2}
+          ></Grid>
+          <Grid
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignContent: 'center',
+            }}
+            item
+            xs={2}
+            md={2}
+          ></Grid>
+          <Grid
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignContent: 'center',
+            }}
+            item
+            xs={2}
+            md={2}
+          ></Grid>
+          <Grid
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignContent: 'center',
+            }}
+            item
+            xs={2}
+            md={2}
+          >
+            <Checkout handlePurchase={this.handlePurchase} />
+          </Grid>
+        </Grid>
+      </Container>
     );
   }
 }

@@ -5,8 +5,8 @@ import LineItems from './LineItems';
 const Cart = ({ selectedCart }) => {
   return (
     <div>
-      Shopping Cart:
-      <div> Your cart id is: {selectedCart ? selectedCart.id : ''}. </div>
+      {/* Shopping Cart:
+      <div> Your cart id is: {selectedCart ? selectedCart.id : ''}. </div> */}
       <LineItems />
       <hr />
     </div>

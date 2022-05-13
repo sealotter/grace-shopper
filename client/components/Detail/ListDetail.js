@@ -1,33 +1,33 @@
-import { Box, Container, Grid } from '@mui/material';
+import { Container, Grid } from '@mui/material';
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, useLocation } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { Button, CardActionArea, CardActions } from '@mui/material';
+import { Button, CardActionArea } from '@mui/material';
 import GenreCard from '../Genre/GenreCard';
+import { green, grey } from '@mui/material/colors';
+import { createItem, updateItem } from '../../store';
 
 const ListDetail = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+  const history = useHistory();
   const location = useLocation();
   const id = location && location.pathname.split('/').pop();
   const albums = useSelector((state) => state.albums);
+  const lineItems = useSelector((state) => state.linItems);
+  const selectedCart = useSelector((state) => state.selectedCart);
+  const dispatch = useDispatch();
 
   const data = (id, albums) => {
     const dispAlbum = albums && albums.find((album) => album.id === +id);
-    //console.log(dispAlbum);
+
     return dispAlbum;
   };
-
-  //     albumArt,
-  //     albumDetails,
-  //     albumName,
-  //     artistName,
-  //     genre,
-  //     style,
-  //     trackList,
-  //     year,
 
   const album = albums && data(id, albums);
   const alsoCount = 3;
@@ -37,11 +37,32 @@ const ListDetail = () => {
     while (album && albums && id && albums[j].genre !== album.genre) {
       j++;
     }
-    console.log(albums[j] && albums[j].id, +id);
+
     albums[j] && albums[j].id !== +id ? genreArr.push(albums[j]) : null;
     j++;
   }
-  console.log(genreArr && genreArr);
+
+  const addToCart = () => {
+    const item =
+      lineItems && lineItems.find((item) => item.albumId === album.id);
+    if (item && item.quantity < album.availableInventory) {
+      dispatch(updateItem({ ...item, quantity: ++item.quantity }));
+      setTimeout(function () {
+        history.push('/cart');
+      }, 750);
+    } else if (!item) {
+      dispatch(createItem(selectedCart.id, +id));
+      setTimeout(function () {
+        history.push('/cart');
+      }, 750);
+    } else {
+      this.setState({ errors: 'No more albums in inventory' });
+      setTimeout(function () {
+        history.push('/cart');
+      }, 750);
+    }
+  };
+
   return (
     <Container maxWidth='xl'>
       <Grid container>
@@ -142,9 +163,62 @@ const ListDetail = () => {
                   <Typography gutterBottom variant='h6' component='div'>
                     <i>{album?.artistName}</i>
                   </Typography>
-                  <Typography variant='body2' color='text.secondary'>
-                    {album?.albumDetails}
+                  <Typography
+                    sx={{ color: green[400] }}
+                    gutterBottom
+                    variant='h6'
+                    component='div'
+                  >
+                    <b>${album?.price}</b>
                   </Typography>
+                  <Typography
+                    sx={{}}
+                    gutterBottom
+                    variant='body'
+                    component='div'
+                  >
+                    <b>GENRE </b>
+                    {album?.genre}
+                  </Typography>
+                  <Typography
+                    sx={{}}
+                    gutterBottom
+                    variant='body'
+                    component='div'
+                  >
+                    <b>YEAR </b>
+                    {album?.year}
+                  </Typography>
+                  {album && album.style ? (
+                    <Typography
+                      sx={{ mt: 1 }}
+                      gutterBottom
+                      variant='body'
+                      component='div'
+                    >
+                      <b>STYLE </b>
+                      <i>{album?.style}</i>
+                    </Typography>
+                  ) : (
+                    ''
+                  )}
+                  <Button
+                    sx={{
+                      mt: 2,
+                      bgcolor: 'black',
+                      ':hover': {
+                        bgcolor: grey[800], // background
+                        color: 'white', //text
+                      },
+                    }}
+                    size='small'
+                    variant='contained'
+                    onClick={addToCart}
+                  >
+                    <Typography sx={{ color: 'White' }} variant='p'>
+                      ADD TO CART
+                    </Typography>
+                  </Button>
                 </CardContent>
               </CardActionArea>
             </Card>

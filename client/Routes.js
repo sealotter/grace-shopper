@@ -30,6 +30,7 @@ import A_AlbumDetail from './components/Admin/A_AlbumDetail';
 import A_AlbumList from './components/Admin/A_AlbumList';
 import PageSearch from './components/Search/PageSearch';
 import PageDetail from './components/Detail/PageDetail';
+import Main from './components/Main/Main';
 
 /**
  * COMPONENT
@@ -41,7 +42,7 @@ class Routes extends Component {
     await this.props.getLineItems();
     await this.props.loadAlbums();
     await this.props.loadCarts();
-    console.log('CDM runs');
+
     const {
       isLoggedIn,
       auth,
@@ -71,8 +72,6 @@ class Routes extends Component {
   }
 
   async componentDidUpdate(prevProps) {
-    console.log(window.localStorage, this.props);
-    console.log('CDU runs');
     const {
       isLoggedIn,
       getLineItems,
@@ -84,8 +83,6 @@ class Routes extends Component {
       selectedCart,
     } = this.props;
     if (prevProps.isLoggedIn != isLoggedIn) {
-      // await deselectCart();
-      console.log('I logged in');
       await this.props.loadCarts();
       getLineItems();
       if (
@@ -129,10 +126,10 @@ class Routes extends Component {
             <Route path='/album/:id' component={PageDetail} />
             <Redirect to='/admin' />
           </Switch>
-       
         ) : isLoggedIn && user.isAdmin === false ? (
           <Switch>
-            <Route path='/' exact component={Login} />
+            <Route path='/' exact component={Main} />
+            {/* <Route path='/' exact component={Login} /> */}
             <Route path='/home' component={Home} />
             <Route path='/cart' component={Cart} />
             <Route path='/profile' component={Profile} />
@@ -147,22 +144,22 @@ class Routes extends Component {
           </Switch>
         ) : (
           <Switch>
-            <Route path='/' exact component={Login} />
+            <Route path='/' exact component={Main} />
+            {/* <Route path='/' exact component={Login} />
             <Route path='/login' component={Login} />
-            <Route path='/signup' component={Signup} />
+            <Route path='/signup' component={Signup} /> */}
             <Route path='/cart' component={Cart} />
             <Route path='/albums/search' component={AlbumSearch} />
             <Route path='/albums/:id' component={AlbumDetail} />
             <Route path='/genre/:id' component={Genre} />
             <Route path='/searchresults' component={PageSearch} />
             <Route path='/album/:id' component={PageDetail} />
-            
+
             <Route path='/checkout/success' exact component={Success} />
             <Route path='/checkout/failed' exact component={Failed} />
-            
+
             <Redirect to='/' />
           </Switch>
-       
         )}
       </div>
     );

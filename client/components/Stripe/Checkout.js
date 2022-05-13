@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { createCheckoutSession } from '../../store';
 import { loadStripe } from '@stripe/stripe-js';
+import { Button, Typography } from '@mui/material';
+import { grey } from '@mui/material/colors';
 
 // deferring loadStripe for only when user is checking out
 let stripePromise;
@@ -13,7 +15,7 @@ const getStripe = () => {
   return stripePromise;
 };
 
-const Checkout = ({ handlePurchase }) => {
+const Checkout = () => {
   const checkoutOptions = {
     lineItems: [
       { price: 'price_1KyLV9EzPlA06fKFDmJk8x3X', quantity: 1 },
@@ -25,15 +27,28 @@ const Checkout = ({ handlePurchase }) => {
   };
 
   const redirectToCheckout = async (session) => {
-    handlePurchase();
-    console.log('redirectToCheckout');
     const stripe = await getStripe();
-    //const { error } = await stripe.redirectToCheckout({sessionId: session.id})
     const { error } = await stripe.redirectToCheckout(checkoutOptions);
   };
   return (
     <div>
-      <button onClick={redirectToCheckout}> Stripe Checkout </button>
+      <Button
+        sx={{
+          mt: 2,
+          bgcolor: 'black',
+          ':hover': {
+            bgcolor: grey[800], // background
+            color: 'white', //text
+          },
+        }}
+        size='small'
+        variant='contained'
+        onClick={redirectToCheckout}
+      >
+        <Typography sx={{ color: 'White' }} variant='p'>
+          PAY NOW
+        </Typography>
+      </Button>
     </div>
   );
 };

@@ -9,7 +9,6 @@ import { Link } from 'react-router-dom';
 
 const ThreeByTwoCard = (props) => {
   const { albumGenre, albumImg, albumId } = props;
-  console.log(albumGenre);
   return (
     <Link to={`/genre/${albumGenre}`}>
       <Card
