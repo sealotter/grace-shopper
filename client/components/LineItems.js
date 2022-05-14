@@ -93,7 +93,7 @@ class LineItems extends React.Component {
   render() {
     const { albums, lineItems, selectedCart, auth } = this.props;
     return (
-      <Container maxWidth='xl'>
+      <Container maxWidth="xl">
         <Grid
           sx={{
             my: 2,
@@ -238,7 +238,7 @@ class LineItems extends React.Component {
                         >
                           <div>
                             <input
-                              type='number'
+                              type="number"
                               min={0}
                               max={album.availableInventory}
                               value={lineItem.quantity}
