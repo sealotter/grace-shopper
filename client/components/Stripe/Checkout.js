@@ -15,7 +15,8 @@ const getStripe = () => {
   return stripePromise;
 };
 
-const Checkout = () => {
+const Checkout = (props) => {
+  console.log(props.handlePurchase);
   const checkoutOptions = {
     lineItems: [
       { price: 'price_1KyLV9EzPlA06fKFDmJk8x3X', quantity: 1 },
@@ -29,6 +30,7 @@ const Checkout = () => {
   const redirectToCheckout = async (session) => {
     const stripe = await getStripe();
     const { error } = await stripe.redirectToCheckout(checkoutOptions);
+    props.handlePurchase();
   };
   return (
     <div>
@@ -41,11 +43,13 @@ const Checkout = () => {
             color: 'white', //text
           },
         }}
-        size='small'
-        variant='contained'
-        onClick={redirectToCheckout}
+        size="small"
+        variant="contained"
+        onClick={() => {
+          redirectToCheckout();
+        }}
       >
-        <Typography sx={{ color: 'White' }} variant='p'>
+        <Typography sx={{ color: 'White' }} variant="p">
           PAY NOW
         </Typography>
       </Button>
