@@ -29,8 +29,8 @@ const Checkout = (props) => {
 
   const redirectToCheckout = async (session) => {
     const stripe = await getStripe();
-    const { error } = await stripe.redirectToCheckout(checkoutOptions);
     props.handlePurchase();
+    const { error } = await stripe.redirectToCheckout(checkoutOptions);
   };
   return (
     <div>
